@@ -7,7 +7,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 
-namespace MLN_ISDP_project.Database
+namespace MLN_ISDP_project
 {
     class OracleDB : IDisposable
     {
@@ -33,6 +33,17 @@ namespace MLN_ISDP_project.Database
                 }
                 return this.m_dbConn;
             }
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public OracleDB(string in_connectionString)
+        {
+            this.m_dbConn = new OdbcConnection(in_connectionString);
+            this.loadMap();
+            this.connect();
         }
 
         #endregion
@@ -83,6 +94,15 @@ namespace MLN_ISDP_project.Database
         }
 
 
+
+        #endregion
+
+        #region IDisposable Method
+
+        public void Dispose()
+        {
+            this.disconnect();
+        }
 
         #endregion
     }
