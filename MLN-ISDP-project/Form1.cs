@@ -20,5 +20,10 @@ namespace MLN_ISDP_project
         {
             Test.test();
         }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
