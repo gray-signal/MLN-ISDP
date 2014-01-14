@@ -28,7 +28,8 @@ namespace MLN_ISDP_project
             {
                 if (this.m_dbConn == null /* && this.user.authenticated */)
                 {
-                    //this.m_dbConn = new OdbcConnection(OracleDB.getConnectionString());
+                    var csBuilder = new System.Data.Odbc.OdbcConnectionStringBuilder("Driver={Microsoft ODBC for Oracle};Server=placeholder;Uid=placeholder;Pwd=placeholder;");
+                    this.m_dbConn = new OdbcConnection(csBuilder.ToString);
                     if (!this.isConnected()) { this.connect(); }
                 }
                 return this.m_dbConn;
