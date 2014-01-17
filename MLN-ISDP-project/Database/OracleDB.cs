@@ -13,7 +13,8 @@ namespace MLN_ISDP_project
     {
         #region Member Level Variables
 
-        private OdbcConnection m_dbConn;
+        protected OdbcConnection m_dbConn;
+        protected OdbcTransaction m_transaction;
 
         private readonly Dictionary<Type, System.Data.Odbc.OdbcType> typeMap = new Dictionary<Type, System.Data.Odbc.OdbcType>();
 
@@ -35,6 +36,16 @@ namespace MLN_ISDP_project
             }
         }
 
+        public DbTransaction transaction
+        {
+            get
+            {
+                if (this.m_transaction == null) this.m_transaction = this.dbConn.BeginTransaction(System.Data.IsolationLevel.ReadCommitted);
+                
+                return this.m_transaction;
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -52,13 +63,11 @@ namespace MLN_ISDP_project
 
         private void loadMap()
         {
-            this.typeMap.Add(typeof(Guid), System.Data.Odbc.OdbcType.UniqueIdentifier);
             this.typeMap.Add(typeof(string), System.Data.Odbc.OdbcType.VarChar);
-            this.typeMap.Add(typeof(DateTime), System.Data.Odbc.OdbcType.DateTime);
-            this.typeMap.Add(typeof(DateTime?), System.Data.Odbc.OdbcType.DateTime);
+            //this.typeMap.Add(typeof(DateTime), System.Data.Odbc.OdbcType.DateTime); //not needed at the moment
+            //this.typeMap.Add(typeof(DateTime?), System.Data.Odbc.OdbcType.DateTime);
             this.typeMap.Add(typeof(int), System.Data.Odbc.OdbcType.Int);
-            this.typeMap.Add(typeof(bool), System.Data.Odbc.OdbcType.Bit);
-            this.typeMap.Add(typeof(double), System.Data.Odbc.OdbcType.Real); //was float, which isn't in OdbcTypes.
+            this.typeMap.Add(typeof(double), System.Data.Odbc.OdbcType.Real);
             //etc
 
         }
