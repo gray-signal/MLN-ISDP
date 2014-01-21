@@ -12,24 +12,22 @@ namespace MLN_ISDP_project
     public partial class Form1 : Form
     {
         private List<Part> selectedParts;
+        private BindingSource sourceParts;
 
         public Form1()
         {
             InitializeComponent();
             selectedParts = new List<Part>();
+            sourceParts = new BindingSource();
+            sourceParts.DataSource = selectedParts;
+            lstPartsQuery.DataSource = sourceParts;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             //Test.test();
 
-            lstPartsQuery.DataSource = selectedParts;
-        }
-
-        private void resetSource()
-        {
-            lstPartsQuery.DataSource = null;
-            lstPartsQuery.DataSource = selectedParts;
+            sourceParts.ResetBindings(true);
         }
 
         private void btnAddParts_Click(object sender, EventArgs e)
@@ -40,7 +38,7 @@ namespace MLN_ISDP_project
 
             selectedParts.Add(addPart);
 
-            this.resetSource();
+            sourceParts.ResetBindings(true);
         }
     }
 }
