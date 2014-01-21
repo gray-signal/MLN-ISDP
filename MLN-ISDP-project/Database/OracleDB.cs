@@ -5,7 +5,6 @@ using System.Text;
 using System.Data.Odbc;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
 
 namespace MLN_ISDP_project
 {
