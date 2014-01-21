@@ -7,9 +7,30 @@ namespace MLN_ISDP_project
 {
     class Part : MLN_ISDP_project.Database.Persistence
     {
+
+        private string m_id;
+
         #region Properties
 
-        public string PartID { get; set; }
+        public string id
+        {
+            get { return m_id; }
+            set
+            {
+                m_id = value;
+            }
+        }
+
+        public string PartID 
+        {
+            get { return m_id; }
+            set
+            {
+                m_id = value;
+            }
+        }
+
+
         public string PartDescription { get; set; }
         public double Section { get; set; }
         public double ListPrice { get; set; }
