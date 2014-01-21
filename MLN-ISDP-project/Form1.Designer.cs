@@ -37,7 +37,18 @@
             this.btnAcctsScreen = new System.Windows.Forms.Button();
             this.tabPartsActions = new System.Windows.Forms.TabControl();
             this.tabLookUp = new System.Windows.Forms.TabPage();
+            this.grpActions = new System.Windows.Forms.GroupBox();
+            this.btnAddIndicated = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnSetInvoice = new System.Windows.Forms.Button();
+            this.btnSetOrder = new System.Windows.Forms.Button();
+            this.btnAddParts = new System.Windows.Forms.Button();
+            this.btnLoadParts = new System.Windows.Forms.Button();
             this.grpTotals = new System.Windows.Forms.GroupBox();
+            this.txtInvList = new System.Windows.Forms.TextBox();
+            this.lblInvList = new System.Windows.Forms.Label();
+            this.txtInvCost = new System.Windows.Forms.TextBox();
+            this.lblInvCost = new System.Windows.Forms.Label();
             this.txtOrderList = new System.Windows.Forms.TextBox();
             this.lblOrderList = new System.Windows.Forms.Label();
             this.txtOrderCost = new System.Windows.Forms.TextBox();
@@ -56,24 +67,13 @@
             this.lstPartsQuery = new System.Windows.Forms.DataGridView();
             this.lblQuery = new System.Windows.Forms.Label();
             this.tabInvoice = new System.Windows.Forms.TabPage();
-            this.lblInvCost = new System.Windows.Forms.Label();
-            this.txtInvCost = new System.Windows.Forms.TextBox();
-            this.lblInvList = new System.Windows.Forms.Label();
-            this.txtInvList = new System.Windows.Forms.TextBox();
-            this.grpActions = new System.Windows.Forms.GroupBox();
-            this.btnLoadParts = new System.Windows.Forms.Button();
-            this.btnAddParts = new System.Windows.Forms.Button();
-            this.btnSetOrder = new System.Windows.Forms.Button();
-            this.btnSetInvoice = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.btnAddIndicated = new System.Windows.Forms.Button();
             this.mnuMenu.SuspendLayout();
             this.tabPartsActions.SuspendLayout();
             this.tabLookUp.SuspendLayout();
+            this.grpActions.SuspendLayout();
             this.grpTotals.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsQuery)).BeginInit();
-            this.grpActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMenu
@@ -94,7 +94,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(42, 21);
             this.fileToolStripMenuItem.Text = "&File";
-            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // partsInventoryToolStripMenuItem
             // 
@@ -157,6 +156,75 @@
             this.tabLookUp.Text = "Look-Up";
             this.tabLookUp.UseVisualStyleBackColor = true;
             // 
+            // grpActions
+            // 
+            this.grpActions.Controls.Add(this.btnAddIndicated);
+            this.grpActions.Controls.Add(this.btnClear);
+            this.grpActions.Controls.Add(this.btnSetInvoice);
+            this.grpActions.Controls.Add(this.btnSetOrder);
+            this.grpActions.Controls.Add(this.btnAddParts);
+            this.grpActions.Controls.Add(this.btnLoadParts);
+            this.grpActions.Location = new System.Drawing.Point(10, 290);
+            this.grpActions.Name = "grpActions";
+            this.grpActions.Size = new System.Drawing.Size(649, 77);
+            this.grpActions.TabIndex = 15;
+            this.grpActions.TabStop = false;
+            // 
+            // btnAddIndicated
+            // 
+            this.btnAddIndicated.Location = new System.Drawing.Point(568, 16);
+            this.btnAddIndicated.Name = "btnAddIndicated";
+            this.btnAddIndicated.Size = new System.Drawing.Size(75, 51);
+            this.btnAddIndicated.TabIndex = 5;
+            this.btnAddIndicated.Text = "Add Parts Indicated";
+            this.btnAddIndicated.UseVisualStyleBackColor = true;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(336, 16);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 51);
+            this.btnClear.TabIndex = 4;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            // 
+            // btnSetInvoice
+            // 
+            this.btnSetInvoice.Location = new System.Drawing.Point(255, 16);
+            this.btnSetInvoice.Name = "btnSetInvoice";
+            this.btnSetInvoice.Size = new System.Drawing.Size(75, 51);
+            this.btnSetInvoice.TabIndex = 3;
+            this.btnSetInvoice.Text = "Set All to Invoice";
+            this.btnSetInvoice.UseVisualStyleBackColor = true;
+            // 
+            // btnSetOrder
+            // 
+            this.btnSetOrder.Location = new System.Drawing.Point(174, 16);
+            this.btnSetOrder.Name = "btnSetOrder";
+            this.btnSetOrder.Size = new System.Drawing.Size(75, 51);
+            this.btnSetOrder.TabIndex = 2;
+            this.btnSetOrder.Text = "Set All to Order";
+            this.btnSetOrder.UseVisualStyleBackColor = true;
+            // 
+            // btnAddParts
+            // 
+            this.btnAddParts.Location = new System.Drawing.Point(93, 16);
+            this.btnAddParts.Name = "btnAddParts";
+            this.btnAddParts.Size = new System.Drawing.Size(75, 51);
+            this.btnAddParts.TabIndex = 1;
+            this.btnAddParts.Text = "Add Part";
+            this.btnAddParts.UseVisualStyleBackColor = true;
+            this.btnAddParts.Click += new System.EventHandler(this.btnAddParts_Click);
+            // 
+            // btnLoadParts
+            // 
+            this.btnLoadParts.Location = new System.Drawing.Point(12, 16);
+            this.btnLoadParts.Name = "btnLoadParts";
+            this.btnLoadParts.Size = new System.Drawing.Size(75, 51);
+            this.btnLoadParts.TabIndex = 0;
+            this.btnLoadParts.Text = "Load Parts File";
+            this.btnLoadParts.UseVisualStyleBackColor = true;
+            // 
             // grpTotals
             // 
             this.grpTotals.Controls.Add(this.txtInvList);
@@ -173,6 +241,38 @@
             this.grpTotals.TabIndex = 14;
             this.grpTotals.TabStop = false;
             this.grpTotals.Text = "Indicated Item(s) Totals ($)";
+            // 
+            // txtInvList
+            // 
+            this.txtInvList.Location = new System.Drawing.Point(138, 78);
+            this.txtInvList.Name = "txtInvList";
+            this.txtInvList.Size = new System.Drawing.Size(100, 20);
+            this.txtInvList.TabIndex = 7;
+            // 
+            // lblInvList
+            // 
+            this.lblInvList.AutoSize = true;
+            this.lblInvList.Location = new System.Drawing.Point(135, 62);
+            this.lblInvList.Name = "lblInvList";
+            this.lblInvList.Size = new System.Drawing.Size(64, 13);
+            this.lblInvList.TabIndex = 6;
+            this.lblInvList.Text = "Invoice List:";
+            // 
+            // txtInvCost
+            // 
+            this.txtInvCost.Location = new System.Drawing.Point(13, 78);
+            this.txtInvCost.Name = "txtInvCost";
+            this.txtInvCost.Size = new System.Drawing.Size(100, 20);
+            this.txtInvCost.TabIndex = 5;
+            // 
+            // lblInvCost
+            // 
+            this.lblInvCost.AutoSize = true;
+            this.lblInvCost.Location = new System.Drawing.Point(10, 62);
+            this.lblInvCost.Name = "lblInvCost";
+            this.lblInvCost.Size = new System.Drawing.Size(69, 13);
+            this.lblInvCost.TabIndex = 4;
+            this.lblInvCost.Text = "Invoice Cost:";
             // 
             // txtOrderList
             // 
@@ -327,110 +427,10 @@
             this.tabInvoice.Location = new System.Drawing.Point(4, 23);
             this.tabInvoice.Name = "tabInvoice";
             this.tabInvoice.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInvoice.Size = new System.Drawing.Size(665, 343);
+            this.tabInvoice.Size = new System.Drawing.Size(665, 373);
             this.tabInvoice.TabIndex = 1;
             this.tabInvoice.Text = "Invoice";
             this.tabInvoice.UseVisualStyleBackColor = true;
-            // 
-            // lblInvCost
-            // 
-            this.lblInvCost.AutoSize = true;
-            this.lblInvCost.Location = new System.Drawing.Point(10, 62);
-            this.lblInvCost.Name = "lblInvCost";
-            this.lblInvCost.Size = new System.Drawing.Size(69, 13);
-            this.lblInvCost.TabIndex = 4;
-            this.lblInvCost.Text = "Invoice Cost:";
-            // 
-            // txtInvCost
-            // 
-            this.txtInvCost.Location = new System.Drawing.Point(13, 78);
-            this.txtInvCost.Name = "txtInvCost";
-            this.txtInvCost.Size = new System.Drawing.Size(100, 20);
-            this.txtInvCost.TabIndex = 5;
-            // 
-            // lblInvList
-            // 
-            this.lblInvList.AutoSize = true;
-            this.lblInvList.Location = new System.Drawing.Point(135, 62);
-            this.lblInvList.Name = "lblInvList";
-            this.lblInvList.Size = new System.Drawing.Size(64, 13);
-            this.lblInvList.TabIndex = 6;
-            this.lblInvList.Text = "Invoice List:";
-            // 
-            // txtInvList
-            // 
-            this.txtInvList.Location = new System.Drawing.Point(138, 78);
-            this.txtInvList.Name = "txtInvList";
-            this.txtInvList.Size = new System.Drawing.Size(100, 20);
-            this.txtInvList.TabIndex = 7;
-            // 
-            // grpActions
-            // 
-            this.grpActions.Controls.Add(this.btnAddIndicated);
-            this.grpActions.Controls.Add(this.btnClear);
-            this.grpActions.Controls.Add(this.btnSetInvoice);
-            this.grpActions.Controls.Add(this.btnSetOrder);
-            this.grpActions.Controls.Add(this.btnAddParts);
-            this.grpActions.Controls.Add(this.btnLoadParts);
-            this.grpActions.Location = new System.Drawing.Point(10, 290);
-            this.grpActions.Name = "grpActions";
-            this.grpActions.Size = new System.Drawing.Size(649, 77);
-            this.grpActions.TabIndex = 15;
-            this.grpActions.TabStop = false;
-            // 
-            // btnLoadParts
-            // 
-            this.btnLoadParts.Location = new System.Drawing.Point(12, 16);
-            this.btnLoadParts.Name = "btnLoadParts";
-            this.btnLoadParts.Size = new System.Drawing.Size(75, 51);
-            this.btnLoadParts.TabIndex = 0;
-            this.btnLoadParts.Text = "Load Parts File";
-            this.btnLoadParts.UseVisualStyleBackColor = true;
-            // 
-            // btnAddParts
-            // 
-            this.btnAddParts.Location = new System.Drawing.Point(93, 16);
-            this.btnAddParts.Name = "btnAddParts";
-            this.btnAddParts.Size = new System.Drawing.Size(75, 51);
-            this.btnAddParts.TabIndex = 1;
-            this.btnAddParts.Text = "Add Part";
-            this.btnAddParts.UseVisualStyleBackColor = true;
-            // 
-            // btnSetOrder
-            // 
-            this.btnSetOrder.Location = new System.Drawing.Point(174, 16);
-            this.btnSetOrder.Name = "btnSetOrder";
-            this.btnSetOrder.Size = new System.Drawing.Size(75, 51);
-            this.btnSetOrder.TabIndex = 2;
-            this.btnSetOrder.Text = "Set All to Order";
-            this.btnSetOrder.UseVisualStyleBackColor = true;
-            // 
-            // btnSetInvoice
-            // 
-            this.btnSetInvoice.Location = new System.Drawing.Point(255, 16);
-            this.btnSetInvoice.Name = "btnSetInvoice";
-            this.btnSetInvoice.Size = new System.Drawing.Size(75, 51);
-            this.btnSetInvoice.TabIndex = 3;
-            this.btnSetInvoice.Text = "Set All to Invoice";
-            this.btnSetInvoice.UseVisualStyleBackColor = true;
-            // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(336, 16);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 51);
-            this.btnClear.TabIndex = 4;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            // 
-            // btnAddIndicated
-            // 
-            this.btnAddIndicated.Location = new System.Drawing.Point(568, 16);
-            this.btnAddIndicated.Name = "btnAddIndicated";
-            this.btnAddIndicated.Size = new System.Drawing.Size(75, 51);
-            this.btnAddIndicated.TabIndex = 5;
-            this.btnAddIndicated.Text = "Add Parts Indicated";
-            this.btnAddIndicated.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -450,12 +450,12 @@
             this.tabPartsActions.ResumeLayout(false);
             this.tabLookUp.ResumeLayout(false);
             this.tabLookUp.PerformLayout();
+            this.grpActions.ResumeLayout(false);
             this.grpTotals.ResumeLayout(false);
             this.grpTotals.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsQuery)).EndInit();
-            this.grpActions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
