@@ -9,5 +9,10 @@ namespace MLN_ISDP_project.Database
     {
         public string id { get; set; }
 
+
+        internal void load()
+        {
+            
+        }
     }
 }
