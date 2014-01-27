@@ -55,7 +55,7 @@ namespace MLN_ISDP_project
                 in_db.connect();
             }
 
-            DataTable dt = in_db.readQuery("SELECT * FROM Parts WHERE PartID = '1506631U03'"/* + this.m_id*/);
+            DataTable dt = in_db.readQuery("SELECT * FROM Parts WHERE PartID = '" + this.m_id + "'");
 
             
             Console.WriteLine("datatable: " + dt.ToString());
