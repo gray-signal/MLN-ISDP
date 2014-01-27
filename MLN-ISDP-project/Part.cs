@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data.Odbc;
+using System.Data.OleDb;
 using System.Data;
 
 namespace MLN_ISDP_project
@@ -55,10 +55,10 @@ namespace MLN_ISDP_project
                 in_db.connect();
             }
 
-            DataTable dt = in_db.readQuery("SELECT table_name FROM all_tables" /*WHERE PartID = " + this.m_id*/);
+            DataTable dt = in_db.readQuery("SELECT * FROM Parts WHERE PartID = '1506631U03'"/* + this.m_id*/);
 
             
-            Console.WriteLine(dt.ToString());
+            Console.WriteLine("datatable: " + dt.ToString());
         }
 
         #endregion

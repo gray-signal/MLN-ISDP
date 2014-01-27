@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 //using System.Data.OracleClient; // doesn't exist anymore? wtf?
-using System.Data.Odbc;
+using System.Data.OleDb;
 using System.Data.Common;
 using System.Linq;
 using System.Data;
@@ -13,17 +13,17 @@ namespace MLN_ISDP_project
     {
         #region Member Level Variables
 
-        protected OdbcConnection m_dbConn;
-        protected OdbcTransaction m_transaction;
+        protected OleDbConnection m_dbConn;
+        protected OleDbTransaction m_transaction;
 
-        private readonly Dictionary<Type, System.Data.Odbc.OdbcType> typeMap = new Dictionary<Type, System.Data.Odbc.OdbcType>();
+        private readonly Dictionary<Type, System.Data.OleDb.OleDbType> typeMap = new Dictionary<Type, System.Data.OleDb.OleDbType>();
 
 
         #endregion
 
         #region Properties
 
-        private OdbcConnection dbConn
+        private OleDbConnection dbConn
         {
             get
             {
@@ -36,7 +36,7 @@ namespace MLN_ISDP_project
             }
         }
 
-        public OdbcTransaction transaction
+        public OleDbTransaction transaction
         {
             get
             {
@@ -52,7 +52,7 @@ namespace MLN_ISDP_project
 
         public OracleDB(string in_connectionString)
         {
-            this.m_dbConn = new OdbcConnection(in_connectionString);
+            this.m_dbConn = new OleDbConnection(in_connectionString);
             this.loadMap();
             this.connect();
         }
@@ -63,11 +63,11 @@ namespace MLN_ISDP_project
 
         private void loadMap()
         {
-            this.typeMap.Add(typeof(string), System.Data.Odbc.OdbcType.VarChar);
+            this.typeMap.Add(typeof(string), System.Data.OleDb.OleDbType.VarChar);
             //this.typeMap.Add(typeof(DateTime), System.Data.Odbc.OdbcType.DateTime); //not needed at the moment
             //this.typeMap.Add(typeof(DateTime?), System.Data.Odbc.OdbcType.DateTime);
-            this.typeMap.Add(typeof(int), System.Data.Odbc.OdbcType.Int);
-            this.typeMap.Add(typeof(double), System.Data.Odbc.OdbcType.Real);
+            this.typeMap.Add(typeof(int), System.Data.OleDb.OleDbType.Integer);
+            this.typeMap.Add(typeof(double), System.Data.OleDb.OleDbType.Double);
             //etc
 
         }
@@ -76,7 +76,7 @@ namespace MLN_ISDP_project
         {
             if (this.m_dbConn == null)
             {
-                this.m_dbConn = new OdbcConnection();
+                this.m_dbConn = new OleDbConnection();
             }
             if (this.isConnected())
             {
@@ -113,8 +113,8 @@ namespace MLN_ISDP_project
                 this.startTransaction();
             }
 
-            OdbcCommand dbComm;
-            OdbcDataReader dbReader;
+            OleDbCommand dbComm;
+            OleDbDataReader dbReader;
 
             try
             {
@@ -158,7 +158,7 @@ namespace MLN_ISDP_project
                 }
 
                 int rowsAffected = 0;
-                OdbcCommand dbComm;
+                OleDbCommand dbComm;
 
                 try
                 {
@@ -192,7 +192,7 @@ namespace MLN_ISDP_project
         {
             if (this.m_transaction == null)
             {
-                OdbcTransaction t = this.transaction;
+                OleDbTransaction t = this.transaction;
                 return true;
             }
             else

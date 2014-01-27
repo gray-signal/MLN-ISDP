@@ -8,8 +8,8 @@ namespace MLN_ISDP_project.Database
     class PersistenceFactory
     {
         //default db conn
-        static System.Data.Odbc.OdbcConnectionStringBuilder csBuilder = new System.Data.Odbc.OdbcConnectionStringBuilder(
-                "Driver={Microsoft ODBC for Oracle};Server=localhost;Uid=2023164;Pwd=#42Paradox;");
+        static System.Data.OleDb.OleDbConnectionStringBuilder csBuilder = new System.Data.OleDb.OleDbConnectionStringBuilder(
+                "Provider=MSDAORA;Data Source=localhost;User ID=2023164;Password=#42Paradox;");
         static OracleDB dbConn = new OracleDB(csBuilder.ToString());
 
         public Persistence Create(string id, Type in_type, OracleDB in_db)
