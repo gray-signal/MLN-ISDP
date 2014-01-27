@@ -20,6 +20,10 @@ namespace MLN_ISDP_project
             selectedParts = new List<Part>();
             sourceParts = new BindingSource();
             sourceParts.DataSource = selectedParts;
+
+            lstPartsQuery.AutoGenerateColumns = false;
+
+
             lstPartsQuery.DataSource = sourceParts;
         }
 
@@ -30,11 +34,18 @@ namespace MLN_ISDP_project
             sourceParts.ResetBindings(true);
         }
 
+        //default db conn
+        static System.Data.Odbc.OdbcConnectionStringBuilder csBuilder = new System.Data.Odbc.OdbcConnectionStringBuilder(
+                "Driver={Microsoft ODBC for Oracle};Server=localhost;Uid=2023164;Pwd=#42Paradox;");
+        static OracleDB dbConn = new OracleDB(csBuilder.ToString());
+
         private void btnAddParts_Click(object sender, EventArgs e)
         {
             string promptValue = PartSearchModal.ShowDialog("Please enter Part Number to add.", "Part Number");
 
             Part addPart = new Database.PersistenceFactory().Create<Part>(promptValue);
+
+            addPart.load(dbConn);
 
             selectedParts.Add(addPart);
 
