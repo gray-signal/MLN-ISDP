@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.Odbc;
 using System.Data.Common;
 using System.Linq;
+using System.Data;
 
 namespace MLN_ISDP_project
 {
@@ -35,7 +36,7 @@ namespace MLN_ISDP_project
             }
         }
 
-        public DbTransaction transaction
+        public OdbcTransaction transaction
         {
             get
             {
@@ -102,6 +103,125 @@ namespace MLN_ISDP_project
         }
 
 
+        public DataTable readQuery(string in_sql)
+        {
+            System.Diagnostics.Debug.WriteLine("OracleDB: executeSQL(" + in_sql + ")");
+            bool commitOnComplete = false;
+            if (this.m_transaction == null)
+            {
+                commitOnComplete = true;
+                this.startTransaction();
+            }
+
+            OdbcCommand dbComm;
+            OdbcDataReader dbReader;
+
+            try
+            {
+                dbComm = this.dbConn.CreateCommand();
+                dbComm.CommandText = in_sql;
+                dbComm.CommandType = System.Data.CommandType.Text;
+                dbComm.Transaction = this.m_transaction;
+
+                dbReader = dbComm.ExecuteReader();
+
+                if (commitOnComplete)
+                {
+                    this.commitTransaction();
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                this.rollbackTransaction();
+                throw e;
+            }
+            finally
+            {
+                dbComm = null;
+            }
+
+            DataTable dt = new DataTable();
+            dt.Load(dbReader);
+            return dt;
+        }
+
+        public bool insertQuery(string in_sql)
+        {
+                System.Diagnostics.Debug.WriteLine("OracleDB: executeSQL(" + in_sql + ")");
+                bool commitOnComplete = false;
+                if (this.m_transaction == null)
+                {
+                    commitOnComplete = true;
+                    this.startTransaction();
+                }
+
+                int rowsAffected = 0;
+                OdbcCommand dbComm;
+
+                try
+                {
+                    dbComm = this.dbConn.CreateCommand();
+                    dbComm.CommandText = in_sql;
+                    dbComm.CommandType = System.Data.CommandType.Text;
+                    dbComm.Transaction = this.m_transaction;
+
+                    rowsAffected = dbComm.ExecuteNonQuery();
+
+                    if (commitOnComplete)
+                    {
+                        this.commitTransaction();
+                    }
+
+
+                }
+                catch (Exception e)
+                {
+                    this.rollbackTransaction();
+                    throw e;
+                }
+                finally
+                {
+                    dbComm = null;
+                }
+                return (rowsAffected > 0);
+        }
+
+        public bool startTransaction()
+        {
+            if (this.m_transaction == null)
+            {
+                OdbcTransaction t = this.transaction;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool commitTransaction()
+        {
+            if (this.m_transaction == null)
+            {
+                return false;
+            }
+            this.m_transaction.Commit();
+            this.m_transaction = null;
+            return true;
+        }
+
+        public bool rollbackTransaction()
+        {
+            if (this.m_transaction == null)
+            {
+                return false;
+            }
+            this.m_transaction.Rollback();
+            this.m_transaction = null;
+            return true;
+        }
 
         #endregion
 
