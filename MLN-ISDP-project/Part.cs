@@ -49,7 +49,7 @@ namespace MLN_ISDP_project
 
         #region Constructors
 
-        public Part() : this("INVALID PART")
+        public Part() : this("NO PART")
         {
             
         }
