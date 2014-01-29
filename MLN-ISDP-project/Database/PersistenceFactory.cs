@@ -19,6 +19,7 @@ namespace MLN_ISDP_project.Database
             var constructor = in_type.GetConstructor(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance, null, new Type[]{ }, new System.Reflection.ParameterModifier[]{});
             obj = (Persistence)constructor.Invoke(null);
 
+            obj.id = id;
 
             return obj;
         }
