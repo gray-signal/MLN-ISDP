@@ -41,15 +41,25 @@ namespace MLN_ISDP_project
 
         private void btnAddParts_Click(object sender, EventArgs e)
         {
-            string promptValue = PartSearchModal.ShowDialog("Please enter Part Number to add.", "Part Number");
+            Part addPart;
+            String dialogText = "Please enter Part Number to add.";
+            string promptValue;
+            do
+            {
+                promptValue = PartSearchModal.ShowDialog(dialogText, "Part Number");
 
-            Part addPart = new Database.PersistenceFactory().Create<Part>(promptValue);
+                //Part addPart = new Database.PersistenceFactory().Create<Part>(promptValue);
+                addPart = new Part(promptValue);
 
-            addPart.load(dbConn);
+                dialogText = "Part number not found. Please enter Part Number.";
 
-            selectedParts.Add(addPart);
+            } while (!addPart.load(dbConn) && promptValue != "");
 
-            sourceParts.ResetBindings(true);
+            if (promptValue != "")
+            {
+                selectedParts.Add(addPart);
+                sourceParts.ResetBindings(true);
+            }
         }
     }
 }
