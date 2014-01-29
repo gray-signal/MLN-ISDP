@@ -11,15 +11,16 @@ namespace MLN_ISDP_project
 {
     public partial class Form1 : Form
     {
-        private List<Part> selectedParts;
+        private List<Part> selectedPartList;
         private BindingSource sourceParts;
+        private Part selectedPart;
 
         public Form1()
         {
             InitializeComponent();
-            selectedParts = new List<Part>();
+            selectedPartList = new List<Part>();
             sourceParts = new BindingSource();
-            sourceParts.DataSource = selectedParts;
+            sourceParts.DataSource = selectedPartList;
 
             //lstPartsQuery.AutoGenerateColumns = false;
 
@@ -57,9 +58,36 @@ namespace MLN_ISDP_project
 
             if (promptValue != "")
             {
-                selectedParts.Add(addPart);
+                selectedPartList.Add(addPart);
                 sourceParts.ResetBindings(true);
             }
+
+            if (selectedPart == null)
+            {
+                selectedPart = addPart;
+            }
+
+            loadPartDetail(selectedPart);
         }
+
+       private void lstPartsQuery_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            selectedPart = selectedPartList[e.RowIndex];
+
+            loadPartDetail(selectedPart);
+        }
+
+       private void loadPartDetail(Part detailedPart)
+       {
+           if (detailedPart != null)
+           {
+               txtPartNum.Text = detailedPart.PartID;
+               txtDescription.Text = detailedPart.PartDescription;
+               txtSection.Text = detailedPart.Section.ToString();
+               txtQOH.Text = detailedPart.QuantityOnHand.ToString();
+               txtQOO.Text = detailedPart.QuantityOnOrder.ToString();
+           }
+       }
+
     }
 }

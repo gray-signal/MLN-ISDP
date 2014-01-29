@@ -412,6 +412,7 @@
             this.lstPartsQuery.Name = "lstPartsQuery";
             this.lstPartsQuery.Size = new System.Drawing.Size(649, 139);
             this.lstPartsQuery.TabIndex = 1;
+            this.lstPartsQuery.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstPartsQuery_CellClick);
             // 
             // lblQuery
             // 
