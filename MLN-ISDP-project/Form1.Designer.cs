@@ -197,6 +197,7 @@
             this.btnSetInvoice.TabIndex = 3;
             this.btnSetInvoice.Text = "Set All to Invoice";
             this.btnSetInvoice.UseVisualStyleBackColor = true;
+            this.btnSetInvoice.Click += new System.EventHandler(this.btnSetInvoice_Click);
             // 
             // btnSetOrder
             // 
@@ -206,6 +207,7 @@
             this.btnSetOrder.TabIndex = 2;
             this.btnSetOrder.Text = "Set All to Order";
             this.btnSetOrder.UseVisualStyleBackColor = true;
+            this.btnSetOrder.Click += new System.EventHandler(this.btnSetOrder_Click);
             // 
             // btnAddParts
             // 
@@ -225,6 +227,7 @@
             this.btnLoadParts.TabIndex = 0;
             this.btnLoadParts.Text = "Load Parts File";
             this.btnLoadParts.UseVisualStyleBackColor = true;
+            this.btnLoadParts.Click += new System.EventHandler(this.btnLoadParts_Click);
             // 
             // grpTotals
             // 

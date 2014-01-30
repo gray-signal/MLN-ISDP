@@ -96,5 +96,40 @@ namespace MLN_ISDP_project
            sourceParts.ResetBindings(false);
        }
 
+       private void btnLoadParts_Click(object sender, EventArgs e)
+       {
+           //send file to FAST parsing class, returns some sort of collection of Parts
+           //List<Part> partsFromFast;
+           //foreach (Part p in partsFromFast)
+           //{
+           //    selectedPartList.Add(p);
+           //    sourceParts.ResetBindings(false);
+           //}
+       }
+
+       private void btnSetOrder_Click(object sender, EventArgs e)
+       {
+           foreach (Part p in selectedPartList)
+           {
+               if (p.QuantityOnHand > 0)
+               {
+                   p.PurchaseIndicator = Part.Indicator.ORDER;
+               }
+               sourceParts.ResetBindings(false);
+           }
+       }
+
+       private void btnSetInvoice_Click(object sender, EventArgs e)
+       {
+           foreach (Part p in selectedPartList)
+           {
+               if (p.QuantityOnHand <= 0)
+               {
+                   p.PurchaseIndicator = Part.Indicator.INVOICE;
+               }
+               sourceParts.ResetBindings(false);
+           }
+       }
+
     }
 }
