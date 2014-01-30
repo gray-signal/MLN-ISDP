@@ -62,7 +62,7 @@ namespace MLN_ISDP_project
                 sourceParts.ResetBindings(true);
             }
 
-            if (selectedPart == null)
+            if (selectedPart == null || selectedPart.PartID.Equals("NO PART"))
             {
                 selectedPart = addPart;
             }
@@ -87,6 +87,13 @@ namespace MLN_ISDP_project
                txtQOH.Text = detailedPart.QuantityOnHand.ToString();
                txtQOO.Text = detailedPart.QuantityOnOrder.ToString();
            }
+       }
+
+       private void btnClear_Click(object sender, EventArgs e)
+       {
+           //TODO: add confirmation dialog to this
+           selectedPartList.Clear();
+           sourceParts.ResetBindings(false);
        }
 
     }
