@@ -44,6 +44,7 @@ namespace MLN_ISDP_project
         public double? QuantityOnOrder { get; set; }
         public double? MinQuantity { get; set; }
         public double? Reserved { get; set; }
+        public Indicator PurchaseIndicator { get; set; }
 
         #endregion
 
@@ -90,6 +91,7 @@ namespace MLN_ISDP_project
                 }
             }
 
+            PurchaseIndicator = Indicator.NONE;
 
             return loadComplete;
         }
