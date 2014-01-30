@@ -34,7 +34,27 @@ namespace MLN_ISDP_project
 
             sourceParts.ResetBindings(true);
 
+            columnSetUp();
+        }
+
+        private void columnSetUp()
+        {
+            //order
             lstPartsQuery.Columns["PartID"].DisplayIndex = 0;
+            lstPartsQuery.Columns["PartDescription"].DisplayIndex = 1;
+
+            //names
+            lstPartsQuery.Columns["PartID"].HeaderText = "Part ID";
+            lstPartsQuery.Columns["PartDescription"].HeaderText = "Part Description";
+            lstPartsQuery.Columns["ListPrice"].HeaderText = "List Price";
+            lstPartsQuery.Columns["CostPrice"].HeaderText = "Cost Price";
+            lstPartsQuery.Columns["QuantityOnHand"].HeaderText = "Quantity On Hand";
+            lstPartsQuery.Columns["QuantityOnOrder"].HeaderText = "Quantity On Order";
+            lstPartsQuery.Columns["PurchaseIndicator"].HeaderText = "Indicator";
+
+
+            //visibility
+            lstPartsQuery.Columns["MinQuantity"].Visible = false;
         }
 
         //default db conn
