@@ -33,12 +33,67 @@ namespace MLN_ISDP_project
             //Test.test();
 
             sourceParts.ResetBindings(true);
+
+            lstPartsQuery.Columns["PartID"].DisplayIndex = 0;
         }
 
         //default db conn
         static System.Data.OleDb.OleDbConnectionStringBuilder csBuilder = new System.Data.OleDb.OleDbConnectionStringBuilder(
                 "Provider=MSDAORA;Data Source=localhost;User ID=2023164;Password=#42Paradox;");
         static OracleDB dbConn = new OracleDB(csBuilder.ToString());
+
+
+
+        private void tallyItems()
+        {
+            decimal orderCostTotal = 0;
+            decimal orderListTotal = 0;
+
+            decimal invoiceCostTotal = 0;
+            decimal invoiceListTotal = 0;
+
+            foreach (Part p in selectedPartList)
+            {
+                if (p.PurchaseIndicator == Part.Indicator.ORDER)
+                {
+                    orderCostTotal = orderCostTotal + (decimal)p.CostPrice;
+                    orderListTotal = orderListTotal + (decimal)p.ListPrice;
+                }
+
+                if (p.PurchaseIndicator == Part.Indicator.INVOICE)
+                {
+                    invoiceCostTotal = invoiceCostTotal + (decimal)p.CostPrice;
+                    invoiceListTotal = invoiceListTotal + (decimal)p.ListPrice;
+                }
+
+            }
+
+            txtOrderCost.Text = "$" + orderCostTotal;
+            txtOrderList.Text = "$" + orderListTotal;
+            txtInvCost.Text = "$" + invoiceCostTotal;
+            txtInvList.Text = "$" + invoiceListTotal;
+        }
+
+        private void lstPartsQuery_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            selectedPart = selectedPartList[e.RowIndex];
+
+            loadPartDetail(selectedPart);
+        }
+
+        private void loadPartDetail(Part detailedPart)
+        {
+            if (detailedPart != null)
+            {
+                txtPartNum.Text = detailedPart.PartID;
+                txtDescription.Text = detailedPart.PartDescription;
+                txtSection.Text = detailedPart.Section.ToString();
+                txtQOH.Text = detailedPart.QuantityOnHand.ToString();
+                txtQOO.Text = detailedPart.QuantityOnOrder.ToString();
+            }
+        }
+
+        #region Button Methods
 
         private void btnAddParts_Click(object sender, EventArgs e)
         {
@@ -59,7 +114,7 @@ namespace MLN_ISDP_project
             if (promptValue != "")
             {
                 selectedPartList.Add(addPart);
-                sourceParts.ResetBindings(true);
+                sourceParts.ResetBindings(false);
             }
 
             if (selectedPart == null || selectedPart.PartID.Equals("NO PART"))
@@ -68,68 +123,56 @@ namespace MLN_ISDP_project
             }
 
             loadPartDetail(selectedPart);
+            tallyItems();
         }
 
-       private void lstPartsQuery_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void btnClear_Click(object sender, EventArgs e)
         {
-            selectedPart = selectedPartList[e.RowIndex];
-
-            loadPartDetail(selectedPart);
+            //TODO: add confirmation dialog to this
+            selectedPartList.Clear();
+            sourceParts.ResetBindings(false);
         }
 
-       private void loadPartDetail(Part detailedPart)
-       {
-           if (detailedPart != null)
-           {
-               txtPartNum.Text = detailedPart.PartID;
-               txtDescription.Text = detailedPart.PartDescription;
-               txtSection.Text = detailedPart.Section.ToString();
-               txtQOH.Text = detailedPart.QuantityOnHand.ToString();
-               txtQOO.Text = detailedPart.QuantityOnOrder.ToString();
-           }
-       }
+        private void btnLoadParts_Click(object sender, EventArgs e)
+        {
+            //send file to FAST parsing class, returns some sort of collection of Parts
+            //List<Part> partsFromFast;
+            //foreach (Part p in partsFromFast)
+            //{
+            //    selectedPartList.Add(p);
+            //    sourceParts.ResetBindings(false);
+            //}
 
-       private void btnClear_Click(object sender, EventArgs e)
-       {
-           //TODO: add confirmation dialog to this
-           selectedPartList.Clear();
-           sourceParts.ResetBindings(false);
-       }
+            tallyItems();
+        }
 
-       private void btnLoadParts_Click(object sender, EventArgs e)
-       {
-           //send file to FAST parsing class, returns some sort of collection of Parts
-           //List<Part> partsFromFast;
-           //foreach (Part p in partsFromFast)
-           //{
-           //    selectedPartList.Add(p);
-           //    sourceParts.ResetBindings(false);
-           //}
-       }
+        private void btnSetOrder_Click(object sender, EventArgs e)
+        {
+            foreach (Part p in selectedPartList)
+            {
+                if (p.QuantityOnHand > 0)
+                {
+                    p.PurchaseIndicator = Part.Indicator.ORDER;
+                }
+                sourceParts.ResetBindings(false);
+            }
 
-       private void btnSetOrder_Click(object sender, EventArgs e)
-       {
-           foreach (Part p in selectedPartList)
-           {
-               if (p.QuantityOnHand > 0)
-               {
-                   p.PurchaseIndicator = Part.Indicator.ORDER;
-               }
-               sourceParts.ResetBindings(false);
-           }
-       }
+            tallyItems();
+        }
 
-       private void btnSetInvoice_Click(object sender, EventArgs e)
-       {
-           foreach (Part p in selectedPartList)
-           {
-               if (p.QuantityOnHand <= 0)
-               {
-                   p.PurchaseIndicator = Part.Indicator.INVOICE;
-               }
-               sourceParts.ResetBindings(false);
-           }
-       }
+        private void btnSetInvoice_Click(object sender, EventArgs e)
+        {
+            foreach (Part p in selectedPartList)
+            {
+                if (p.QuantityOnHand <= 0)
+                {
+                    p.PurchaseIndicator = Part.Indicator.INVOICE;
+                }
+                sourceParts.ResetBindings(false);
+            }
+            tallyItems();
+        }
 
+        #endregion
     }
 }

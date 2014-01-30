@@ -411,6 +411,7 @@
             // 
             // lstPartsQuery
             // 
+            this.lstPartsQuery.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.lstPartsQuery.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lstPartsQuery.Location = new System.Drawing.Point(10, 24);
             this.lstPartsQuery.Name = "lstPartsQuery";
