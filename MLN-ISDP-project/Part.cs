@@ -10,7 +10,7 @@ namespace MLN_ISDP_project
     class Part /*: MLN_ISDP_project.Database.Persistence*/
     {
 
-        public enum Indicator { INVOICE, ORDER, NONE }
+        public enum Indicator { NONE, INVOICE, ORDER }
 
         private string m_id;
 
@@ -35,7 +35,7 @@ namespace MLN_ISDP_project
             }
         }
 
-
+        //db properties
         public string PartDescription { get; set; }
         public double? Section { get; set; }
         public decimal? ListPrice { get; set; }
@@ -44,7 +44,12 @@ namespace MLN_ISDP_project
         public double? QuantityOnOrder { get; set; }
         public double? MinQuantity { get; set; }
         public double? Reserved { get; set; }
+
+        //calculated or selected properties
         public Indicator PurchaseIndicator { get; set; }
+        public int Request { get; set; }
+        public decimal TotalCost { get; set; }
+        public decimal TotalList { get; set; }
 
         #endregion
 
@@ -80,8 +85,8 @@ namespace MLN_ISDP_project
                 {
                     PartDescription = (string)dt.Rows[0]["PartDescription"];
                     Section = (double?)dt.Rows[0].Field<double?>("Section") ?? 0;
-                    ListPrice = (decimal?)dt.Rows[0].Field<decimal?>("ListPrice");
-                    CostPrice = (decimal?)dt.Rows[0].Field<decimal?>("CostPrice");
+                    ListPrice = (decimal?)dt.Rows[0].Field<decimal?>("ListPrice") ?? 0;
+                    CostPrice = (decimal?)dt.Rows[0].Field<decimal?>("CostPrice") ?? 0;
                     QuantityOnHand = (double?)dt.Rows[0].Field<double?>("QuantityOnHand") ?? 0;
                     QuantityOnOrder = (double?)dt.Rows[0].Field<double?>("QuantityOnOrder") ?? 0;
                     MinQuantity = (double?)dt.Rows[0].Field<double?>("MinQuantity") ?? 0;
