@@ -20,6 +20,10 @@ namespace MLN_ISDP_project
             Button confirm = new Button() { Text = "OK", Left = 150, Width = 100, Top = 70 };
             Button cancel = new Button() { Text = "Cancel", Left = 350, Width = 100, Top = 70 };
 
+            inputBox.TabIndex = 0;
+            confirm.TabIndex = 1;
+            cancel.TabIndex = 2;
+
             confirm.Click += (sender, e) => {
                 if (inputBox.Text == "")
                     inputBox.Text = " "; // stupid hack to make cancel close out, but ok on empty field not close.
@@ -33,6 +37,7 @@ namespace MLN_ISDP_project
             partSearch.Controls.Add(cancel);
             partSearch.Controls.Add(textLabel);
             partSearch.Controls.Add(inputBox);
+
             partSearch.ShowDialog();
 
             return (string)inputBox.Text;
