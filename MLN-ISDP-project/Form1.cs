@@ -89,7 +89,14 @@ namespace MLN_ISDP_project
                 "Provider=MSDAORA;Data Source=localhost;User ID=2023164;Password=#42Paradox;");
         static OracleDB dbConn = new OracleDB(csBuilder.ToString());
 
-
+        private void calculateFields()
+        {
+            foreach (Part p in selectedPartList)
+            {
+                p.TotalCost = p.Request * (decimal)p.CostPrice;
+                p.TotalList = p.Request * (decimal)p.ListPrice;
+            }
+        }
 
         private void tallyItems()
         {
@@ -105,14 +112,14 @@ namespace MLN_ISDP_project
             {
                 if (p.PurchaseIndicator == Part.Indicator.ORDER)
                 {
-                    orderCostTotal = orderCostTotal + (decimal)p.CostPrice;
-                    orderListTotal = orderListTotal + (decimal)p.ListPrice;
+                    orderCostTotal = orderCostTotal + (decimal)p.TotalCost;
+                    orderListTotal = orderListTotal + (decimal)p.TotalList;
                 }
 
                 if (p.PurchaseIndicator == Part.Indicator.INVOICE)
                 {
-                    invoiceCostTotal = invoiceCostTotal + (decimal)p.CostPrice;
-                    invoiceListTotal = invoiceListTotal + (decimal)p.ListPrice;
+                    invoiceCostTotal = invoiceCostTotal + (decimal)p.TotalCost;
+                    invoiceListTotal = invoiceListTotal + (decimal)p.TotalList;
                 }
 
 
@@ -194,6 +201,8 @@ namespace MLN_ISDP_project
             //}
 
             tallyItems();
+            calculateFields();
+            sourceParts.ResetBindings(false);
         }
 
         private void btnSetOrder_Click(object sender, EventArgs e)
