@@ -22,7 +22,9 @@ namespace MLN_ISDP_project
             sourceParts = new BindingSource();
             sourceParts.DataSource = selectedPartList;
 
-            //lstPartsQuery.AutoGenerateColumns = false;
+
+
+            //lstPartsQuery.AutoGenerateColumns = true;
 
 
             lstPartsQuery.DataSource = sourceParts;
@@ -32,29 +34,54 @@ namespace MLN_ISDP_project
         {
             //Test.test();
 
-            sourceParts.ResetBindings(true);
+            //sourceParts.ResetBindings(true);
 
             columnSetUp();
         }
 
         private void columnSetUp()
         {
+            //lstPartsQuery.Columns["PartID"].CellType.
+
             //order
             lstPartsQuery.Columns["PartID"].DisplayIndex = 0;
             lstPartsQuery.Columns["PartDescription"].DisplayIndex = 1;
+            lstPartsQuery.Columns["QuantityOnHand"].DisplayIndex = 2;
+            lstPartsQuery.Columns["Request"].DisplayIndex = 3;
+            lstPartsQuery.Columns["CostPrice"].DisplayIndex = 4;
+            lstPartsQuery.Columns["ListPrice"].DisplayIndex = 5;
+            lstPartsQuery.Columns["TotalCost"].DisplayIndex = 6;
+            lstPartsQuery.Columns["TotalList"].DisplayIndex = 7;
+            lstPartsQuery.Columns["PurchaseIndicator"].DisplayIndex = 8;
 
             //names
             lstPartsQuery.Columns["PartID"].HeaderText = "Part ID";
-            lstPartsQuery.Columns["PartDescription"].HeaderText = "Part Description";
-            lstPartsQuery.Columns["ListPrice"].HeaderText = "List Price";
-            lstPartsQuery.Columns["CostPrice"].HeaderText = "Cost Price";
-            lstPartsQuery.Columns["QuantityOnHand"].HeaderText = "Quantity On Hand";
+            lstPartsQuery.Columns["PartDescription"].HeaderText = "Description";
+            lstPartsQuery.Columns["ListPrice"].HeaderText = "List ($)";
+            lstPartsQuery.Columns["CostPrice"].HeaderText = "Cost ($)";
+            lstPartsQuery.Columns["TotalCost"].HeaderText = "Total Cost ($)";
+            lstPartsQuery.Columns["TotalList"].HeaderText = "Total List ($)";
+            lstPartsQuery.Columns["QuantityOnHand"].HeaderText = "Q.O.H.";
             lstPartsQuery.Columns["QuantityOnOrder"].HeaderText = "Quantity On Order";
             lstPartsQuery.Columns["PurchaseIndicator"].HeaderText = "Indicator";
 
 
             //visibility
             lstPartsQuery.Columns["MinQuantity"].Visible = false;
+            lstPartsQuery.Columns["Section"].Visible = false;
+            lstPartsQuery.Columns["QuantityOnOrder"].Visible = false;
+            lstPartsQuery.Columns["Reserved"].Visible = false;
+
+            //fuckery
+            lstPartsQuery.Columns.Remove("PurchaseIndicator");
+
+            var PurchaseIndicator = new DataGridViewComboBoxColumn();
+            PurchaseIndicator.DataPropertyName = "PurchaseIndicator";
+            lstPartsQuery.Columns.Add(PurchaseIndicator);
+
+            PurchaseIndicator.HeaderText = "Indicator";
+            PurchaseIndicator.DataSource = new List<Part.Indicator> { Part.Indicator.NONE, Part.Indicator.INVOICE, Part.Indicator.ORDER };
+
         }
 
         //default db conn
@@ -72,6 +99,8 @@ namespace MLN_ISDP_project
             decimal invoiceCostTotal = 0;
             decimal invoiceListTotal = 0;
 
+            List<Part> markedForDeletion = new List<Part>();
+
             foreach (Part p in selectedPartList)
             {
                 if (p.PurchaseIndicator == Part.Indicator.ORDER)
@@ -85,6 +114,7 @@ namespace MLN_ISDP_project
                     invoiceCostTotal = invoiceCostTotal + (decimal)p.CostPrice;
                     invoiceListTotal = invoiceListTotal + (decimal)p.ListPrice;
                 }
+
 
             }
 
