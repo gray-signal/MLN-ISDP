@@ -292,7 +292,7 @@ namespace MLN_ISDP_project
         {
             foreach (Part p in selectedPartList)
             {
-                if (p.QuantityOnHand > 0)
+                if (p.QuantityOnHand <= 0)
                 {
                     p.PurchaseIndicator = Part.Indicator.ORDER;
                 }
@@ -306,7 +306,7 @@ namespace MLN_ISDP_project
         {
             foreach (Part p in selectedPartList)
             {
-                if (p.QuantityOnHand <= 0)
+                if (p.QuantityOnHand > 0)
                 {
                     p.PurchaseIndicator = Part.Indicator.INVOICE;
                 }
