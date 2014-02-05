@@ -53,7 +53,7 @@
             this.lblOrderList = new System.Windows.Forms.Label();
             this.txtOrderCost = new System.Windows.Forms.TextBox();
             this.lblOrderCost = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpInfo = new System.Windows.Forms.GroupBox();
             this.lblPartNum = new System.Windows.Forms.Label();
             this.txtQOO = new System.Windows.Forms.TextBox();
             this.txtPartNum = new System.Windows.Forms.TextBox();
@@ -67,13 +67,63 @@
             this.lstPartsQuery = new System.Windows.Forms.DataGridView();
             this.lblQuery = new System.Windows.Forms.Label();
             this.tabInvoice = new System.Windows.Forms.TabPage();
+            this.tabInvoiceActions = new System.Windows.Forms.TabControl();
+            this.tabInvoiceCreate = new System.Windows.Forms.TabPage();
+            this.lstPartsInvoice = new System.Windows.Forms.DataGridView();
+            this.lblInvoicePartsList = new System.Windows.Forms.Label();
+            this.tabInvoiceHistory = new System.Windows.Forms.TabPage();
+            this.grpOrderInfo = new System.Windows.Forms.GroupBox();
+            this.grpCustInfo = new System.Windows.Forms.GroupBox();
+            this.lblDepositPct = new System.Windows.Forms.Label();
+            this.numDepositPct = new System.Windows.Forms.NumericUpDown();
+            this.lblDepositPayAmt = new System.Windows.Forms.Label();
+            this.txtDepositAmt = new System.Windows.Forms.TextBox();
+            this.lblDepositRem = new System.Windows.Forms.Label();
+            this.lblPartsTotal = new System.Windows.Forms.Label();
+            this.lblSalesTax = new System.Windows.Forms.Label();
+            this.lblGrandTotal = new System.Windows.Forms.Label();
+            this.txtDepositRem = new System.Windows.Forms.TextBox();
+            this.txtPartsTotal = new System.Windows.Forms.TextBox();
+            this.txtSalesTax = new System.Windows.Forms.TextBox();
+            this.txtGrandTotal = new System.Windows.Forms.TextBox();
+            this.lblAccountNo = new System.Windows.Forms.Label();
+            this.lblFirstName = new System.Windows.Forms.Label();
+            this.lblLastName = new System.Windows.Forms.Label();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.lblDiscountType = new System.Windows.Forms.Label();
+            this.txtAccountNo = new System.Windows.Forms.TextBox();
+            this.btnAccountSearch = new System.Windows.Forms.Button();
+            this.txtFirstName = new System.Windows.Forms.TextBox();
+            this.txtLastName = new System.Windows.Forms.TextBox();
+            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.cboDiscountType = new System.Windows.Forms.ComboBox();
+            this.lblPhone = new System.Windows.Forms.Label();
+            this.lblEmail = new System.Windows.Forms.Label();
+            this.lblCity = new System.Windows.Forms.Label();
+            this.lblPostal = new System.Windows.Forms.Label();
+            this.lblProvince = new System.Windows.Forms.Label();
+            this.txtPhone = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.txtCity = new System.Windows.Forms.TextBox();
+            this.txtPostal = new System.Windows.Forms.TextBox();
+            this.cboProvince = new System.Windows.Forms.ComboBox();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnClearInvoice = new System.Windows.Forms.Button();
+            this.btnComplete = new System.Windows.Forms.Button();
             this.mnuMenu.SuspendLayout();
             this.tabPartsActions.SuspendLayout();
             this.tabLookUp.SuspendLayout();
             this.grpActions.SuspendLayout();
             this.grpTotals.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grpInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsQuery)).BeginInit();
+            this.tabInvoice.SuspendLayout();
+            this.tabInvoiceActions.SuspendLayout();
+            this.tabInvoiceCreate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsInvoice)).BeginInit();
+            this.grpOrderInfo.SuspendLayout();
+            this.grpCustInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDepositPct)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMenu
@@ -145,7 +195,7 @@
             // 
             this.tabLookUp.Controls.Add(this.grpActions);
             this.tabLookUp.Controls.Add(this.grpTotals);
-            this.tabLookUp.Controls.Add(this.groupBox1);
+            this.tabLookUp.Controls.Add(this.grpInfo);
             this.tabLookUp.Controls.Add(this.lstPartsQuery);
             this.tabLookUp.Controls.Add(this.lblQuery);
             this.tabLookUp.Location = new System.Drawing.Point(4, 23);
@@ -178,6 +228,7 @@
             this.btnAddIndicated.TabIndex = 5;
             this.btnAddIndicated.Text = "Add Parts Indicated";
             this.btnAddIndicated.UseVisualStyleBackColor = true;
+            this.btnAddIndicated.Click += new System.EventHandler(this.btnAddIndicated_Click);
             // 
             // btnClear
             // 
@@ -310,24 +361,24 @@
             this.lblOrderCost.TabIndex = 0;
             this.lblOrderCost.Text = "Order Cost:";
             // 
-            // groupBox1
+            // grpInfo
             // 
-            this.groupBox1.Controls.Add(this.lblPartNum);
-            this.groupBox1.Controls.Add(this.txtQOO);
-            this.groupBox1.Controls.Add(this.txtPartNum);
-            this.groupBox1.Controls.Add(this.lblQOO);
-            this.groupBox1.Controls.Add(this.lblSection);
-            this.groupBox1.Controls.Add(this.txtDescription);
-            this.groupBox1.Controls.Add(this.txtSection);
-            this.groupBox1.Controls.Add(this.lblDescription);
-            this.groupBox1.Controls.Add(this.lblQOH);
-            this.groupBox1.Controls.Add(this.txtQOH);
-            this.groupBox1.Location = new System.Drawing.Point(10, 169);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(379, 115);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Selected Item Information";
+            this.grpInfo.Controls.Add(this.lblPartNum);
+            this.grpInfo.Controls.Add(this.txtQOO);
+            this.grpInfo.Controls.Add(this.txtPartNum);
+            this.grpInfo.Controls.Add(this.lblQOO);
+            this.grpInfo.Controls.Add(this.lblSection);
+            this.grpInfo.Controls.Add(this.txtDescription);
+            this.grpInfo.Controls.Add(this.txtSection);
+            this.grpInfo.Controls.Add(this.lblDescription);
+            this.grpInfo.Controls.Add(this.lblQOH);
+            this.grpInfo.Controls.Add(this.txtQOH);
+            this.grpInfo.Location = new System.Drawing.Point(10, 169);
+            this.grpInfo.Name = "grpInfo";
+            this.grpInfo.Size = new System.Drawing.Size(379, 115);
+            this.grpInfo.TabIndex = 13;
+            this.grpInfo.TabStop = false;
+            this.grpInfo.Text = "Selected Item Information";
             // 
             // lblPartNum
             // 
@@ -419,6 +470,8 @@
             this.lstPartsQuery.Size = new System.Drawing.Size(649, 139);
             this.lstPartsQuery.TabIndex = 1;
             this.lstPartsQuery.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstPartsQuery_CellClick);
+            this.lstPartsQuery.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstPartsQuery_CellEndEdit);
+            this.lstPartsQuery.CurrentCellDirtyStateChanged += new System.EventHandler(this.lstPartsQuery_CurrentCellDirtyStateChanged);
             // 
             // lblQuery
             // 
@@ -431,13 +484,413 @@
             // 
             // tabInvoice
             // 
+            this.tabInvoice.Controls.Add(this.tabInvoiceActions);
             this.tabInvoice.Location = new System.Drawing.Point(4, 23);
             this.tabInvoice.Name = "tabInvoice";
             this.tabInvoice.Padding = new System.Windows.Forms.Padding(3);
             this.tabInvoice.Size = new System.Drawing.Size(665, 373);
             this.tabInvoice.TabIndex = 1;
-            this.tabInvoice.Text = "Invoice";
+            this.tabInvoice.Text = "Invoicing";
             this.tabInvoice.UseVisualStyleBackColor = true;
+            // 
+            // tabInvoiceActions
+            // 
+            this.tabInvoiceActions.Controls.Add(this.tabInvoiceCreate);
+            this.tabInvoiceActions.Controls.Add(this.tabInvoiceHistory);
+            this.tabInvoiceActions.Location = new System.Drawing.Point(7, 7);
+            this.tabInvoiceActions.Name = "tabInvoiceActions";
+            this.tabInvoiceActions.SelectedIndex = 0;
+            this.tabInvoiceActions.Size = new System.Drawing.Size(652, 360);
+            this.tabInvoiceActions.TabIndex = 0;
+            // 
+            // tabInvoiceCreate
+            // 
+            this.tabInvoiceCreate.Controls.Add(this.btnComplete);
+            this.tabInvoiceCreate.Controls.Add(this.btnClearInvoice);
+            this.tabInvoiceCreate.Controls.Add(this.btnRemove);
+            this.tabInvoiceCreate.Controls.Add(this.grpCustInfo);
+            this.tabInvoiceCreate.Controls.Add(this.grpOrderInfo);
+            this.tabInvoiceCreate.Controls.Add(this.lstPartsInvoice);
+            this.tabInvoiceCreate.Controls.Add(this.lblInvoicePartsList);
+            this.tabInvoiceCreate.Location = new System.Drawing.Point(4, 23);
+            this.tabInvoiceCreate.Name = "tabInvoiceCreate";
+            this.tabInvoiceCreate.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInvoiceCreate.Size = new System.Drawing.Size(644, 333);
+            this.tabInvoiceCreate.TabIndex = 0;
+            this.tabInvoiceCreate.Text = "Create";
+            this.tabInvoiceCreate.UseVisualStyleBackColor = true;
+            // 
+            // lstPartsInvoice
+            // 
+            this.lstPartsInvoice.AllowUserToAddRows = false;
+            this.lstPartsInvoice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstPartsInvoice.Location = new System.Drawing.Point(7, 24);
+            this.lstPartsInvoice.Name = "lstPartsInvoice";
+            this.lstPartsInvoice.Size = new System.Drawing.Size(631, 84);
+            this.lstPartsInvoice.TabIndex = 1;
+            // 
+            // lblInvoicePartsList
+            // 
+            this.lblInvoicePartsList.AutoSize = true;
+            this.lblInvoicePartsList.Location = new System.Drawing.Point(7, 7);
+            this.lblInvoicePartsList.Name = "lblInvoicePartsList";
+            this.lblInvoicePartsList.Size = new System.Drawing.Size(87, 13);
+            this.lblInvoicePartsList.TabIndex = 0;
+            this.lblInvoicePartsList.Text = "Parts on Invoice:";
+            // 
+            // tabInvoiceHistory
+            // 
+            this.tabInvoiceHistory.Location = new System.Drawing.Point(4, 23);
+            this.tabInvoiceHistory.Name = "tabInvoiceHistory";
+            this.tabInvoiceHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInvoiceHistory.Size = new System.Drawing.Size(644, 333);
+            this.tabInvoiceHistory.TabIndex = 1;
+            this.tabInvoiceHistory.Text = "History";
+            this.tabInvoiceHistory.UseVisualStyleBackColor = true;
+            // 
+            // grpOrderInfo
+            // 
+            this.grpOrderInfo.Controls.Add(this.txtGrandTotal);
+            this.grpOrderInfo.Controls.Add(this.txtSalesTax);
+            this.grpOrderInfo.Controls.Add(this.txtPartsTotal);
+            this.grpOrderInfo.Controls.Add(this.txtDepositRem);
+            this.grpOrderInfo.Controls.Add(this.lblGrandTotal);
+            this.grpOrderInfo.Controls.Add(this.lblSalesTax);
+            this.grpOrderInfo.Controls.Add(this.lblPartsTotal);
+            this.grpOrderInfo.Controls.Add(this.lblDepositRem);
+            this.grpOrderInfo.Controls.Add(this.txtDepositAmt);
+            this.grpOrderInfo.Controls.Add(this.lblDepositPayAmt);
+            this.grpOrderInfo.Controls.Add(this.numDepositPct);
+            this.grpOrderInfo.Controls.Add(this.lblDepositPct);
+            this.grpOrderInfo.Location = new System.Drawing.Point(7, 114);
+            this.grpOrderInfo.Name = "grpOrderInfo";
+            this.grpOrderInfo.Size = new System.Drawing.Size(631, 63);
+            this.grpOrderInfo.TabIndex = 2;
+            this.grpOrderInfo.TabStop = false;
+            this.grpOrderInfo.Text = "Order Information:";
+            // 
+            // grpCustInfo
+            // 
+            this.grpCustInfo.Controls.Add(this.cboProvince);
+            this.grpCustInfo.Controls.Add(this.txtPostal);
+            this.grpCustInfo.Controls.Add(this.txtCity);
+            this.grpCustInfo.Controls.Add(this.txtEmail);
+            this.grpCustInfo.Controls.Add(this.txtPhone);
+            this.grpCustInfo.Controls.Add(this.lblProvince);
+            this.grpCustInfo.Controls.Add(this.lblPostal);
+            this.grpCustInfo.Controls.Add(this.lblCity);
+            this.grpCustInfo.Controls.Add(this.lblEmail);
+            this.grpCustInfo.Controls.Add(this.lblPhone);
+            this.grpCustInfo.Controls.Add(this.cboDiscountType);
+            this.grpCustInfo.Controls.Add(this.txtAddress);
+            this.grpCustInfo.Controls.Add(this.txtLastName);
+            this.grpCustInfo.Controls.Add(this.txtFirstName);
+            this.grpCustInfo.Controls.Add(this.btnAccountSearch);
+            this.grpCustInfo.Controls.Add(this.txtAccountNo);
+            this.grpCustInfo.Controls.Add(this.lblDiscountType);
+            this.grpCustInfo.Controls.Add(this.lblAddress);
+            this.grpCustInfo.Controls.Add(this.lblLastName);
+            this.grpCustInfo.Controls.Add(this.lblFirstName);
+            this.grpCustInfo.Controls.Add(this.lblAccountNo);
+            this.grpCustInfo.Location = new System.Drawing.Point(7, 181);
+            this.grpCustInfo.Name = "grpCustInfo";
+            this.grpCustInfo.Size = new System.Drawing.Size(631, 107);
+            this.grpCustInfo.TabIndex = 3;
+            this.grpCustInfo.TabStop = false;
+            this.grpCustInfo.Text = "Customer Information:";
+            // 
+            // lblDepositPct
+            // 
+            this.lblDepositPct.AutoSize = true;
+            this.lblDepositPct.Location = new System.Drawing.Point(7, 16);
+            this.lblDepositPct.Name = "lblDepositPct";
+            this.lblDepositPct.Size = new System.Drawing.Size(57, 13);
+            this.lblDepositPct.TabIndex = 0;
+            this.lblDepositPct.Text = "Deposit %:";
+            // 
+            // numDepositPct
+            // 
+            this.numDepositPct.Location = new System.Drawing.Point(10, 33);
+            this.numDepositPct.Name = "numDepositPct";
+            this.numDepositPct.Size = new System.Drawing.Size(54, 20);
+            this.numDepositPct.TabIndex = 1;
+            // 
+            // lblDepositPayAmt
+            // 
+            this.lblDepositPayAmt.AutoSize = true;
+            this.lblDepositPayAmt.Location = new System.Drawing.Point(91, 16);
+            this.lblDepositPayAmt.Name = "lblDepositPayAmt";
+            this.lblDepositPayAmt.Size = new System.Drawing.Size(106, 13);
+            this.lblDepositPayAmt.TabIndex = 2;
+            this.lblDepositPayAmt.Text = "Deposit Pay Amount:";
+            // 
+            // txtDepositAmt
+            // 
+            this.txtDepositAmt.Location = new System.Drawing.Point(94, 32);
+            this.txtDepositAmt.Name = "txtDepositAmt";
+            this.txtDepositAmt.Size = new System.Drawing.Size(103, 20);
+            this.txtDepositAmt.TabIndex = 3;
+            // 
+            // lblDepositRem
+            // 
+            this.lblDepositRem.AutoSize = true;
+            this.lblDepositRem.Location = new System.Drawing.Point(224, 16);
+            this.lblDepositRem.Name = "lblDepositRem";
+            this.lblDepositRem.Size = new System.Drawing.Size(99, 13);
+            this.lblDepositRem.TabIndex = 4;
+            this.lblDepositRem.Text = "Deposit Remaining:";
+            // 
+            // lblPartsTotal
+            // 
+            this.lblPartsTotal.AutoSize = true;
+            this.lblPartsTotal.Location = new System.Drawing.Point(350, 16);
+            this.lblPartsTotal.Name = "lblPartsTotal";
+            this.lblPartsTotal.Size = new System.Drawing.Size(61, 13);
+            this.lblPartsTotal.TabIndex = 5;
+            this.lblPartsTotal.Text = "Parts Total:";
+            // 
+            // lblSalesTax
+            // 
+            this.lblSalesTax.AutoSize = true;
+            this.lblSalesTax.Location = new System.Drawing.Point(438, 16);
+            this.lblSalesTax.Name = "lblSalesTax";
+            this.lblSalesTax.Size = new System.Drawing.Size(86, 13);
+            this.lblSalesTax.TabIndex = 6;
+            this.lblSalesTax.Text = "Sales Tax (13%):";
+            // 
+            // lblGrandTotal
+            // 
+            this.lblGrandTotal.AutoSize = true;
+            this.lblGrandTotal.Location = new System.Drawing.Point(551, 16);
+            this.lblGrandTotal.Name = "lblGrandTotal";
+            this.lblGrandTotal.Size = new System.Drawing.Size(61, 13);
+            this.lblGrandTotal.TabIndex = 7;
+            this.lblGrandTotal.Text = "Total Price:";
+            // 
+            // txtDepositRem
+            // 
+            this.txtDepositRem.Location = new System.Drawing.Point(227, 32);
+            this.txtDepositRem.Name = "txtDepositRem";
+            this.txtDepositRem.Size = new System.Drawing.Size(96, 20);
+            this.txtDepositRem.TabIndex = 8;
+            // 
+            // txtPartsTotal
+            // 
+            this.txtPartsTotal.Location = new System.Drawing.Point(353, 32);
+            this.txtPartsTotal.Name = "txtPartsTotal";
+            this.txtPartsTotal.Size = new System.Drawing.Size(71, 20);
+            this.txtPartsTotal.TabIndex = 9;
+            // 
+            // txtSalesTax
+            // 
+            this.txtSalesTax.Location = new System.Drawing.Point(441, 32);
+            this.txtSalesTax.Name = "txtSalesTax";
+            this.txtSalesTax.Size = new System.Drawing.Size(90, 20);
+            this.txtSalesTax.TabIndex = 10;
+            // 
+            // txtGrandTotal
+            // 
+            this.txtGrandTotal.Location = new System.Drawing.Point(554, 32);
+            this.txtGrandTotal.Name = "txtGrandTotal";
+            this.txtGrandTotal.Size = new System.Drawing.Size(71, 20);
+            this.txtGrandTotal.TabIndex = 11;
+            // 
+            // lblAccountNo
+            // 
+            this.lblAccountNo.AutoSize = true;
+            this.lblAccountNo.Location = new System.Drawing.Point(7, 20);
+            this.lblAccountNo.Name = "lblAccountNo";
+            this.lblAccountNo.Size = new System.Drawing.Size(90, 13);
+            this.lblAccountNo.TabIndex = 0;
+            this.lblAccountNo.Text = "Account Number:";
+            // 
+            // lblFirstName
+            // 
+            this.lblFirstName.AutoSize = true;
+            this.lblFirstName.Location = new System.Drawing.Point(137, 20);
+            this.lblFirstName.Name = "lblFirstName";
+            this.lblFirstName.Size = new System.Drawing.Size(60, 13);
+            this.lblFirstName.TabIndex = 1;
+            this.lblFirstName.Text = "First Name:";
+            // 
+            // lblLastName
+            // 
+            this.lblLastName.AutoSize = true;
+            this.lblLastName.Location = new System.Drawing.Point(241, 20);
+            this.lblLastName.Name = "lblLastName";
+            this.lblLastName.Size = new System.Drawing.Size(61, 13);
+            this.lblLastName.TabIndex = 2;
+            this.lblLastName.Text = "Last Name:";
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.AutoSize = true;
+            this.lblAddress.Location = new System.Drawing.Point(345, 20);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(48, 13);
+            this.lblAddress.TabIndex = 3;
+            this.lblAddress.Text = "Address:";
+            // 
+            // lblDiscountType
+            // 
+            this.lblDiscountType.AutoSize = true;
+            this.lblDiscountType.Location = new System.Drawing.Point(532, 20);
+            this.lblDiscountType.Name = "lblDiscountType";
+            this.lblDiscountType.Size = new System.Drawing.Size(79, 13);
+            this.lblDiscountType.TabIndex = 4;
+            this.lblDiscountType.Text = "Discount Type:";
+            // 
+            // txtAccountNo
+            // 
+            this.txtAccountNo.Location = new System.Drawing.Point(10, 37);
+            this.txtAccountNo.Name = "txtAccountNo";
+            this.txtAccountNo.Size = new System.Drawing.Size(69, 20);
+            this.txtAccountNo.TabIndex = 5;
+            // 
+            // btnAccountSearch
+            // 
+            this.btnAccountSearch.Location = new System.Drawing.Point(81, 35);
+            this.btnAccountSearch.Name = "btnAccountSearch";
+            this.btnAccountSearch.Size = new System.Drawing.Size(21, 23);
+            this.btnAccountSearch.TabIndex = 6;
+            this.btnAccountSearch.UseVisualStyleBackColor = true;
+            // 
+            // txtFirstName
+            // 
+            this.txtFirstName.Location = new System.Drawing.Point(140, 37);
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.Size = new System.Drawing.Size(73, 20);
+            this.txtFirstName.TabIndex = 7;
+            // 
+            // txtLastName
+            // 
+            this.txtLastName.Location = new System.Drawing.Point(244, 37);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(73, 20);
+            this.txtLastName.TabIndex = 8;
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Location = new System.Drawing.Point(348, 37);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(164, 20);
+            this.txtAddress.TabIndex = 9;
+            // 
+            // cboDiscountType
+            // 
+            this.cboDiscountType.FormattingEnabled = true;
+            this.cboDiscountType.Location = new System.Drawing.Point(535, 36);
+            this.cboDiscountType.Name = "cboDiscountType";
+            this.cboDiscountType.Size = new System.Drawing.Size(89, 21);
+            this.cboDiscountType.TabIndex = 10;
+            // 
+            // lblPhone
+            // 
+            this.lblPhone.AutoSize = true;
+            this.lblPhone.Location = new System.Drawing.Point(10, 64);
+            this.lblPhone.Name = "lblPhone";
+            this.lblPhone.Size = new System.Drawing.Size(88, 13);
+            this.lblPhone.TabIndex = 11;
+            this.lblPhone.Text = "Primary Phone #:";
+            // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Location = new System.Drawing.Point(140, 64);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(76, 13);
+            this.lblEmail.TabIndex = 12;
+            this.lblEmail.Text = "Email Address:";
+            // 
+            // lblCity
+            // 
+            this.lblCity.AutoSize = true;
+            this.lblCity.Location = new System.Drawing.Point(345, 64);
+            this.lblCity.Name = "lblCity";
+            this.lblCity.Size = new System.Drawing.Size(27, 13);
+            this.lblCity.TabIndex = 13;
+            this.lblCity.Text = "City:";
+            // 
+            // lblPostal
+            // 
+            this.lblPostal.AutoSize = true;
+            this.lblPostal.Location = new System.Drawing.Point(423, 64);
+            this.lblPostal.Name = "lblPostal";
+            this.lblPostal.Size = new System.Drawing.Size(67, 13);
+            this.lblPostal.TabIndex = 14;
+            this.lblPostal.Text = "Postal Code:";
+            // 
+            // lblProvince
+            // 
+            this.lblProvince.AutoSize = true;
+            this.lblProvince.Location = new System.Drawing.Point(532, 64);
+            this.lblProvince.Name = "lblProvince";
+            this.lblProvince.Size = new System.Drawing.Size(52, 13);
+            this.lblProvince.TabIndex = 15;
+            this.lblProvince.Text = "Province:";
+            // 
+            // txtPhone
+            // 
+            this.txtPhone.Location = new System.Drawing.Point(10, 81);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(100, 20);
+            this.txtPhone.TabIndex = 16;
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(143, 81);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(174, 20);
+            this.txtEmail.TabIndex = 17;
+            // 
+            // txtCity
+            // 
+            this.txtCity.Location = new System.Drawing.Point(348, 81);
+            this.txtCity.Name = "txtCity";
+            this.txtCity.Size = new System.Drawing.Size(63, 20);
+            this.txtCity.TabIndex = 18;
+            // 
+            // txtPostal
+            // 
+            this.txtPostal.Location = new System.Drawing.Point(426, 81);
+            this.txtPostal.Name = "txtPostal";
+            this.txtPostal.Size = new System.Drawing.Size(86, 20);
+            this.txtPostal.TabIndex = 19;
+            // 
+            // cboProvince
+            // 
+            this.cboProvince.FormattingEnabled = true;
+            this.cboProvince.Location = new System.Drawing.Point(535, 81);
+            this.cboProvince.Name = "cboProvince";
+            this.cboProvince.Size = new System.Drawing.Size(89, 21);
+            this.cboProvince.TabIndex = 20;
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(11, 294);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(83, 33);
+            this.btnRemove.TabIndex = 4;
+            this.btnRemove.Text = "Remove Item";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            // 
+            // btnClearInvoice
+            // 
+            this.btnClearInvoice.Location = new System.Drawing.Point(101, 294);
+            this.btnClearInvoice.Name = "btnClearInvoice";
+            this.btnClearInvoice.Size = new System.Drawing.Size(83, 33);
+            this.btnClearInvoice.TabIndex = 5;
+            this.btnClearInvoice.Text = "Clear";
+            this.btnClearInvoice.UseVisualStyleBackColor = true;
+            // 
+            // btnComplete
+            // 
+            this.btnComplete.Location = new System.Drawing.Point(533, 294);
+            this.btnComplete.Name = "btnComplete";
+            this.btnComplete.Size = new System.Drawing.Size(99, 33);
+            this.btnComplete.TabIndex = 6;
+            this.btnComplete.Text = "Complete Invoice";
+            this.btnComplete.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -460,9 +913,19 @@
             this.grpActions.ResumeLayout(false);
             this.grpTotals.ResumeLayout(false);
             this.grpTotals.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grpInfo.ResumeLayout(false);
+            this.grpInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsQuery)).EndInit();
+            this.tabInvoice.ResumeLayout(false);
+            this.tabInvoiceActions.ResumeLayout(false);
+            this.tabInvoiceCreate.ResumeLayout(false);
+            this.tabInvoiceCreate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsInvoice)).EndInit();
+            this.grpOrderInfo.ResumeLayout(false);
+            this.grpOrderInfo.PerformLayout();
+            this.grpCustInfo.ResumeLayout(false);
+            this.grpCustInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDepositPct)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -495,7 +958,7 @@
         private System.Windows.Forms.GroupBox grpTotals;
         private System.Windows.Forms.TextBox txtOrderCost;
         private System.Windows.Forms.Label lblOrderCost;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpInfo;
         private System.Windows.Forms.TextBox txtOrderList;
         private System.Windows.Forms.Label lblOrderList;
         private System.Windows.Forms.Label lblInvCost;
@@ -509,6 +972,49 @@
         private System.Windows.Forms.Button btnSetInvoice;
         private System.Windows.Forms.Button btnSetOrder;
         private System.Windows.Forms.Button btnAddParts;
+        private System.Windows.Forms.TabControl tabInvoiceActions;
+        private System.Windows.Forms.TabPage tabInvoiceCreate;
+        private System.Windows.Forms.DataGridView lstPartsInvoice;
+        private System.Windows.Forms.Label lblInvoicePartsList;
+        private System.Windows.Forms.TabPage tabInvoiceHistory;
+        private System.Windows.Forms.GroupBox grpCustInfo;
+        private System.Windows.Forms.GroupBox grpOrderInfo;
+        private System.Windows.Forms.Label lblGrandTotal;
+        private System.Windows.Forms.Label lblSalesTax;
+        private System.Windows.Forms.Label lblPartsTotal;
+        private System.Windows.Forms.Label lblDepositRem;
+        private System.Windows.Forms.TextBox txtDepositAmt;
+        private System.Windows.Forms.Label lblDepositPayAmt;
+        private System.Windows.Forms.NumericUpDown numDepositPct;
+        private System.Windows.Forms.Label lblDepositPct;
+        private System.Windows.Forms.TextBox txtGrandTotal;
+        private System.Windows.Forms.TextBox txtSalesTax;
+        private System.Windows.Forms.TextBox txtPartsTotal;
+        private System.Windows.Forms.TextBox txtDepositRem;
+        private System.Windows.Forms.Label lblDiscountType;
+        private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.Label lblLastName;
+        private System.Windows.Forms.Label lblFirstName;
+        private System.Windows.Forms.Label lblAccountNo;
+        private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.TextBox txtLastName;
+        private System.Windows.Forms.TextBox txtFirstName;
+        private System.Windows.Forms.Button btnAccountSearch;
+        private System.Windows.Forms.TextBox txtAccountNo;
+        private System.Windows.Forms.ComboBox cboDiscountType;
+        private System.Windows.Forms.Label lblCity;
+        private System.Windows.Forms.Label lblEmail;
+        private System.Windows.Forms.Label lblPhone;
+        private System.Windows.Forms.ComboBox cboProvince;
+        private System.Windows.Forms.TextBox txtPostal;
+        private System.Windows.Forms.TextBox txtCity;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.TextBox txtPhone;
+        private System.Windows.Forms.Label lblProvince;
+        private System.Windows.Forms.Label lblPostal;
+        private System.Windows.Forms.Button btnComplete;
+        private System.Windows.Forms.Button btnClearInvoice;
+        private System.Windows.Forms.Button btnRemove;
 
     }
 }
