@@ -12,15 +12,31 @@ namespace MLN_ISDP_project
     public partial class Form1 : Form
     {
         private List<Part> selectedPartList;
+        private List<Part> invoicePartList;
+        private List<Part> orderPartList;
+
         private BindingSource sourceParts;
+        private BindingSource sourceInvoice;
+        private BindingSource sourceOrder;
+
         private Part selectedPart;
 
         public Form1()
         {
             InitializeComponent();
             selectedPartList = new List<Part>();
+            orderPartList = new List<Part>();
+            invoicePartList = new List<Part>();
+
+
             sourceParts = new BindingSource();
             sourceParts.DataSource = selectedPartList;
+
+            sourceInvoice = new BindingSource();
+            sourceInvoice.DataSource = invoicePartList;
+
+            sourceOrder = new BindingSource();
+            sourceOrder.DataSource = orderPartList;
 
 
 
@@ -28,6 +44,7 @@ namespace MLN_ISDP_project
 
 
             lstPartsQuery.DataSource = sourceParts;
+            lstPartsInvoice.DataSource = sourceInvoice;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,10 +53,10 @@ namespace MLN_ISDP_project
 
             //sourceParts.ResetBindings(true);
 
-            columnSetUp();
+            lookUpColumnSetUp();
         }
 
-        private void columnSetUp()
+        private void lookUpColumnSetUp()
         {
             //lstPartsQuery.Columns["PartID"].CellType.
 
@@ -71,6 +88,7 @@ namespace MLN_ISDP_project
             lstPartsQuery.Columns["Section"].Visible = false;
             lstPartsQuery.Columns["QuantityOnOrder"].Visible = false;
             lstPartsQuery.Columns["Reserved"].Visible = false;
+            lstPartsQuery.Columns["Dirty"].Visible = false;
 
             //fuckery
             lstPartsQuery.Columns.Remove("PurchaseIndicator");
@@ -82,6 +100,20 @@ namespace MLN_ISDP_project
             PurchaseIndicator.HeaderText = "Indicator";
             PurchaseIndicator.DataSource = new List<Part.Indicator> { Part.Indicator.NONE, Part.Indicator.INVOICE, Part.Indicator.ORDER };
 
+        }
+
+        private void invoiceColumnSetUp()
+        {
+            //ordering
+            lstPartsInvoice.Columns["PartID"].DisplayIndex = 0;
+            lstPartsInvoice.Columns["PartDescription"].DisplayIndex = 1;
+
+            //visibility
+            lstPartsQuery.Columns["MinQuantity"].Visible = false;
+            lstPartsQuery.Columns["Section"].Visible = false;
+            lstPartsQuery.Columns["QuantityOnOrder"].Visible = false;
+            lstPartsQuery.Columns["Reserved"].Visible = false;
+            lstPartsQuery.Columns["Dirty"].Visible = false;
         }
 
         //default db conn
@@ -148,6 +180,25 @@ namespace MLN_ISDP_project
                 txtQOH.Text = detailedPart.QuantityOnHand.ToString();
                 txtQOO.Text = detailedPart.QuantityOnOrder.ToString();
             }
+        }
+
+        private void lstPartsQuery_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            //calculateFields();
+            //tallyItems();
+
+            //int editedRowIndex = lstPartsQuery.CurrentRow.Index;
+
+            //Part editedPart = selectedPartList[editedRowIndex];
+
+            //if (editedPart.Request > editedPart.QuantityOnHand)
+            //{
+            //    int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
+            //    editedPart.QuantityOnOrder = editedPart.QuantityOnOrder + difference;
+            //    editedPart.Request = (int)editedPart.QuantityOnHand;
+            //}
+
+            //selectedPartList[editedRowIndex] = editedPart;
         }
 
         #region Button Methods
@@ -232,6 +283,44 @@ namespace MLN_ISDP_project
             tallyItems();
         }
 
+        private void btnAddIndicated_Click(object sender, EventArgs e)
+        {
+            foreach (Part p in selectedPartList)
+            {
+                if (p.PurchaseIndicator == Part.Indicator.INVOICE || p.PurchaseIndicator == Part.Indicator.ORDER)
+                {
+                    invoicePartList.Add(p);
+                }
+
+            }
+
+            foreach (Part p in invoicePartList)
+                selectedPartList.Remove(p);
+        }
+
         #endregion
+
+        private void lstPartsQuery_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            
+
+            int editedRowIndex = lstPartsQuery.CurrentRow.Index;
+
+            Part editedPart = selectedPartList[editedRowIndex];
+
+            if (editedPart.Request > editedPart.QuantityOnHand)
+            {
+                int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
+                editedPart.QuantityOnOrder = editedPart.QuantityOnOrder + difference;
+                editedPart.Request = (int)editedPart.QuantityOnHand;
+            }
+
+            editedPart.Dirty = true;
+
+            selectedPartList[editedRowIndex] = editedPart;
+
+            calculateFields();
+            tallyItems();
+        }
     }
 }
