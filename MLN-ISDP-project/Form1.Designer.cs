@@ -523,6 +523,7 @@
             // lstPartsInvoice
             // 
             this.lstPartsInvoice.AllowUserToAddRows = false;
+            this.lstPartsInvoice.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.lstPartsInvoice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lstPartsInvoice.Location = new System.Drawing.Point(7, 24);
             this.lstPartsInvoice.Name = "lstPartsInvoice";
@@ -873,6 +874,7 @@
             this.btnRemove.TabIndex = 4;
             this.btnRemove.Text = "Remove Item";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnClearInvoice
             // 
@@ -882,6 +884,7 @@
             this.btnClearInvoice.TabIndex = 5;
             this.btnClearInvoice.Text = "Clear";
             this.btnClearInvoice.UseVisualStyleBackColor = true;
+            this.btnClearInvoice.Click += new System.EventHandler(this.btnClearInvoice_Click);
             // 
             // btnComplete
             // 
@@ -891,6 +894,7 @@
             this.btnComplete.TabIndex = 6;
             this.btnComplete.Text = "Complete Invoice";
             this.btnComplete.UseVisualStyleBackColor = true;
+            this.btnComplete.Click += new System.EventHandler(this.btnComplete_Click);
             // 
             // Form1
             // 
