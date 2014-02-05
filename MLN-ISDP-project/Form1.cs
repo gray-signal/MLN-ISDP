@@ -54,6 +54,7 @@ namespace MLN_ISDP_project
             //sourceParts.ResetBindings(true);
 
             lookUpColumnSetUp();
+            invoiceColumnSetUp();
         }
 
         private void lookUpColumnSetUp()
@@ -89,6 +90,11 @@ namespace MLN_ISDP_project
             lstPartsQuery.Columns["QuantityOnOrder"].Visible = false;
             lstPartsQuery.Columns["Reserved"].Visible = false;
             lstPartsQuery.Columns["Dirty"].Visible = false;
+            lstPartsQuery.Columns["Receive"].Visible = false;
+            lstPartsQuery.Columns["BackOrder"].Visible = false;
+            lstPartsQuery.Columns["Deposit"].Visible = false;
+            lstPartsQuery.Columns["Net"].Visible = false;
+            lstPartsQuery.Columns["Amount"].Visible = false;
 
             //fuckery
             lstPartsQuery.Columns.Remove("PurchaseIndicator");
@@ -107,13 +113,34 @@ namespace MLN_ISDP_project
             //ordering
             lstPartsInvoice.Columns["PartID"].DisplayIndex = 0;
             lstPartsInvoice.Columns["PartDescription"].DisplayIndex = 1;
+            lstPartsInvoice.Columns["Request"].DisplayIndex = 2;
+            lstPartsInvoice.Columns["Receive"].DisplayIndex = 3;
+            lstPartsInvoice.Columns["BackOrder"].DisplayIndex = 4;
+            lstPartsInvoice.Columns["ListPrice"].DisplayIndex = 5;
+            lstPartsInvoice.Columns["Deposit"].DisplayIndex = 7; //skipped a number because for some reason it just doesn't... count right? here?
+            lstPartsInvoice.Columns["Net"].DisplayIndex = 8;     //and i have no idea why and no time to fuck with it, so this works
+            lstPartsInvoice.Columns["Amount"].DisplayIndex = 9;
+
+
+            //names
+            lstPartsInvoice.Columns["Request"].HeaderText = "Order";
+            lstPartsInvoice.Columns["BackOrder"].HeaderText = "B.O.";
+            lstPartsInvoice.Columns["ListPrice"].HeaderText = "List ($)";
+            lstPartsInvoice.Columns["Deposit"].HeaderText = "Deposit ($)";
+            lstPartsInvoice.Columns["Net"].HeaderText = "Net ($)";
+            lstPartsInvoice.Columns["Amount"].HeaderText = "Amount ($)";
 
             //visibility
-            lstPartsQuery.Columns["MinQuantity"].Visible = false;
-            lstPartsQuery.Columns["Section"].Visible = false;
-            lstPartsQuery.Columns["QuantityOnOrder"].Visible = false;
-            lstPartsQuery.Columns["Reserved"].Visible = false;
-            lstPartsQuery.Columns["Dirty"].Visible = false;
+            lstPartsInvoice.Columns["MinQuantity"].Visible = false;
+            lstPartsInvoice.Columns["Section"].Visible = false;
+            lstPartsInvoice.Columns["QuantityOnHand"].Visible = false;
+            lstPartsInvoice.Columns["QuantityOnOrder"].Visible = false;
+            lstPartsInvoice.Columns["Reserved"].Visible = false;
+            lstPartsInvoice.Columns["Dirty"].Visible = false;
+            lstPartsInvoice.Columns["CostPrice"].Visible = false;
+            lstPartsInvoice.Columns["PurchaseIndicator"].Visible = false;
+            lstPartsInvoice.Columns["TotalCost"].Visible = false;
+            lstPartsInvoice.Columns["TotalList"].Visible = false;
         }
 
         //default db conn
@@ -165,9 +192,12 @@ namespace MLN_ISDP_project
 
         private void lstPartsQuery_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            selectedPart = selectedPartList[e.RowIndex];
+            if (!(e.RowIndex == -1))
+            {
+                selectedPart = selectedPartList[e.RowIndex];
 
-            loadPartDetail(selectedPart);
+                loadPartDetail(selectedPart);
+            }
         }
 
         private void loadPartDetail(Part detailedPart)
@@ -202,6 +232,8 @@ namespace MLN_ISDP_project
         }
 
         #region Button Methods
+
+        //lookup buttons
 
         private void btnAddParts_Click(object sender, EventArgs e)
         {
@@ -296,6 +328,29 @@ namespace MLN_ISDP_project
 
             foreach (Part p in invoicePartList)
                 selectedPartList.Remove(p);
+
+            sourceParts.ResetBindings(false);
+            sourceInvoice.ResetBindings(false);
+        }
+
+        //invoice buttons
+
+        private void btnClearInvoice_Click(object sender, EventArgs e)
+        {
+            //TODO: add confirmation dialog to this
+            invoicePartList.Clear();
+            sourceInvoice.ResetBindings(false);
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            lstPartsInvoice.Rows.Remove(lstPartsInvoice.CurrentRow);
+            sourceInvoice.ResetBindings(false);
+        }
+
+        private void btnComplete_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
