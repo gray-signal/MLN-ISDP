@@ -47,9 +47,22 @@ namespace MLN_ISDP_project
 
         //calculated or selected properties
         public Indicator PurchaseIndicator { get; set; }
-        public int Request { get; set; }
+
+        //calculated/selected for both
+        public int Request { get; set; } //is called order on invoice screen
         public decimal TotalCost { get; set; }
         public decimal TotalList { get; set; }
+
+        //calculated/selected for lookup
+
+
+        //calculated/selected for invoice
+        public int Receive { get; set; }
+        public int BackOrder { get; set; }
+        public double Deposit { get; set; }
+        public double Net { get; set; }
+        public double Amount { get; set; }
+
 
         //utility properties
         public bool Dirty { get; set; }
