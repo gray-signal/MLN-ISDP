@@ -51,6 +51,9 @@ namespace MLN_ISDP_project
         public decimal TotalCost { get; set; }
         public decimal TotalList { get; set; }
 
+        //utility properties
+        public bool Dirty { get; set; }
+
         #endregion
 
         #region Constructors
