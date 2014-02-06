@@ -117,6 +117,20 @@ namespace MLN_ISDP_project
             return loadComplete;
         }
 
+        internal bool commit(OracleDB in_db)
+        {
+            bool writeComplete = false;
+            if (!in_db.isConnected())
+            {
+                in_db.connect();
+            }
+
+            //in_db.insertQuery("");
+
+
+            return writeComplete;
+        }
+
         #endregion
 
     }
