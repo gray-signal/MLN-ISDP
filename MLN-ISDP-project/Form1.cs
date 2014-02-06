@@ -148,12 +148,41 @@ namespace MLN_ISDP_project
                 "Provider=MSDAORA;Data Source=localhost;User ID=2023164;Password=#42Paradox;");
         static OracleDB dbConn = new OracleDB(csBuilder.ToString());
 
-        private void calculateFields()
+        private void calculateLookUpFields()
         {
             foreach (Part p in selectedPartList)
             {
                 p.TotalCost = p.Request * (decimal)p.CostPrice;
                 p.TotalList = p.Request * (decimal)p.ListPrice;
+            }
+        }
+
+        private void calculateInvoiceFields()
+        {
+            foreach (Part p in invoicePartList)
+            {
+                if (p.Request > p.QuantityOnHand)
+                {
+                    p.Receive = (int)p.QuantityOnHand;
+                    p.BackOrder = p.Request - p.Receive;
+                }
+
+                if (p.BackOrder > 0)
+                {
+                    p.Deposit = (double)(p.ListPrice / numDepositPct.Value);
+                }
+
+                //if (p.PurchaseIndicator == Part.Indicator.INVOICE)
+                //{
+
+                //}
+
+                //if (p.PurchaseIndicator == Part.Indicator.ORDER)
+                //{
+
+                //}
+
+                sourceInvoice.ResetBindings(false);
             }
         }
 
@@ -284,7 +313,7 @@ namespace MLN_ISDP_project
             //}
 
             tallyItems();
-            calculateFields();
+            calculateLookUpFields();
             sourceParts.ResetBindings(false);
         }
 
@@ -329,6 +358,9 @@ namespace MLN_ISDP_project
             foreach (Part p in invoicePartList)
                 selectedPartList.Remove(p);
 
+
+            calculateInvoiceFields();
+
             sourceParts.ResetBindings(false);
             sourceInvoice.ResetBindings(false);
         }
@@ -344,8 +376,11 @@ namespace MLN_ISDP_project
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            lstPartsInvoice.Rows.Remove(lstPartsInvoice.CurrentRow);
-            sourceInvoice.ResetBindings(false);
+            if (lstPartsInvoice.Rows.Count > 0)
+            {
+                lstPartsInvoice.Rows.Remove(lstPartsInvoice.CurrentRow);
+                sourceInvoice.ResetBindings(false);
+            }
         }
 
         private void btnComplete_Click(object sender, EventArgs e)
@@ -367,15 +402,29 @@ namespace MLN_ISDP_project
             {
                 int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
                 editedPart.QuantityOnOrder = editedPart.QuantityOnOrder + difference;
-                editedPart.Request = (int)editedPart.QuantityOnHand;
+                //editedPart.Request = (int)editedPart.QuantityOnHand;
             }
 
             editedPart.Dirty = true;
 
             selectedPartList[editedRowIndex] = editedPart;
 
-            calculateFields();
+            calculateLookUpFields();
             tallyItems();
+        }
+
+        private void lstPartsInvoice_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            int editedRowIndex = lstPartsInvoice.CurrentRow.Index;
+
+            Part editedPart = invoicePartList[editedRowIndex];
+
+
+
+
+            editedPart.Dirty = true;
+
+            selectedPartList[editedRowIndex] = editedPart;
         }
     }
 }

@@ -529,6 +529,7 @@
             this.lstPartsInvoice.Name = "lstPartsInvoice";
             this.lstPartsInvoice.Size = new System.Drawing.Size(631, 84);
             this.lstPartsInvoice.TabIndex = 1;
+            this.lstPartsInvoice.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstPartsInvoice_CellEndEdit);
             // 
             // lblInvoicePartsList
             // 
@@ -615,6 +616,11 @@
             this.numDepositPct.Name = "numDepositPct";
             this.numDepositPct.Size = new System.Drawing.Size(54, 20);
             this.numDepositPct.TabIndex = 1;
+            this.numDepositPct.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            131072});
             // 
             // lblDepositPayAmt
             // 
