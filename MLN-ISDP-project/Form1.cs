@@ -11,6 +11,8 @@ namespace MLN_ISDP_project
 {
     public partial class Form1 : Form
     {
+        private string EmployeeID;
+
         private List<Part> selectedPartList;
         private List<Part> invoicePartList;
         private List<Part> orderPartList;
@@ -19,15 +21,21 @@ namespace MLN_ISDP_project
         private BindingSource sourceInvoice;
         private BindingSource sourceOrder;
 
+        private DataTable discountTable;
+
         private Part selectedPart;
 
         public Form1()
         {
             InitializeComponent();
+
+            EmployeeID = "1234";
+
             selectedPartList = new List<Part>();
             orderPartList = new List<Part>();
             invoicePartList = new List<Part>();
 
+            discountTable = new DataTable();
 
             sourceParts = new BindingSource();
             sourceParts.DataSource = selectedPartList;
@@ -38,7 +46,11 @@ namespace MLN_ISDP_project
             sourceOrder = new BindingSource();
             sourceOrder.DataSource = orderPartList;
 
+            discountTable = dbConn.readQuery("SELECT DiscountID, DiscountPercent, DiscountType from Discount ORDER BY DiscountPercent");
 
+            cboDiscountType.ValueMember = "DiscountPercent";
+            cboDiscountType.DisplayMember = "DiscountType";
+            cboDiscountType.DataSource = discountTable;
 
             //lstPartsQuery.AutoGenerateColumns = true;
 
@@ -96,6 +108,12 @@ namespace MLN_ISDP_project
             lstPartsQuery.Columns["Net"].Visible = false;
             lstPartsQuery.Columns["Amount"].Visible = false;
 
+            //formatting
+            lstPartsQuery.Columns["CostPrice"].DefaultCellStyle.Format = "c";
+            lstPartsQuery.Columns["ListPrice"].DefaultCellStyle.Format = "c";
+            lstPartsQuery.Columns["TotalCost"].DefaultCellStyle.Format = "c";
+            lstPartsQuery.Columns["TotalList"].DefaultCellStyle.Format = "c";
+
             //fuckery
             lstPartsQuery.Columns.Remove("PurchaseIndicator");
 
@@ -141,6 +159,13 @@ namespace MLN_ISDP_project
             lstPartsInvoice.Columns["PurchaseIndicator"].Visible = false;
             lstPartsInvoice.Columns["TotalCost"].Visible = false;
             lstPartsInvoice.Columns["TotalList"].Visible = false;
+
+            //formatting
+            lstPartsInvoice.Columns["ListPrice"].DefaultCellStyle.Format = "c";
+            lstPartsInvoice.Columns["Deposit"].DefaultCellStyle.Format = "c";
+            lstPartsInvoice.Columns["Net"].DefaultCellStyle.Format = "c";
+            lstPartsInvoice.Columns["Amount"].DefaultCellStyle.Format = "c";
+
         }
 
         //default db conn
@@ -159,18 +184,49 @@ namespace MLN_ISDP_project
 
         private void calculateInvoiceFields()
         {
+            double salesTax = 1.13;
+            double discount = 10;// Double.Parse(cboDiscountType.SelectedText);
+
+            double totalDeposit = 0;
+            double owedAfterDeposit = 0;
+            double partsTotal = 0;
+            double taxTotal = 0;
+            double grandTotal = 0;
+
             foreach (Part p in invoicePartList)
             {
+                p.Amount = 0;
                 if (p.Request > p.QuantityOnHand)
                 {
                     p.Receive = (int)p.QuantityOnHand;
                     p.BackOrder = p.Request - p.Receive;
                 }
+                else
+                {
+                    p.Receive = p.Request;
+                    p.BackOrder = 0;
+                }
 
                 if (p.BackOrder > 0)
                 {
                     p.Deposit = (double)(p.ListPrice / numDepositPct.Value);
+                    double tempNet = (p.Deposit * salesTax);
+                    p.Net = tempNet - (tempNet / discount);
+
+                    p.Amount = p.Amount + (p.Net * p.BackOrder);
+
+                    owedAfterDeposit = owedAfterDeposit + (p.Amount - p.Deposit);
                 }
+
+                if (p.Request > 0)
+                {
+                    double tempNet = ((double)p.ListPrice * salesTax);
+                    p.Net = tempNet - (tempNet / discount);
+
+                    p.Amount = p.Amount + (p.Net * p.Request);
+                }
+
+
 
                 //if (p.PurchaseIndicator == Part.Indicator.INVOICE)
                 //{
@@ -182,8 +238,15 @@ namespace MLN_ISDP_project
 
                 //}
 
-                sourceInvoice.ResetBindings(false);
+                totalDeposit = totalDeposit + p.Deposit;
+
+                
             }
+
+            txtDepositAmt.Text = "" + totalDeposit;
+
+
+            sourceInvoice.ResetBindings(false);
         }
 
         private void tallyItems()
@@ -325,9 +388,10 @@ namespace MLN_ISDP_project
                 {
                     p.PurchaseIndicator = Part.Indicator.ORDER;
                 }
-                sourceParts.ResetBindings(false);
+                if (p.Request <= 0)
+                    p.Request = 1;
             }
-
+            sourceParts.ResetBindings(false);
             tallyItems();
         }
 
@@ -339,8 +403,10 @@ namespace MLN_ISDP_project
                 {
                     p.PurchaseIndicator = Part.Indicator.INVOICE;
                 }
-                sourceParts.ResetBindings(false);
+                if (p.Request <= 0)
+                    p.Request = 1;
             }
+            sourceParts.ResetBindings(false);
             tallyItems();
         }
 
@@ -386,6 +452,15 @@ namespace MLN_ISDP_project
         private void btnComplete_Click(object sender, EventArgs e)
         {
 
+            string strDiscount = discountTable.Rows[cboDiscountType.SelectedIndex]["DiscountID"].ToString();
+            dbConn.insertQuery("INSERT INTO Invoice "
+                              + "(DateTime, Total, PaymentMethod, CustomerID, DiscountID, EmployeeID) "
+                              + "VALUES (SYSDATE, '" + txtGrandTotal.Text + "', NULL, '" + txtAccountNo.Text + "', '" + strDiscount + "', '" + EmployeeID + "')");
+
+            foreach (Part p in invoicePartList)
+            {
+                p.commit(dbConn);
+            }
         }
 
         #endregion
@@ -419,12 +494,14 @@ namespace MLN_ISDP_project
 
             Part editedPart = invoicePartList[editedRowIndex];
 
-
+            //do things to part here
 
 
             editedPart.Dirty = true;
 
-            selectedPartList[editedRowIndex] = editedPart;
+            invoicePartList[editedRowIndex] = editedPart;
+
+            calculateInvoiceFields();
         }
     }
 }
