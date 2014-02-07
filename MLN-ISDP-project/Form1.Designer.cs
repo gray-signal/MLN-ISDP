@@ -190,6 +190,7 @@
             this.tabPartsActions.SelectedIndex = 0;
             this.tabPartsActions.Size = new System.Drawing.Size(673, 400);
             this.tabPartsActions.TabIndex = 3;
+            this.tabPartsActions.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabPartsActions_Selected);
             // 
             // tabLookUp
             // 
@@ -672,6 +673,7 @@
             this.cboDiscountType.Name = "cboDiscountType";
             this.cboDiscountType.Size = new System.Drawing.Size(89, 21);
             this.cboDiscountType.TabIndex = 10;
+            this.cboDiscountType.SelectedIndexChanged += new System.EventHandler(this.cboDiscountType_SelectedIndexChanged);
             // 
             // txtAddress
             // 
@@ -866,6 +868,7 @@
             0,
             0,
             131072});
+            this.numDepositPct.ValueChanged += new System.EventHandler(this.numDepositPct_ValueChanged);
             // 
             // lblDepositPct
             // 

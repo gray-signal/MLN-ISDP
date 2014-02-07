@@ -182,10 +182,61 @@ namespace MLN_ISDP_project
             }
         }
 
+        private double calculateDeposit(Part p)
+        {
+            double totalDeposit = 0;
+
+            if (p.BackOrder > 0)
+            {
+                totalDeposit = (double)(p.ListPrice / numDepositPct.Value);
+            }
+
+            return totalDeposit;
+        }
+
+        private double calculateNet(Part p)
+        {
+            double totalNet = 0;
+            double discount = Double.Parse(cboDiscountType.SelectedValue.ToString());
+
+            if (p.Receive > 0)
+            {
+                totalNet = (double)p.ListPrice;
+
+                if (discount > 0)
+                {
+                    totalNet = totalNet - (totalNet / discount);
+                }
+            }
+
+            if (p.BackOrder > 0)
+            {
+                totalNet = totalNet + p.Deposit;
+            }
+
+            return totalNet;
+        }
+
+        private double calculateAmount(Part p)
+        {
+            double totalAmount = 0;
+
+            if (p.BackOrder > 0)
+            {
+                totalAmount = totalAmount + (p.Deposit * p.BackOrder);
+            }
+
+            if (p.Receive > 0)
+            {
+                totalAmount = totalAmount + ((p.Net - p.Deposit) * p.Receive);
+            }
+
+            return totalAmount;
+        }
+
         private void calculateInvoiceFields()
         {
-            double salesTax = 1.13;
-            double discount = 10;// Double.Parse(cboDiscountType.SelectedText);
+            double salesTax = .13;
 
             double totalDeposit = 0;
             double owedAfterDeposit = 0;
@@ -195,7 +246,12 @@ namespace MLN_ISDP_project
 
             foreach (Part p in invoicePartList)
             {
-                p.Amount = 0;
+                //calculate columns
+                p.Deposit = calculateDeposit(p);
+                p.Net = calculateNet(p);
+                p.Amount = calculateAmount(p);
+
+                //check quantity
                 if (p.Request > p.QuantityOnHand)
                 {
                     p.Receive = (int)p.QuantityOnHand;
@@ -207,44 +263,23 @@ namespace MLN_ISDP_project
                     p.BackOrder = 0;
                 }
 
+
+                totalDeposit = totalDeposit + (p.Deposit * p.BackOrder);
                 if (p.BackOrder > 0)
                 {
-                    p.Deposit = (double)(p.ListPrice / numDepositPct.Value);
-                    double tempNet = (p.Deposit * salesTax);
-                    p.Net = tempNet - (tempNet / discount);
 
-                    p.Amount = p.Amount + (p.Net * p.BackOrder);
-
-                    owedAfterDeposit = owedAfterDeposit + (p.Amount - p.Deposit);
                 }
-
-                if (p.Request > 0)
-                {
-                    double tempNet = ((double)p.ListPrice * salesTax);
-                    p.Net = tempNet - (tempNet / discount);
-
-                    p.Amount = p.Amount + (p.Net * p.Request);
-                }
-
-
-
-                //if (p.PurchaseIndicator == Part.Indicator.INVOICE)
-                //{
-
-                //}
-
-                //if (p.PurchaseIndicator == Part.Indicator.ORDER)
-                //{
-
-                //}
-
-                totalDeposit = totalDeposit + p.Deposit;
-
-                
+                partsTotal = partsTotal + p.Amount;
             }
 
-            txtDepositAmt.Text = "" + totalDeposit;
+            taxTotal = partsTotal * salesTax;
+            grandTotal = partsTotal + taxTotal;
 
+            txtDepositAmt.Text = string.Format("{0:c}", totalDeposit);
+            txtDepositRem.Text = string.Format("{0:c}", owedAfterDeposit);
+            txtPartsTotal.Text = string.Format("{0:c}", partsTotal);
+            txtSalesTax.Text = string.Format("{0:c}", taxTotal);
+            txtGrandTotal.Text = string.Format("{0:c}", grandTotal);
 
             sourceInvoice.ResetBindings(false);
         }
@@ -424,11 +459,10 @@ namespace MLN_ISDP_project
             foreach (Part p in invoicePartList)
                 selectedPartList.Remove(p);
 
-
-            calculateInvoiceFields();
-
             sourceParts.ResetBindings(false);
             sourceInvoice.ResetBindings(false);
+
+            calculateInvoiceFields();
         }
 
         //invoice buttons
@@ -501,6 +535,21 @@ namespace MLN_ISDP_project
 
             invoicePartList[editedRowIndex] = editedPart;
 
+            calculateInvoiceFields();
+        }
+
+        private void cboDiscountType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            calculateInvoiceFields();
+        }
+
+        private void numDepositPct_ValueChanged(object sender, EventArgs e)
+        {
+            calculateInvoiceFields();
+        }
+
+        private void tabPartsActions_Selected(object sender, TabControlEventArgs e)
+        {
             calculateInvoiceFields();
         }
     }
