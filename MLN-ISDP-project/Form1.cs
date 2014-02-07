@@ -173,18 +173,20 @@ namespace MLN_ISDP_project
 
         }
 
-        //default db conn
+        //default db connection
         static System.Data.OleDb.OleDbConnectionStringBuilder csBuilder = new System.Data.OleDb.OleDbConnectionStringBuilder(
                 "Provider=MSDAORA;Data Source=localhost;User ID=2023164;Password=#42Paradox;");
         static OracleDB dbConn = new OracleDB(csBuilder.ToString());
 
         private void calculateLookUpFields()
         {
+            //iterate selected parts, total the costs
             foreach (Part p in selectedPartList)
             {
                 p.TotalCost = p.Request * (decimal)p.CostPrice;
                 p.TotalList = p.Request * (decimal)p.ListPrice;
 
+                //flag them as edited
                 p.Dirty = true;
             }
         }
@@ -193,6 +195,7 @@ namespace MLN_ISDP_project
         {
             double totalDeposit = 0;
 
+            //if any are being backordered, set the deposit price
             if (p.BackOrder > 0)
             {
                 totalDeposit = (double)(p.ListPrice * (numDepositPct.Value / 100));
@@ -206,6 +209,7 @@ namespace MLN_ISDP_project
             double totalNet = 0;
             double discount = Double.Parse(cboDiscountType.SelectedValue.ToString());
 
+            //if any are being purchased now, set the price, and apply a dicount if any
             if (p.Receive > 0)
             {
                 totalNet = (double)p.ListPrice;
@@ -216,6 +220,7 @@ namespace MLN_ISDP_project
                 }
             }
 
+            //if any on backorder, add the deposit to the net value
             if (p.BackOrder > 0)
             {
                 totalNet = totalNet + p.Deposit;
@@ -228,14 +233,17 @@ namespace MLN_ISDP_project
         {
             double totalAmount = 0;
 
+            //if on backorder, add the deposits to the total amount
             if (p.BackOrder > 0)
             {
                 totalAmount = totalAmount + (p.Deposit * p.BackOrder);
             }
 
+            //if any being picked up, add their value to the total amount
             if (p.Receive > 0)
             {
-                totalAmount = totalAmount + ((p.Net - p.Deposit) * p.Receive);
+                //have to separate back out the deposit amount, as it's been added in
+                totalAmount = totalAmount + ((p.Net - p.Deposit) * p.Receive); 
             }
 
             return totalAmount;
@@ -252,6 +260,7 @@ namespace MLN_ISDP_project
             taxTotal = 0;
             grandTotal = 0;
 
+            //iterate each part and calculate all its fields
             foreach (Part p in invoicePartList)
             {
                 //calculate columns
@@ -259,7 +268,7 @@ namespace MLN_ISDP_project
                 p.Net = calculateNet(p);
                 p.Amount = calculateAmount(p);
 
-                //check quantity
+                //check quantity and error correct
                 if (p.Request > p.QuantityOnHand)
                 {
                     p.Receive = (int)p.QuantityOnHand;
@@ -271,17 +280,19 @@ namespace MLN_ISDP_project
                     p.BackOrder = 0;
                 }
 
-
+                //running total of deposit, parts, etc. amounts for text fields
                 depositTotal = depositTotal + (p.Deposit * p.BackOrder);
                 if (p.BackOrder > 0)
                 {
                     owedAfterDeposit = owedAfterDeposit + (((double)p.ListPrice - p.Deposit) * p.BackOrder);
                 }
+
                 partsTotal = partsTotal + p.Amount;
 
                 p.Dirty = true;
             }
 
+            //calc tax and final totals, add to text fields
             taxTotal = partsTotal * salesTax;
             grandTotal = partsTotal + taxTotal;
 
@@ -302,8 +313,7 @@ namespace MLN_ISDP_project
             decimal invoiceCostTotal = 0;
             decimal invoiceListTotal = 0;
 
-            List<Part> markedForDeletion = new List<Part>();
-
+            //iterate parts list (i do this a lot) and total some fields
             foreach (Part p in selectedPartList)
             {
                 if (p.PurchaseIndicator == Part.Indicator.ORDER)
@@ -329,6 +339,7 @@ namespace MLN_ISDP_project
 
         private void lstPartsQuery_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            //if there are rows, assign the current part and load its details
             if (!(e.RowIndex == -1))
             {
                 selectedPart = selectedPartList[e.RowIndex];
@@ -339,6 +350,7 @@ namespace MLN_ISDP_project
 
         private void loadPartDetail(Part detailedPart)
         {
+            //if that part isn't null, stick all its values into text fields
             if (detailedPart != null)
             {
                 txtPartNum.Text = detailedPart.PartID;
@@ -351,21 +363,7 @@ namespace MLN_ISDP_project
 
         private void lstPartsQuery_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            //calculateFields();
-            //tallyItems();
-
-            //int editedRowIndex = lstPartsQuery.CurrentRow.Index;
-
-            //Part editedPart = selectedPartList[editedRowIndex];
-
-            //if (editedPart.Request > editedPart.QuantityOnHand)
-            //{
-            //    int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
-            //    editedPart.QuantityOnOrder = editedPart.QuantityOnOrder + difference;
-            //    editedPart.Request = (int)editedPart.QuantityOnHand;
-            //}
-
-            //selectedPartList[editedRowIndex] = editedPart;
+            //TODO: remove this method and handler for it
         }
 
         #region Button Methods
@@ -377,28 +375,37 @@ namespace MLN_ISDP_project
             Part addPart;
             String dialogText = "Please enter Part Number to add.";
             string promptValue;
+
+            //loop until a valid part is returned, or cancel is clicked
             do
             {
+                //show the prompt
                 promptValue = PartSearchModal.ShowDialog(dialogText, "Part Number");
 
-                //Part addPart = new Database.PersistenceFactory().Create<Part>(promptValue);
+                //Part addPart = new Database.PersistenceFactory().Create<Part>(promptValue); //i was messing with factory patterns, ignore this too
+
+                //create the new part (will always work, but won't always be able to load)
                 addPart = new Part(promptValue);
 
+                //resets the text in case we do end up looping
                 dialogText = "Part number not found. Please enter Part Number.";
 
-            } while (!addPart.load(dbConn) && promptValue != "");
+            } while (!addPart.load(dbConn) && promptValue != ""); //tries to load the part from the db. they're smart enough, they can load themselves
 
+            //if not cancelled, add the part to the list and refresh
             if (promptValue != "")
             {
                 selectedPartList.Add(addPart);
                 sourceParts.ResetBindings(false);
             }
 
+            //if the current part selection is null or an empty part, select this one
             if (selectedPart == null || selectedPart.PartID.Equals("NO PART"))
             {
                 selectedPart = addPart;
             }
 
+            //load that detail in and retally stuff
             loadPartDetail(selectedPart);
             tallyItems();
         }
@@ -406,6 +413,7 @@ namespace MLN_ISDP_project
         private void btnClear_Click(object sender, EventArgs e)
         {
             //TODO: add confirmation dialog to this
+            //clears out the whole damn list
             selectedPartList.Clear();
             sourceParts.ResetBindings(false);
         }
@@ -413,13 +421,14 @@ namespace MLN_ISDP_project
         private void btnLoadParts_Click(object sender, EventArgs e)
         {
             //send file to FAST parsing class, returns some sort of collection of Parts
-            //List<Part> partsFromFast;
+            //List<Part> partsFromFast = FastParser(filename);
             //foreach (Part p in partsFromFast)
             //{
             //    selectedPartList.Add(p);
             //    sourceParts.ResetBindings(false);
             //}
 
+            //leave these uncommented, so we have a nudge button, i guess
             tallyItems();
             calculateLookUpFields();
             sourceParts.ResetBindings(false);
@@ -427,6 +436,7 @@ namespace MLN_ISDP_project
 
         private void btnSetOrder_Click(object sender, EventArgs e)
         {
+            //loops parts, and if we haven't got 'em, sets them to order. and if none are selected, sets it to one as a default
             foreach (Part p in selectedPartList)
             {
                 if (p.QuantityOnHand <= 0)
@@ -445,6 +455,7 @@ namespace MLN_ISDP_project
 
         private void btnSetInvoice_Click(object sender, EventArgs e)
         {
+            //loops parts, and if there's any around, sets them to invoice. sets the request to at least one, just in case
             foreach (Part p in selectedPartList)
             {
                 if (p.QuantityOnHand > 0)
@@ -463,6 +474,7 @@ namespace MLN_ISDP_project
 
         private void btnAddIndicated_Click(object sender, EventArgs e)
         {
+            //loops parts, if they're indicated, adds them to the list backing the other dgv
             foreach (Part p in selectedPartList)
             {
                 if (p.PurchaseIndicator == Part.Indicator.INVOICE || p.PurchaseIndicator == Part.Indicator.ORDER)
@@ -472,9 +484,14 @@ namespace MLN_ISDP_project
 
             }
 
+            //i didn't really expect this to work, so it's mostly magic happening
+            //if i get some time, i'll look into how c# compares objects.
+            //are the parts in the lookup list the SAME parts as in the invoice list? i really hope not.
+            //but this removes them regardless. maybe it compares properties? dunno.
             foreach (Part p in invoicePartList)
                 selectedPartList.Remove(p);
 
+            //reset BOTH dgvs, and calculate the new fields.
             sourceParts.ResetBindings(false);
             sourceInvoice.ResetBindings(false);
 
@@ -486,12 +503,14 @@ namespace MLN_ISDP_project
         private void btnClearInvoice_Click(object sender, EventArgs e)
         {
             //TODO: add confirmation dialog to this
+            //clears this one
             invoicePartList.Clear();
             sourceInvoice.ResetBindings(false);
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
+            //if there are any rows, clear the current one. ran into some weirdness, so i added the check. might not need it anymore
             if (lstPartsInvoice.Rows.Count > 0)
             {
                 lstPartsInvoice.Rows.Remove(lstPartsInvoice.CurrentRow);
@@ -508,15 +527,19 @@ namespace MLN_ISDP_project
 
             string formattedCurrent = current.ToString("yyyy-MM-dd HH:mm:ss");
 
+            //inserts the data on the invoice into the table. primary keys are autogenerated from a seq, so no worries there.
             dbConn.insertQuery("INSERT INTO Invoice "
                               + "(DateTime, Total, PaymentMethod, CustomerID, DiscountID, EmployeeID, PartsTotal, DepositTotal, TaxTotal, BalanceOwed) "
                               + "VALUES (to_date('" + formattedCurrent + "', 'yyyy-MM-dd hh24:mi:ss'), '"
                               + grandTotal + "', NULL, '" + txtAccountNo.Text + "', '" + strDiscount + "', '" + EmployeeID + "', '"
                               + partsTotal + "', '" + depositTotal + "', '" + taxTotal + "', '" + owedAfterDeposit + "')");
 
+            //we save the date and use it to pull the generated PK back in. i could modify my oracle class to return a value, but that's too much digression
             DataTable dt = dbConn.readQuery("SELECT InvoiceID FROM Invoice WHERE DateTime = to_date('" + formattedCurrent + "', 'yyyy-MM-dd hh24:mi:ss')");
             string invID = (string)dt.Rows[0]["InvoiceID"];
 
+            //loops the parts, writes invoice line data.
+            //and then the parts save themselves, just like they loaded themselves before
             foreach (Part p in invoicePartList)
             {
                 dbConn.insertQuery("INSERT INTO InvoiceDetails "
@@ -527,28 +550,32 @@ namespace MLN_ISDP_project
                 p.commit(dbConn);
             }
 
+            //don't know if i should do this, but there's no other way of indicating that it worked as of yet?
             btnClearInvoice_Click(sender, e);
         }
 
         #endregion
 
+        //when a cell has been edited, run some checks and updates
         private void lstPartsQuery_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             
 
             int editedRowIndex = lstPartsQuery.CurrentRow.Index;
 
+            //pull the part to edit out
             Part editedPart = selectedPartList[editedRowIndex];
 
+            //if they're askin' for more than we've got, correct them.
             if (editedPart.Request > editedPart.QuantityOnHand)
             {
                 int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
                 editedPart.QuantityOnOrder = editedPart.QuantityOnOrder + difference;
-                //editedPart.Request = (int)editedPart.QuantityOnHand;
             }
 
             editedPart.Dirty = true;
 
+            //stick the edited part back in
             selectedPartList[editedRowIndex] = editedPart;
 
             calculateLookUpFields();
@@ -561,26 +588,31 @@ namespace MLN_ISDP_project
 
             Part editedPart = invoicePartList[editedRowIndex];
 
-            //do things to part here
+            //do things to part here, if we had anything to do. but we don't yet
 
 
             editedPart.Dirty = true;
 
             invoicePartList[editedRowIndex] = editedPart;
 
+            //refresh the fields every time any damn thing changes
             calculateInvoiceFields();
         }
 
+
+        //like when the discount changes
         private void cboDiscountType_SelectedIndexChanged(object sender, EventArgs e)
         {
             calculateInvoiceFields();
         }
 
+        //or when the deposit percentage changes
         private void numDepositPct_ValueChanged(object sender, EventArgs e)
         {
             calculateInvoiceFields();
         }
 
+        //even when we select this damn tab, just in case
         private void tabPartsActions_Selected(object sender, TabControlEventArgs e)
         {
             calculateInvoiceFields();
