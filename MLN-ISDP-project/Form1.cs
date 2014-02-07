@@ -25,6 +25,8 @@ namespace MLN_ISDP_project
 
         private Part selectedPart;
 
+        private double grandTotal; //klugeing, sorry
+
         public Form1()
         {
             InitializeComponent();
@@ -188,7 +190,7 @@ namespace MLN_ISDP_project
 
             if (p.BackOrder > 0)
             {
-                totalDeposit = (double)(p.ListPrice / numDepositPct.Value);
+                totalDeposit = (double)(p.ListPrice * (numDepositPct.Value / 100));
             }
 
             return totalDeposit;
@@ -205,7 +207,7 @@ namespace MLN_ISDP_project
 
                 if (discount > 0)
                 {
-                    totalNet = totalNet - (totalNet / discount);
+                    totalNet = totalNet - (totalNet * (discount / 100));
                 }
             }
 
@@ -242,7 +244,7 @@ namespace MLN_ISDP_project
             double owedAfterDeposit = 0;
             double partsTotal = 0;
             double taxTotal = 0;
-            double grandTotal = 0;
+            grandTotal = 0;
 
             foreach (Part p in invoicePartList)
             {
@@ -267,7 +269,7 @@ namespace MLN_ISDP_project
                 totalDeposit = totalDeposit + (p.Deposit * p.BackOrder);
                 if (p.BackOrder > 0)
                 {
-
+                    owedAfterDeposit = owedAfterDeposit + (((double)p.ListPrice - p.Deposit) * p.BackOrder);
                 }
                 partsTotal = partsTotal + p.Amount;
             }
@@ -487,12 +489,25 @@ namespace MLN_ISDP_project
         {
 
             string strDiscount = discountTable.Rows[cboDiscountType.SelectedIndex]["DiscountID"].ToString();
+
+            DateTime current = DateTime.Now;
+
+            string formattedCurrent = current.ToString("yyyy-MM-dd HH:mm:ss");
+
             dbConn.insertQuery("INSERT INTO Invoice "
                               + "(DateTime, Total, PaymentMethod, CustomerID, DiscountID, EmployeeID) "
-                              + "VALUES (SYSDATE, '" + txtGrandTotal.Text + "', NULL, '" + txtAccountNo.Text + "', '" + strDiscount + "', '" + EmployeeID + "')");
+                              + "VALUES (to_date('" + formattedCurrent + "', 'yyyy-MM-dd hh24:mi:ss'), '"
+                              + grandTotal + "', NULL, '" + txtAccountNo.Text + "', '" + strDiscount + "', '" + EmployeeID + "')");
+
+            DataTable dt = dbConn.readQuery("SELECT InvoiceID FROM Invoice WHERE DateTime = to_date('" + formattedCurrent + "', 'yyyy-MM-dd hh24:mi:ss')");
+            string invID = (string)dt.Rows[0]["InvoiceID"];
 
             foreach (Part p in invoicePartList)
             {
+                dbConn.insertQuery("INSERT INTO InvoiceDetails "
+                                 + "(InvoiceID, PartID, Quantity) "
+                                 + "VALUES ('" + invID + "', '" + p.PartID + "', '" + p.Receive + "')");
+
                 p.commit(dbConn);
             }
         }
