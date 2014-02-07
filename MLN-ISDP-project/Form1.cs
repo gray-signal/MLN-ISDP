@@ -25,14 +25,21 @@ namespace MLN_ISDP_project
 
         private Part selectedPart;
 
-        private double grandTotal; //klugeing, sorry
+        //klugeing, sorry
+        private double grandTotal; 
+        private double depositTotal;
+        private double partsTotal;
+        private double taxTotal;
+        double owedAfterDeposit;
 
         public Form1()
         {
             InitializeComponent();
 
+            //initialize temp value
             EmployeeID = "1234";
 
+            //initializing a whole bunch, setting datasources
             selectedPartList = new List<Part>();
             orderPartList = new List<Part>();
             invoicePartList = new List<Part>();
@@ -48,34 +55,30 @@ namespace MLN_ISDP_project
             sourceOrder = new BindingSource();
             sourceOrder.DataSource = orderPartList;
 
+            //read in the discount types and then stick them into the proper combobox
             discountTable = dbConn.readQuery("SELECT DiscountID, DiscountPercent, DiscountType from Discount ORDER BY DiscountPercent");
 
             cboDiscountType.ValueMember = "DiscountPercent";
             cboDiscountType.DisplayMember = "DiscountType";
             cboDiscountType.DataSource = discountTable;
 
-            //lstPartsQuery.AutoGenerateColumns = true;
-
-
+            //sets the datasources to the proper binding sources which were set to List<Part>'s
             lstPartsQuery.DataSource = sourceParts;
             lstPartsInvoice.DataSource = sourceInvoice;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Test.test();
+            //Test.test(); // test class, ignore safely
 
-            //sourceParts.ResetBindings(true);
-
+            //soon as we load, set up the datagrid view columns
             lookUpColumnSetUp();
             invoiceColumnSetUp();
         }
 
         private void lookUpColumnSetUp()
         {
-            //lstPartsQuery.Columns["PartID"].CellType.
-
-            //order
+            //ordering
             lstPartsQuery.Columns["PartID"].DisplayIndex = 0;
             lstPartsQuery.Columns["PartDescription"].DisplayIndex = 1;
             lstPartsQuery.Columns["QuantityOnHand"].DisplayIndex = 2;
@@ -116,7 +119,7 @@ namespace MLN_ISDP_project
             lstPartsQuery.Columns["TotalCost"].DefaultCellStyle.Format = "c";
             lstPartsQuery.Columns["TotalList"].DefaultCellStyle.Format = "c";
 
-            //fuckery
+            //fuckery, just to get the indicator as a combobox column
             lstPartsQuery.Columns.Remove("PurchaseIndicator");
 
             var PurchaseIndicator = new DataGridViewComboBoxColumn();
@@ -181,6 +184,8 @@ namespace MLN_ISDP_project
             {
                 p.TotalCost = p.Request * (decimal)p.CostPrice;
                 p.TotalList = p.Request * (decimal)p.ListPrice;
+
+                p.Dirty = true;
             }
         }
 
@@ -240,10 +245,11 @@ namespace MLN_ISDP_project
         {
             double salesTax = .13;
 
-            double totalDeposit = 0;
-            double owedAfterDeposit = 0;
-            double partsTotal = 0;
-            double taxTotal = 0;
+            owedAfterDeposit = 0;
+            
+            depositTotal = 0;
+            partsTotal = 0;
+            taxTotal = 0;
             grandTotal = 0;
 
             foreach (Part p in invoicePartList)
@@ -266,18 +272,20 @@ namespace MLN_ISDP_project
                 }
 
 
-                totalDeposit = totalDeposit + (p.Deposit * p.BackOrder);
+                depositTotal = depositTotal + (p.Deposit * p.BackOrder);
                 if (p.BackOrder > 0)
                 {
                     owedAfterDeposit = owedAfterDeposit + (((double)p.ListPrice - p.Deposit) * p.BackOrder);
                 }
                 partsTotal = partsTotal + p.Amount;
+
+                p.Dirty = true;
             }
 
             taxTotal = partsTotal * salesTax;
             grandTotal = partsTotal + taxTotal;
 
-            txtDepositAmt.Text = string.Format("{0:c}", totalDeposit);
+            txtDepositAmt.Text = string.Format("{0:c}", depositTotal);
             txtDepositRem.Text = string.Format("{0:c}", owedAfterDeposit);
             txtPartsTotal.Text = string.Format("{0:c}", partsTotal);
             txtSalesTax.Text = string.Format("{0:c}", taxTotal);
@@ -424,10 +432,13 @@ namespace MLN_ISDP_project
                 if (p.QuantityOnHand <= 0)
                 {
                     p.PurchaseIndicator = Part.Indicator.ORDER;
+                    if (p.Request <= 0)
+                        p.Request = 1;
+
+                    p.Dirty = true;
                 }
-                if (p.Request <= 0)
-                    p.Request = 1;
             }
+                
             sourceParts.ResetBindings(false);
             tallyItems();
         }
@@ -439,9 +450,12 @@ namespace MLN_ISDP_project
                 if (p.QuantityOnHand > 0)
                 {
                     p.PurchaseIndicator = Part.Indicator.INVOICE;
+                    if (p.Request <= 0)
+                        p.Request = 1;
+
+                    p.Dirty = true;
                 }
-                if (p.Request <= 0)
-                    p.Request = 1;
+                
             }
             sourceParts.ResetBindings(false);
             tallyItems();
@@ -495,9 +509,10 @@ namespace MLN_ISDP_project
             string formattedCurrent = current.ToString("yyyy-MM-dd HH:mm:ss");
 
             dbConn.insertQuery("INSERT INTO Invoice "
-                              + "(DateTime, Total, PaymentMethod, CustomerID, DiscountID, EmployeeID) "
+                              + "(DateTime, Total, PaymentMethod, CustomerID, DiscountID, EmployeeID, PartsTotal, DepositTotal, TaxTotal, BalanceOwed) "
                               + "VALUES (to_date('" + formattedCurrent + "', 'yyyy-MM-dd hh24:mi:ss'), '"
-                              + grandTotal + "', NULL, '" + txtAccountNo.Text + "', '" + strDiscount + "', '" + EmployeeID + "')");
+                              + grandTotal + "', NULL, '" + txtAccountNo.Text + "', '" + strDiscount + "', '" + EmployeeID + "', '"
+                              + partsTotal + "', '" + depositTotal + "', '" + taxTotal + "', '" + owedAfterDeposit + "')");
 
             DataTable dt = dbConn.readQuery("SELECT InvoiceID FROM Invoice WHERE DateTime = to_date('" + formattedCurrent + "', 'yyyy-MM-dd hh24:mi:ss')");
             string invID = (string)dt.Rows[0]["InvoiceID"];
@@ -505,11 +520,14 @@ namespace MLN_ISDP_project
             foreach (Part p in invoicePartList)
             {
                 dbConn.insertQuery("INSERT INTO InvoiceDetails "
-                                 + "(InvoiceID, PartID, Quantity) "
-                                 + "VALUES ('" + invID + "', '" + p.PartID + "', '" + p.Receive + "')");
+                                 + "(InvoiceID, PartID, Request, Receive, BackOrder, Net, Amount) "
+                                 + "VALUES ('" + invID + "', '" + p.PartID + "', '" + p.Request + "', '"
+                                 + p.Receive + "', '" + p.BackOrder + "', '" + p.Net + "', '" + p.Amount  + "')");
 
                 p.commit(dbConn);
             }
+
+            btnClearInvoice_Click(sender, e);
         }
 
         #endregion

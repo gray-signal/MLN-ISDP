@@ -125,14 +125,16 @@ namespace MLN_ISDP_project
                 in_db.connect();
             }
 
-            if (this.Dirty)
-            {
+            //if (this.Dirty)
+            //{
                 in_db.insertQuery("UPDATE Parts "
-                                + "SET QuantityOnHand = '" + this.QuantityOnHand + "',"
+                                + "SET QuantityOnHand = '" + (this.QuantityOnHand - this.Receive) + "',"
                                 + "QuantityOnOrder = '" + this.QuantityOnOrder + "'" 
                                 + "WHERE PartID = '" + this.PartID + "'");
 
-            }
+                this.Dirty = false;
+
+            //}
             return writeComplete;
         }
 
