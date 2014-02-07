@@ -165,6 +165,7 @@
             // 
             // btnPartsScreen
             // 
+            this.btnPartsScreen.Enabled = false;
             this.btnPartsScreen.Location = new System.Drawing.Point(12, 28);
             this.btnPartsScreen.Name = "btnPartsScreen";
             this.btnPartsScreen.Size = new System.Drawing.Size(101, 50);
@@ -174,6 +175,7 @@
             // 
             // btnAcctsScreen
             // 
+            this.btnAcctsScreen.Enabled = false;
             this.btnAcctsScreen.Location = new System.Drawing.Point(119, 28);
             this.btnAcctsScreen.Name = "btnAcctsScreen";
             this.btnAcctsScreen.Size = new System.Drawing.Size(101, 50);
