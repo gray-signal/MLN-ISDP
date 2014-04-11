@@ -9,17 +9,19 @@ using System.Windows.Forms;
 
 namespace MLN_ISDP_project
 {
-    public partial class Form1 : Form
+    public partial class frmPartsInventory : Form
     {
         private string EmployeeID;
 
         private List<Part> selectedPartList;
         private List<Part> invoicePartList;
         private List<Part> orderPartList;
+        private List<Part> spOrderPartList;
 
         private BindingSource sourceParts;
         private BindingSource sourceInvoice;
         private BindingSource sourceOrder;
+        private BindingSource sourceSpOrder;
 
         private DataTable discountTable;
 
@@ -31,8 +33,9 @@ namespace MLN_ISDP_project
         private double partsTotal;
         private double taxTotal;
         double owedAfterDeposit;
+        private double owedDepositTax;
 
-        public Form1()
+        public frmPartsInventory()
         {
             InitializeComponent();
 
@@ -43,6 +46,7 @@ namespace MLN_ISDP_project
             selectedPartList = new List<Part>();
             orderPartList = new List<Part>();
             invoicePartList = new List<Part>();
+            spOrderPartList = new List<Part>();
 
             discountTable = new DataTable();
 
@@ -55,6 +59,9 @@ namespace MLN_ISDP_project
             sourceOrder = new BindingSource();
             sourceOrder.DataSource = orderPartList;
 
+            sourceSpOrder = new BindingSource();
+            sourceSpOrder.DataSource = spOrderPartList;
+
             //read in the discount types and then stick them into the proper combobox
             discountTable = dbConn.readQuery("SELECT DiscountID, DiscountPercent, DiscountType from Discount ORDER BY DiscountPercent");
 
@@ -65,6 +72,8 @@ namespace MLN_ISDP_project
             //sets the datasources to the proper binding sources which were set to List<Part>'s
             lstPartsQuery.DataSource = sourceParts;
             lstPartsInvoice.DataSource = sourceInvoice;
+            lstPartsOrder.DataSource = sourceOrder;
+            lstPartsSpOrder.DataSource = sourceSpOrder;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -113,11 +122,17 @@ namespace MLN_ISDP_project
             lstPartsQuery.Columns["Net"].Visible = false;
             lstPartsQuery.Columns["Amount"].Visible = false;
 
-            //formatting
+            //formatting currency
             lstPartsQuery.Columns["CostPrice"].DefaultCellStyle.Format = "c";
             lstPartsQuery.Columns["ListPrice"].DefaultCellStyle.Format = "c";
             lstPartsQuery.Columns["TotalCost"].DefaultCellStyle.Format = "c";
             lstPartsQuery.Columns["TotalList"].DefaultCellStyle.Format = "c";
+
+            //formatting nums right justified
+            lstPartsQuery.Columns["CostPrice"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsQuery.Columns["ListPrice"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsQuery.Columns["TotalCost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsQuery.Columns["TotalList"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             //fuckery, just to get the indicator as a combobox column
             lstPartsQuery.Columns.Remove("PurchaseIndicator");
@@ -128,6 +143,8 @@ namespace MLN_ISDP_project
 
             PurchaseIndicator.HeaderText = "Indicator";
             PurchaseIndicator.DataSource = new List<Part.Indicator> { Part.Indicator.NONE, Part.Indicator.INVOICE, Part.Indicator.ORDER };
+
+            lstPartsQuery.RowHeadersVisible = false;
 
         }
 
@@ -165,12 +182,68 @@ namespace MLN_ISDP_project
             lstPartsInvoice.Columns["TotalCost"].Visible = false;
             lstPartsInvoice.Columns["TotalList"].Visible = false;
 
-            //formatting
+            //formatting currency
             lstPartsInvoice.Columns["ListPrice"].DefaultCellStyle.Format = "c";
             lstPartsInvoice.Columns["Deposit"].DefaultCellStyle.Format = "c";
             lstPartsInvoice.Columns["Net"].DefaultCellStyle.Format = "c";
             lstPartsInvoice.Columns["Amount"].DefaultCellStyle.Format = "c";
 
+            //formatting nums right justified
+            lstPartsInvoice.Columns["ListPrice"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsInvoice.Columns["Deposit"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsInvoice.Columns["Net"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsInvoice.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+
+            lstPartsInvoice.RowHeadersVisible = false;
+        }
+
+        private void spOrderColumnSetUp()
+        {
+            //ordering
+            lstPartsSpOrder.Columns["PartID"].DisplayIndex = 0;
+            lstPartsSpOrder.Columns["PartDescription"].DisplayIndex = 1;
+            lstPartsSpOrder.Columns["BackOrder"].DisplayIndex = 2;
+            lstPartsSpOrder.Columns["ListPrice"].DisplayIndex = 3;
+            lstPartsSpOrder.Columns["CostPrice"].DisplayIndex = 4;
+            lstPartsSpOrder.Columns["TotalCost"].DisplayIndex = 5;
+            lstPartsSpOrder.Columns["TotalList"].DisplayIndex = 6;
+
+
+            //names
+            lstPartsInvoice.Columns["Request"].HeaderText = "Order";
+            lstPartsInvoice.Columns["BackOrder"].HeaderText = "B.O.";
+            lstPartsInvoice.Columns["ListPrice"].HeaderText = "List ($)";
+            lstPartsInvoice.Columns["Deposit"].HeaderText = "Deposit ($)";
+            lstPartsInvoice.Columns["Net"].HeaderText = "Net ($)";
+            lstPartsInvoice.Columns["Amount"].HeaderText = "Amount ($)";
+
+            //visibility
+            lstPartsInvoice.Columns["MinQuantity"].Visible = false;
+            lstPartsInvoice.Columns["Section"].Visible = false;
+            lstPartsInvoice.Columns["QuantityOnHand"].Visible = false;
+            lstPartsInvoice.Columns["QuantityOnOrder"].Visible = false;
+            lstPartsInvoice.Columns["Reserved"].Visible = false;
+            lstPartsInvoice.Columns["Dirty"].Visible = false;
+            lstPartsInvoice.Columns["CostPrice"].Visible = false;
+            lstPartsInvoice.Columns["PurchaseIndicator"].Visible = false;
+            lstPartsInvoice.Columns["TotalCost"].Visible = false;
+            lstPartsInvoice.Columns["TotalList"].Visible = false;
+
+            //formatting currency
+            lstPartsInvoice.Columns["ListPrice"].DefaultCellStyle.Format = "c";
+            lstPartsInvoice.Columns["Deposit"].DefaultCellStyle.Format = "c";
+            lstPartsInvoice.Columns["Net"].DefaultCellStyle.Format = "c";
+            lstPartsInvoice.Columns["Amount"].DefaultCellStyle.Format = "c";
+
+            //formatting nums right justified
+            lstPartsInvoice.Columns["ListPrice"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsInvoice.Columns["Deposit"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsInvoice.Columns["Net"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsInvoice.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+
+            lstPartsInvoice.RowHeadersVisible = false;
         }
 
         //default db connection
@@ -194,11 +267,18 @@ namespace MLN_ISDP_project
         private double calculateDeposit(Part p)
         {
             double totalDeposit = 0;
+            double discount = Double.Parse(cboDiscountType.SelectedValue.ToString());
+            double tempList = (double)p.ListPrice;
 
             //if any are being backordered, set the deposit price
             if (p.BackOrder > 0)
             {
-                totalDeposit = (double)(p.ListPrice * (numDepositPct.Value / 100));
+                if (discount > 0)
+                {
+                    tempList = tempList - (tempList * (discount / 100));
+                }
+
+                totalDeposit = (tempList * (double)(numDepositPct.Value / 100)); 
             }
 
             return totalDeposit;
@@ -220,12 +300,6 @@ namespace MLN_ISDP_project
                 }
             }
 
-            //if any on backorder, add the deposit to the net value
-            if (p.BackOrder > 0)
-            {
-                totalNet = totalNet + p.Deposit;
-            }
-
             return totalNet;
         }
 
@@ -242,8 +316,7 @@ namespace MLN_ISDP_project
             //if any being picked up, add their value to the total amount
             if (p.Receive > 0)
             {
-                //have to separate back out the deposit amount, as it's been added in
-                totalAmount = totalAmount + ((p.Net - p.Deposit) * p.Receive); 
+                totalAmount = totalAmount + (p.Net * p.Receive); 
             }
 
             return totalAmount;
@@ -256,6 +329,7 @@ namespace MLN_ISDP_project
             owedAfterDeposit = 0;
             
             depositTotal = 0;
+            owedDepositTax = 0;
             partsTotal = 0;
             taxTotal = 0;
             grandTotal = 0;
@@ -263,22 +337,12 @@ namespace MLN_ISDP_project
             //iterate each part and calculate all its fields
             foreach (Part p in invoicePartList)
             {
+                resolveRequest(p);
+
                 //calculate columns
                 p.Deposit = calculateDeposit(p);
                 p.Net = calculateNet(p);
                 p.Amount = calculateAmount(p);
-
-                //check quantity and error correct
-                if (p.Request > p.QuantityOnHand)
-                {
-                    p.Receive = (int)p.QuantityOnHand;
-                    p.BackOrder = p.Request - p.Receive;
-                }
-                else
-                {
-                    p.Receive = p.Request;
-                    p.BackOrder = 0;
-                }
 
                 //running total of deposit, parts, etc. amounts for text fields
                 depositTotal = depositTotal + (p.Deposit * p.BackOrder);
@@ -295,14 +359,31 @@ namespace MLN_ISDP_project
             //calc tax and final totals, add to text fields
             taxTotal = partsTotal * salesTax;
             grandTotal = partsTotal + taxTotal;
+            owedDepositTax = owedAfterDeposit + (owedAfterDeposit * salesTax);
 
             txtDepositAmt.Text = string.Format("{0:c}", depositTotal);
             txtDepositRem.Text = string.Format("{0:c}", owedAfterDeposit);
+            txtDepositWithTax.Text = string.Format("{0:c}", owedDepositTax);
             txtPartsTotal.Text = string.Format("{0:c}", partsTotal);
             txtSalesTax.Text = string.Format("{0:c}", taxTotal);
             txtGrandTotal.Text = string.Format("{0:c}", grandTotal);
 
             sourceInvoice.ResetBindings(false);
+        }
+
+        private void resolveRequest(Part p)
+        {
+            //check quantity and error correct
+            if (p.Request > p.QuantityOnHand)
+            {
+                p.Receive = (int)p.QuantityOnHand;
+                p.BackOrder = p.Request - p.Receive;
+            }
+            else
+            {
+                p.Receive = p.Request;
+                p.BackOrder = 0;
+            }
         }
 
         private void tallyItems()
@@ -395,19 +476,41 @@ namespace MLN_ISDP_project
             //if not cancelled, add the part to the list and refresh
             if (promptValue != "")
             {
+                if (addPart.Request == 0)
+                {
+                    addPart.Request = 1;
+                }
+                if (addPart.QuantityOnHand > 0)
+                {
+                    addPart.PurchaseIndicator = Part.Indicator.INVOICE;
+                }
+                else
+                {
+                    addPart.PurchaseIndicator = Part.Indicator.ORDER;
+                }
                 selectedPartList.Add(addPart);
                 sourceParts.ResetBindings(false);
             }
 
             //if the current part selection is null or an empty part, select this one
-            if (selectedPart == null || selectedPart.PartID.Equals("NO PART"))
-            {
+            //if (selectedPart == null || selectedPart.PartID.Equals("NO PART"))
+            //{
                 selectedPart = addPart;
-            }
+                lstPartsQuery.ClearSelection();
+
+                int rowIndex = lstPartsQuery.Rows.Count - 1;
+
+                lstPartsQuery.Rows[rowIndex].Selected = true;
+                lstPartsQuery.Rows[rowIndex].Cells[0].Selected = true;
+                lstPartsQuery.FirstDisplayedScrollingRowIndex = rowIndex;
+
+            //}
 
             //load that detail in and retally stuff
+            updateCurrentRow();
             loadPartDetail(selectedPart);
             tallyItems();
+            calculateLookUpFields();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -416,17 +519,50 @@ namespace MLN_ISDP_project
             //clears out the whole damn list
             selectedPartList.Clear();
             sourceParts.ResetBindings(false);
+
+            clearItemInfoAndTotals();
+        }
+
+        private void clearItemInfoAndTotals()
+        {
+            txtPartNum.Text = "";
+            txtDescription.Text = "";
+            txtSection.Text = "";
+            txtQOH.Text = "";
+            txtQOO.Text = "";
+
+            txtOrderCost.Text = "";
+            txtOrderList.Text = "";
+            txtInvCost.Text = "";
+            txtInvList.Text = "";
         }
 
         private void btnLoadParts_Click(object sender, EventArgs e)
         {
-            //send file to FAST parsing class, returns some sort of collection of Parts
-            //List<Part> partsFromFast = FastParser(filename);
-            //foreach (Part p in partsFromFast)
-            //{
-            //    selectedPartList.Add(p);
-            //    sourceParts.ResetBindings(false);
-            //}
+            string fileLoc = "";
+            FastParser fast = new FastParser();
+
+            OpenFileDialog fileDia = new OpenFileDialog();
+
+            fileDia.Filter = "FAST Part File|*.DAT";
+
+            DialogResult okSelected = fileDia.ShowDialog();
+
+            if (okSelected == System.Windows.Forms.DialogResult.OK)
+            {
+                fileLoc = fileDia.InitialDirectory + fileDia.FileName;
+
+
+                fast.loadFile(fileLoc);
+                List<Part> partsFromFast = fast.createParts();
+
+                foreach (Part p in partsFromFast)
+                {
+                    p.PurchaseIndicator = Part.Indicator.INVOICE;
+                    selectedPartList.Add(p);
+                    sourceParts.ResetBindings(false);
+                }
+            }
 
             //leave these uncommented, so we have a nudge button, i guess
             tallyItems();
@@ -477,9 +613,14 @@ namespace MLN_ISDP_project
             //loops parts, if they're indicated, adds them to the list backing the other dgv
             foreach (Part p in selectedPartList)
             {
-                if (p.PurchaseIndicator == Part.Indicator.INVOICE || p.PurchaseIndicator == Part.Indicator.ORDER)
+                resolveRequest(p);
+                if (p.PurchaseIndicator == Part.Indicator.INVOICE)
                 {
                     invoicePartList.Add(p);
+                }
+                if (p.BackOrder > 0 || p.PurchaseIndicator == Part.Indicator.ORDER)
+                {
+                    spOrderPartList.Add(p);
                 }
 
             }
@@ -488,12 +629,19 @@ namespace MLN_ISDP_project
             //if i get some time, i'll look into how c# compares objects.
             //are the parts in the lookup list the SAME parts as in the invoice list? i really hope not.
             //but this removes them regardless. maybe it compares properties? dunno.
+
+            //update, c# stores a reference to the same object in each list<>. so they are the same
             foreach (Part p in invoicePartList)
+                selectedPartList.Remove(p);
+
+            foreach (Part p in spOrderPartList)
                 selectedPartList.Remove(p);
 
             //reset BOTH dgvs, and calculate the new fields.
             sourceParts.ResetBindings(false);
             sourceInvoice.ResetBindings(false);
+
+            clearItemInfoAndTotals();
 
             calculateInvoiceFields();
         }
@@ -559,14 +707,19 @@ namespace MLN_ISDP_project
         //when a cell has been edited, run some checks and updates
         private void lstPartsQuery_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            
+            updateCurrentRow();
+            calculateLookUpFields();
+            tallyItems();
+        }
 
+        private void updateCurrentRow()
+        {
             int editedRowIndex = lstPartsQuery.CurrentRow.Index;
 
             //pull the part to edit out
             Part editedPart = selectedPartList[editedRowIndex];
 
-            //if they're askin' for more than we've got, correct them.
+            //if they're askin' for more than we've got, order some.
             if (editedPart.Request > editedPart.QuantityOnHand)
             {
                 int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
@@ -577,9 +730,6 @@ namespace MLN_ISDP_project
 
             //stick the edited part back in
             selectedPartList[editedRowIndex] = editedPart;
-
-            calculateLookUpFields();
-            tallyItems();
         }
 
         private void lstPartsInvoice_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -616,6 +766,11 @@ namespace MLN_ISDP_project
         private void tabPartsActions_Selected(object sender, TabControlEventArgs e)
         {
             calculateInvoiceFields();
+        }
+
+        private void btnPartsScreen_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.OleDb;
 using System.Data;
 
-namespace MLN_ISDP_project
+namespace MLN_ISDP_WorkOrders
 {
     class Part /*: MLN_ISDP_project.Database.Persistence*/ //this was also for the factory pattern experiments
     {
@@ -13,6 +13,7 @@ namespace MLN_ISDP_project
         public enum Indicator { NONE, INVOICE, ORDER }
 
         private string m_id;
+        private bool m_quantityAlreadySet;
 
         #region Properties
 
@@ -74,37 +75,15 @@ namespace MLN_ISDP_project
         public Part(string id)
         {
             m_id = id;
+            m_quantityAlreadySet = false;
         }
 
-        public Part(string id, string requested)
+        public Part(string id, string quantity)
         {
             m_id = id;
-            Request = Int16.Parse(requested);            
+            QuantityOnHand = Double.Parse(quantity);
+            m_quantityAlreadySet = true;
 
-        }
-
-        //clone constructor (i have my reasons)
-        public Part(Part other)
-        {
-            PartID = other.PartID;
-            PartDescription = other.PartDescription;
-            Section = other.Section;
-            ListPrice = other.ListPrice;
-            CostPrice = other.CostPrice;
-            QuantityOnHand = other.QuantityOnHand;
-            QuantityOnOrder = other.QuantityOnOrder;
-            MinQuantity = other.MinQuantity;
-            Reserved = other.Reserved;
-            PurchaseIndicator = other.PurchaseIndicator;
-            Request = other.Request;
-            TotalCost = other.TotalCost;
-            TotalList = other.TotalList;
-            Receive = other.Receive;
-            BackOrder = other.BackOrder;
-            Deposit = other.Deposit;
-            Net = other.Net;
-            Amount = other.Amount;
-            Dirty = other.Dirty;
         }
 
         #endregion
@@ -137,7 +116,10 @@ namespace MLN_ISDP_project
                     Section = (double?)dt.Rows[0].Field<double?>("Section") ?? 0;
                     ListPrice = (decimal?)dt.Rows[0].Field<decimal?>("ListPrice") ?? 0;
                     CostPrice = (decimal?)dt.Rows[0].Field<decimal?>("CostPrice") ?? 0;
-                    QuantityOnHand = (double?)dt.Rows[0].Field<double?>("QuantityOnHand") ?? 0;
+                    if (!m_quantityAlreadySet)
+                    {
+                        QuantityOnHand = (double?)dt.Rows[0].Field<double?>("QuantityOnHand") ?? 0;
+                    }
                     QuantityOnOrder = (double?)dt.Rows[0].Field<double?>("QuantityOnOrder") ?? 0;
                     MinQuantity = (double?)dt.Rows[0].Field<double?>("MinQuantity") ?? 0;
                     Reserved = dt.Rows[0].Field<double?>("Reserved") ?? 0;

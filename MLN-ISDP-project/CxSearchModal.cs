@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Windows.Forms;
 
-namespace MLN_ISDP_WorkOrders
+namespace MLN_ISDP_project
 {
-    public static class CxSearchModal
+    class CxSearchModal
     {
         public static string ShowDialog(string text, string caption, DataTable dt)
         {
@@ -35,7 +35,7 @@ namespace MLN_ISDP_WorkOrders
             confirm.TabIndex = 1;
             cancel.TabIndex = 2;
 
-            
+
 
             confirm.Click += (sender, e) =>
             {

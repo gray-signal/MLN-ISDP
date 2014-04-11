@@ -1,6 +1,6 @@
 ﻿namespace MLN_ISDP_WorkOrders
 {
-    partial class Form1
+    partial class frmServiceWorkOrder
     {
         /// <summary>
         /// Required designer variable.
@@ -38,8 +38,13 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabCreate = new System.Windows.Forms.TabPage();
             this.grpServiceInfo = new System.Windows.Forms.GroupBox();
+            this.numTaskTime = new System.Windows.Forms.NumericUpDown();
+            this.btnRemoveTask = new System.Windows.Forms.Button();
+            this.lblTaskList = new System.Windows.Forms.Label();
+            this.lstTasks = new System.Windows.Forms.ListBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
+            this.btnRemoveTech = new System.Windows.Forms.Button();
             this.lstTechnicians = new System.Windows.Forms.ListBox();
             this.lblTechnicianList = new System.Windows.Forms.Label();
             this.btnAssign = new System.Windows.Forms.Button();
@@ -50,17 +55,20 @@
             this.txtDescription = new System.Windows.Forms.RichTextBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
+            this.btnAddTask = new System.Windows.Forms.Button();
             this.cboTask = new System.Windows.Forms.ComboBox();
             this.lblTask = new System.Windows.Forms.Label();
             this.grpWorkInfo = new System.Windows.Forms.GroupBox();
             this.numKmOut = new System.Windows.Forms.NumericUpDown();
             this.lblKmOut = new System.Windows.Forms.Label();
+            this.numKmIn = new System.Windows.Forms.NumericUpDown();
             this.lblKmIn = new System.Windows.Forms.Label();
             this.numRate = new System.Windows.Forms.NumericUpDown();
             this.lblRate = new System.Windows.Forms.Label();
             this.dtpPromised = new System.Windows.Forms.DateTimePicker();
             this.lblPromised = new System.Windows.Forms.Label();
             this.grpVehicleInfo = new System.Windows.Forms.GroupBox();
+            this.txtYear = new System.Windows.Forms.TextBox();
             this.txtWarrantyExp = new System.Windows.Forms.TextBox();
             this.lblWarrantyExp = new System.Windows.Forms.Label();
             this.txtPlateNum = new System.Windows.Forms.TextBox();
@@ -73,6 +81,7 @@
             this.txtVin = new System.Windows.Forms.TextBox();
             this.lblVin = new System.Windows.Forms.Label();
             this.grpCxInfo = new System.Windows.Forms.GroupBox();
+            this.txtProvince = new System.Windows.Forms.TextBox();
             this.lblProvince = new System.Windows.Forms.Label();
             this.txtCity = new System.Windows.Forms.TextBox();
             this.lblCity = new System.Windows.Forms.Label();
@@ -96,27 +105,18 @@
             this.txtCxNameSearch = new System.Windows.Forms.TextBox();
             this.lblCxSearch = new System.Windows.Forms.Label();
             this.tabView = new System.Windows.Forms.TabPage();
-            this.txtProvince = new System.Windows.Forms.TextBox();
-            this.txtYear = new System.Windows.Forms.TextBox();
-            this.numKmIn = new System.Windows.Forms.NumericUpDown();
-            this.lstTasks = new System.Windows.Forms.ListBox();
-            this.lblTaskList = new System.Windows.Forms.Label();
-            this.btnRemoveTech = new System.Windows.Forms.Button();
-            this.btnRemoveTask = new System.Windows.Forms.Button();
-            this.btnAddTask = new System.Windows.Forms.Button();
-            this.numTaskTime = new System.Windows.Forms.NumericUpDown();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabCreate.SuspendLayout();
             this.grpServiceInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).BeginInit();
             this.grpWorkInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numKmOut)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numKmIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRate)).BeginInit();
             this.grpVehicleInfo.SuspendLayout();
             this.grpCxInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numKmIn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -234,6 +234,46 @@
             this.grpServiceInfo.TabStop = false;
             this.grpServiceInfo.Text = "Service Information";
             // 
+            // numTaskTime
+            // 
+            this.numTaskTime.DecimalPlaces = 2;
+            this.numTaskTime.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.numTaskTime.Location = new System.Drawing.Point(98, 32);
+            this.numTaskTime.Name = "numTaskTime";
+            this.numTaskTime.Size = new System.Drawing.Size(98, 20);
+            this.numTaskTime.TabIndex = 20;
+            // 
+            // btnRemoveTask
+            // 
+            this.btnRemoveTask.Location = new System.Drawing.Point(200, 130);
+            this.btnRemoveTask.Name = "btnRemoveTask";
+            this.btnRemoveTask.Size = new System.Drawing.Size(23, 23);
+            this.btnRemoveTask.TabIndex = 19;
+            this.btnRemoveTask.Text = "X";
+            this.btnRemoveTask.UseVisualStyleBackColor = true;
+            this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
+            // 
+            // lblTaskList
+            // 
+            this.lblTaskList.AutoSize = true;
+            this.lblTaskList.Location = new System.Drawing.Point(7, 114);
+            this.lblTaskList.Name = "lblTaskList";
+            this.lblTaskList.Size = new System.Drawing.Size(39, 13);
+            this.lblTaskList.TabIndex = 18;
+            this.lblTaskList.Text = "Tasks:";
+            // 
+            // lstTasks
+            // 
+            this.lstTasks.FormattingEnabled = true;
+            this.lstTasks.Location = new System.Drawing.Point(10, 130);
+            this.lstTasks.Name = "lstTasks";
+            this.lstTasks.Size = new System.Drawing.Size(186, 82);
+            this.lstTasks.TabIndex = 17;
+            // 
             // btnReset
             // 
             this.btnReset.Location = new System.Drawing.Point(549, 184);
@@ -242,6 +282,7 @@
             this.btnReset.TabIndex = 16;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnCreate
             // 
@@ -251,6 +292,17 @@
             this.btnCreate.TabIndex = 15;
             this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
+            // 
+            // btnRemoveTech
+            // 
+            this.btnRemoveTech.Location = new System.Drawing.Point(428, 130);
+            this.btnRemoveTech.Name = "btnRemoveTech";
+            this.btnRemoveTech.Size = new System.Drawing.Size(23, 23);
+            this.btnRemoveTech.TabIndex = 14;
+            this.btnRemoveTech.Text = "X";
+            this.btnRemoveTech.UseVisualStyleBackColor = true;
+            this.btnRemoveTech.Click += new System.EventHandler(this.btnRemoveTech_Click);
             // 
             // lstTechnicians
             // 
@@ -271,11 +323,11 @@
             // 
             // btnAssign
             // 
-            this.btnAssign.Location = new System.Drawing.Point(426, 28);
+            this.btnAssign.Location = new System.Drawing.Point(234, 57);
             this.btnAssign.Name = "btnAssign";
-            this.btnAssign.Size = new System.Drawing.Size(25, 23);
+            this.btnAssign.Size = new System.Drawing.Size(66, 23);
             this.btnAssign.TabIndex = 11;
-            this.btnAssign.Text = "+";
+            this.btnAssign.Text = "Add Tech";
             this.btnAssign.UseVisualStyleBackColor = true;
             this.btnAssign.Click += new System.EventHandler(this.btnAssign_Click);
             // 
@@ -312,7 +364,7 @@
             "Warranty"});
             this.cboType.Location = new System.Drawing.Point(10, 72);
             this.cboType.Name = "cboType";
-            this.cboType.Size = new System.Drawing.Size(151, 21);
+            this.cboType.Size = new System.Drawing.Size(104, 21);
             this.cboType.TabIndex = 8;
             // 
             // lblType
@@ -349,6 +401,16 @@
             this.lblTime.Size = new System.Drawing.Size(33, 13);
             this.lblTime.TabIndex = 3;
             this.lblTime.Text = "Time:";
+            // 
+            // btnAddTask
+            // 
+            this.btnAddTask.Location = new System.Drawing.Point(120, 70);
+            this.btnAddTask.Name = "btnAddTask";
+            this.btnAddTask.Size = new System.Drawing.Size(76, 23);
+            this.btnAddTask.TabIndex = 2;
+            this.btnAddTask.Text = "Save Task";
+            this.btnAddTask.UseVisualStyleBackColor = true;
+            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
             // 
             // cboTask
             // 
@@ -389,7 +451,12 @@
             // 
             // numKmOut
             // 
-            this.numKmOut.Location = new System.Drawing.Point(283, 33);
+            this.numKmOut.Location = new System.Drawing.Point(332, 33);
+            this.numKmOut.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.numKmOut.Name = "numKmOut";
             this.numKmOut.Size = new System.Drawing.Size(75, 20);
             this.numKmOut.TabIndex = 7;
@@ -397,16 +464,28 @@
             // lblKmOut
             // 
             this.lblKmOut.AutoSize = true;
-            this.lblKmOut.Location = new System.Drawing.Point(280, 16);
+            this.lblKmOut.Location = new System.Drawing.Point(329, 16);
             this.lblKmOut.Name = "lblKmOut";
             this.lblKmOut.Size = new System.Drawing.Size(78, 13);
             this.lblKmOut.TabIndex = 6;
             this.lblKmOut.Text = "Kilometers Out:";
             // 
+            // numKmIn
+            // 
+            this.numKmIn.Location = new System.Drawing.Point(236, 33);
+            this.numKmIn.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numKmIn.Name = "numKmIn";
+            this.numKmIn.Size = new System.Drawing.Size(67, 20);
+            this.numKmIn.TabIndex = 5;
+            // 
             // lblKmIn
             // 
             this.lblKmIn.AutoSize = true;
-            this.lblKmIn.Location = new System.Drawing.Point(184, 16);
+            this.lblKmIn.Location = new System.Drawing.Point(233, 16);
             this.lblKmIn.Name = "lblKmIn";
             this.lblKmIn.Size = new System.Drawing.Size(70, 13);
             this.lblKmIn.TabIndex = 4;
@@ -414,7 +493,8 @@
             // 
             // numRate
             // 
-            this.numRate.Location = new System.Drawing.Point(104, 33);
+            this.numRate.DecimalPlaces = 2;
+            this.numRate.Location = new System.Drawing.Point(153, 33);
             this.numRate.Name = "numRate";
             this.numRate.Size = new System.Drawing.Size(57, 20);
             this.numRate.TabIndex = 3;
@@ -422,7 +502,7 @@
             // lblRate
             // 
             this.lblRate.AutoSize = true;
-            this.lblRate.Location = new System.Drawing.Point(101, 16);
+            this.lblRate.Location = new System.Drawing.Point(150, 16);
             this.lblRate.Name = "lblRate";
             this.lblRate.Size = new System.Drawing.Size(30, 13);
             this.lblRate.TabIndex = 2;
@@ -430,14 +510,15 @@
             // 
             // dtpPromised
             // 
-            this.dtpPromised.CustomFormat = "hh:mm tt";
+            this.dtpPromised.CustomFormat = "dd MMM yyyy - hh:mm tt";
             this.dtpPromised.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpPromised.Location = new System.Drawing.Point(6, 32);
             this.dtpPromised.Name = "dtpPromised";
             this.dtpPromised.ShowUpDown = true;
-            this.dtpPromised.Size = new System.Drawing.Size(77, 20);
+            this.dtpPromised.Size = new System.Drawing.Size(139, 20);
             this.dtpPromised.TabIndex = 1;
             this.dtpPromised.Value = new System.DateTime(2014, 3, 19, 13, 30, 0, 0);
+            this.dtpPromised.ValueChanged += new System.EventHandler(this.dtpPromised_ValueChanged);
             // 
             // lblPromised
             // 
@@ -468,6 +549,14 @@
             this.grpVehicleInfo.TabIndex = 6;
             this.grpVehicleInfo.TabStop = false;
             this.grpVehicleInfo.Text = "Vehicle Information";
+            // 
+            // txtYear
+            // 
+            this.txtYear.Location = new System.Drawing.Point(351, 32);
+            this.txtYear.Name = "txtYear";
+            this.txtYear.ReadOnly = true;
+            this.txtYear.Size = new System.Drawing.Size(55, 20);
+            this.txtYear.TabIndex = 14;
             // 
             // txtWarrantyExp
             // 
@@ -589,6 +678,14 @@
             this.grpCxInfo.TabIndex = 5;
             this.grpCxInfo.TabStop = false;
             this.grpCxInfo.Text = "Customer Information:";
+            // 
+            // txtProvince
+            // 
+            this.txtProvince.Location = new System.Drawing.Point(351, 76);
+            this.txtProvince.Name = "txtProvince";
+            this.txtProvince.ReadOnly = true;
+            this.txtProvince.Size = new System.Drawing.Size(100, 20);
+            this.txtProvince.TabIndex = 17;
             // 
             // lblProvince
             // 
@@ -789,94 +886,6 @@
             this.tabView.Text = "View";
             this.tabView.UseVisualStyleBackColor = true;
             // 
-            // txtProvince
-            // 
-            this.txtProvince.Location = new System.Drawing.Point(351, 76);
-            this.txtProvince.Name = "txtProvince";
-            this.txtProvince.ReadOnly = true;
-            this.txtProvince.Size = new System.Drawing.Size(100, 20);
-            this.txtProvince.TabIndex = 17;
-            // 
-            // txtYear
-            // 
-            this.txtYear.Location = new System.Drawing.Point(351, 32);
-            this.txtYear.Name = "txtYear";
-            this.txtYear.ReadOnly = true;
-            this.txtYear.Size = new System.Drawing.Size(55, 20);
-            this.txtYear.TabIndex = 14;
-            // 
-            // numKmIn
-            // 
-            this.numKmIn.Location = new System.Drawing.Point(187, 33);
-            this.numKmIn.Name = "numKmIn";
-            this.numKmIn.Size = new System.Drawing.Size(67, 20);
-            this.numKmIn.TabIndex = 5;
-            // 
-            // lstTasks
-            // 
-            this.lstTasks.FormattingEnabled = true;
-            this.lstTasks.Location = new System.Drawing.Point(10, 130);
-            this.lstTasks.Name = "lstTasks";
-            this.lstTasks.Size = new System.Drawing.Size(186, 82);
-            this.lstTasks.TabIndex = 17;
-            // 
-            // lblTaskList
-            // 
-            this.lblTaskList.AutoSize = true;
-            this.lblTaskList.Location = new System.Drawing.Point(7, 114);
-            this.lblTaskList.Name = "lblTaskList";
-            this.lblTaskList.Size = new System.Drawing.Size(39, 13);
-            this.lblTaskList.TabIndex = 18;
-            this.lblTaskList.Text = "Tasks:";
-            // 
-            // btnRemoveTech
-            // 
-            this.btnRemoveTech.Location = new System.Drawing.Point(428, 130);
-            this.btnRemoveTech.Name = "btnRemoveTech";
-            this.btnRemoveTech.Size = new System.Drawing.Size(23, 23);
-            this.btnRemoveTech.TabIndex = 14;
-            this.btnRemoveTech.Text = "X";
-            this.btnRemoveTech.UseVisualStyleBackColor = true;
-            this.btnRemoveTech.Click += new System.EventHandler(this.btnRemoveTech_Click);
-            // 
-            // btnRemoveTask
-            // 
-            this.btnRemoveTask.Location = new System.Drawing.Point(200, 130);
-            this.btnRemoveTask.Name = "btnRemoveTask";
-            this.btnRemoveTask.Size = new System.Drawing.Size(23, 23);
-            this.btnRemoveTask.TabIndex = 19;
-            this.btnRemoveTask.Text = "X";
-            this.btnRemoveTask.UseVisualStyleBackColor = true;
-            this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
-            // 
-            // btnAddTask
-            // 
-            this.btnAddTask.Location = new System.Drawing.Point(167, 70);
-            this.btnAddTask.Name = "btnAddTask";
-            this.btnAddTask.Size = new System.Drawing.Size(29, 23);
-            this.btnAddTask.TabIndex = 2;
-            this.btnAddTask.Text = "+";
-            this.btnAddTask.UseVisualStyleBackColor = true;
-            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
-            // 
-            // numTaskTime
-            // 
-            this.numTaskTime.DecimalPlaces = 2;
-            this.numTaskTime.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.numTaskTime.Location = new System.Drawing.Point(98, 32);
-            this.numTaskTime.Name = "numTaskTime";
-            this.numTaskTime.Size = new System.Drawing.Size(98, 20);
-            this.numTaskTime.TabIndex = 20;
-            this.numTaskTime.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -885,7 +894,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(342, 73);
             this.dataGridView1.TabIndex = 4;
             // 
-            // Form1
+            // frmServiceWorkOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -896,7 +905,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "frmServiceWorkOrder";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -905,16 +914,16 @@
             this.tabCreate.PerformLayout();
             this.grpServiceInfo.ResumeLayout(false);
             this.grpServiceInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).EndInit();
             this.grpWorkInfo.ResumeLayout(false);
             this.grpWorkInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numKmOut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numKmIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRate)).EndInit();
             this.grpVehicleInfo.ResumeLayout(false);
             this.grpVehicleInfo.PerformLayout();
             this.grpCxInfo.ResumeLayout(false);
             this.grpCxInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numKmIn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
