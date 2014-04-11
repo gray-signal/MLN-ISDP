@@ -93,6 +93,8 @@
             this.lblFirstName = new System.Windows.Forms.Label();
             this.lblAccountNo = new System.Windows.Forms.Label();
             this.grpOrderInfo = new System.Windows.Forms.GroupBox();
+            this.txtDepositWithTax = new System.Windows.Forms.TextBox();
+            this.lblDepositWithTax = new System.Windows.Forms.Label();
             this.txtGrandTotal = new System.Windows.Forms.TextBox();
             this.txtSalesTax = new System.Windows.Forms.TextBox();
             this.txtPartsTotal = new System.Windows.Forms.TextBox();
@@ -108,6 +110,28 @@
             this.lstPartsInvoice = new System.Windows.Forms.DataGridView();
             this.lblInvoicePartsList = new System.Windows.Forms.Label();
             this.tabInvoiceHistory = new System.Windows.Forms.TabPage();
+            this.tabSpecialOrders = new System.Windows.Forms.TabPage();
+            this.tabSpecialOrderContainer = new System.Windows.Forms.TabControl();
+            this.tabSpOrderAdd = new System.Windows.Forms.TabPage();
+            this.lstPartsSpOrder = new System.Windows.Forms.DataGridView();
+            this.grpSpOrderActions = new System.Windows.Forms.GroupBox();
+            this.btnSpSaveOrder = new System.Windows.Forms.Button();
+            this.btnSpClear = new System.Windows.Forms.Button();
+            this.btnSpRemovePart = new System.Windows.Forms.Button();
+            this.btnSpAddPart = new System.Windows.Forms.Button();
+            this.btnSpLoadParts = new System.Windows.Forms.Button();
+            this.txtSpOrderList = new System.Windows.Forms.TextBox();
+            this.lblSpOrderList = new System.Windows.Forms.Label();
+            this.txtSpOrderCost = new System.Windows.Forms.TextBox();
+            this.lblSpOrderCost = new System.Windows.Forms.Label();
+            this.txtOrderedFor = new System.Windows.Forms.TextBox();
+            this.lblOrderedFor = new System.Windows.Forms.Label();
+            this.btnAcctSearch = new System.Windows.Forms.Button();
+            this.txtAcctSearch = new System.Windows.Forms.TextBox();
+            this.lblAcctSearch = new System.Windows.Forms.Label();
+            this.tabSpOrderView = new System.Windows.Forms.TabPage();
+            this.txtSpItemCountView = new System.Windows.Forms.TextBox();
+            this.lblSpOrderCountView = new System.Windows.Forms.Label();
             this.tabOrders = new System.Windows.Forms.TabPage();
             this.grpOrderActions = new System.Windows.Forms.GroupBox();
             this.btnSendOrder = new System.Windows.Forms.Button();
@@ -123,28 +147,23 @@
             this.lblTotalOrderCost = new System.Windows.Forms.Label();
             this.lblTotalItems = new System.Windows.Forms.Label();
             this.lblPONum = new System.Windows.Forms.Label();
-            this.lblDepositWithTax = new System.Windows.Forms.Label();
-            this.txtDepositWithTax = new System.Windows.Forms.TextBox();
-            this.tabSpecialOrders = new System.Windows.Forms.TabPage();
-            this.tabSpecialOrderContainer = new System.Windows.Forms.TabControl();
-            this.tabSpOrderAdd = new System.Windows.Forms.TabPage();
-            this.tabSpOrderView = new System.Windows.Forms.TabPage();
-            this.lblAcctSearch = new System.Windows.Forms.Label();
-            this.txtAcctSearch = new System.Windows.Forms.TextBox();
-            this.btnAcctSearch = new System.Windows.Forms.Button();
-            this.lblOrderedFor = new System.Windows.Forms.Label();
-            this.txtOrderedFor = new System.Windows.Forms.TextBox();
-            this.lblSpOrderCost = new System.Windows.Forms.Label();
-            this.txtSpOrderCost = new System.Windows.Forms.TextBox();
-            this.lblSpOrderList = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.grpSpOrderActions = new System.Windows.Forms.GroupBox();
-            this.btnSpLoadParts = new System.Windows.Forms.Button();
-            this.btnSpAddPart = new System.Windows.Forms.Button();
-            this.btnSpRemovePart = new System.Windows.Forms.Button();
-            this.btnSpClear = new System.Windows.Forms.Button();
-            this.btnSpSaveOrder = new System.Windows.Forms.Button();
-            this.lstPartsSpOrder = new System.Windows.Forms.DataGridView();
+            this.tabPartsReq = new System.Windows.Forms.TabPage();
+            this.grpWOActions = new System.Windows.Forms.GroupBox();
+            this.btnWOComplete = new System.Windows.Forms.Button();
+            this.btnWOClear = new System.Windows.Forms.Button();
+            this.btnWORemoveReq = new System.Windows.Forms.Button();
+            this.btnWOAddPart = new System.Windows.Forms.Button();
+            this.btnWOLoadParts = new System.Windows.Forms.Button();
+            this.lstInServWO = new System.Windows.Forms.DataGridView();
+            this.lblInServWO = new System.Windows.Forms.Label();
+            this.lstPartReq = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSpOrderCostView = new System.Windows.Forms.TextBox();
+            this.lblSpOrderCostView = new System.Windows.Forms.Label();
+            this.txtSpOrderListView = new System.Windows.Forms.TextBox();
+            this.lblSpOrderListView = new System.Windows.Forms.Label();
+            this.btnSpOrderClear = new System.Windows.Forms.Button();
+            this.lstPartsSpOrderView = new System.Windows.Forms.DataGridView();
             this.mnuMenu.SuspendLayout();
             this.tabPartsActions.SuspendLayout();
             this.tabLookUp.SuspendLayout();
@@ -159,14 +178,20 @@
             this.grpOrderInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDepositPct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsInvoice)).BeginInit();
-            this.tabOrders.SuspendLayout();
-            this.grpOrderActions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lstPartsOrder)).BeginInit();
             this.tabSpecialOrders.SuspendLayout();
             this.tabSpecialOrderContainer.SuspendLayout();
             this.tabSpOrderAdd.SuspendLayout();
-            this.grpSpOrderActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsSpOrder)).BeginInit();
+            this.grpSpOrderActions.SuspendLayout();
+            this.tabSpOrderView.SuspendLayout();
+            this.tabOrders.SuspendLayout();
+            this.grpOrderActions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsOrder)).BeginInit();
+            this.tabPartsReq.SuspendLayout();
+            this.grpWOActions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstInServWO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartReq)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsSpOrderView)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMenu
@@ -212,6 +237,7 @@
             this.tabPartsActions.Controls.Add(this.tabInvoice);
             this.tabPartsActions.Controls.Add(this.tabSpecialOrders);
             this.tabPartsActions.Controls.Add(this.tabOrders);
+            this.tabPartsActions.Controls.Add(this.tabPartsReq);
             this.tabPartsActions.Location = new System.Drawing.Point(12, 28);
             this.tabPartsActions.Name = "tabPartsActions";
             this.tabPartsActions.SelectedIndex = 0;
@@ -822,6 +848,23 @@
             this.grpOrderInfo.TabStop = false;
             this.grpOrderInfo.Text = "Order Information:";
             // 
+            // txtDepositWithTax
+            // 
+            this.txtDepositWithTax.Location = new System.Drawing.Point(303, 32);
+            this.txtDepositWithTax.Name = "txtDepositWithTax";
+            this.txtDepositWithTax.ReadOnly = true;
+            this.txtDepositWithTax.Size = new System.Drawing.Size(55, 20);
+            this.txtDepositWithTax.TabIndex = 13;
+            // 
+            // lblDepositWithTax
+            // 
+            this.lblDepositWithTax.AutoSize = true;
+            this.lblDepositWithTax.Location = new System.Drawing.Point(300, 16);
+            this.lblDepositWithTax.Name = "lblDepositWithTax";
+            this.lblDepositWithTax.Size = new System.Drawing.Size(37, 13);
+            this.lblDepositWithTax.TabIndex = 12;
+            this.lblDepositWithTax.Text = "+ Tax:";
+            // 
             // txtGrandTotal
             // 
             this.txtGrandTotal.Location = new System.Drawing.Point(554, 32);
@@ -954,10 +997,235 @@
             this.tabInvoiceHistory.Location = new System.Drawing.Point(4, 23);
             this.tabInvoiceHistory.Name = "tabInvoiceHistory";
             this.tabInvoiceHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInvoiceHistory.Size = new System.Drawing.Size(644, 333);
+            this.tabInvoiceHistory.Size = new System.Drawing.Size(644, 390);
             this.tabInvoiceHistory.TabIndex = 1;
             this.tabInvoiceHistory.Text = "History";
             this.tabInvoiceHistory.UseVisualStyleBackColor = true;
+            // 
+            // tabSpecialOrders
+            // 
+            this.tabSpecialOrders.Controls.Add(this.tabSpecialOrderContainer);
+            this.tabSpecialOrders.Location = new System.Drawing.Point(4, 23);
+            this.tabSpecialOrders.Name = "tabSpecialOrders";
+            this.tabSpecialOrders.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSpecialOrders.Size = new System.Drawing.Size(665, 430);
+            this.tabSpecialOrders.TabIndex = 3;
+            this.tabSpecialOrders.Text = "Special Orders";
+            this.tabSpecialOrders.UseVisualStyleBackColor = true;
+            // 
+            // tabSpecialOrderContainer
+            // 
+            this.tabSpecialOrderContainer.Controls.Add(this.tabSpOrderAdd);
+            this.tabSpecialOrderContainer.Controls.Add(this.tabSpOrderView);
+            this.tabSpecialOrderContainer.Location = new System.Drawing.Point(6, 6);
+            this.tabSpecialOrderContainer.Name = "tabSpecialOrderContainer";
+            this.tabSpecialOrderContainer.SelectedIndex = 0;
+            this.tabSpecialOrderContainer.Size = new System.Drawing.Size(653, 418);
+            this.tabSpecialOrderContainer.TabIndex = 0;
+            // 
+            // tabSpOrderAdd
+            // 
+            this.tabSpOrderAdd.Controls.Add(this.lstPartsSpOrder);
+            this.tabSpOrderAdd.Controls.Add(this.grpSpOrderActions);
+            this.tabSpOrderAdd.Controls.Add(this.txtSpOrderList);
+            this.tabSpOrderAdd.Controls.Add(this.lblSpOrderList);
+            this.tabSpOrderAdd.Controls.Add(this.txtSpOrderCost);
+            this.tabSpOrderAdd.Controls.Add(this.lblSpOrderCost);
+            this.tabSpOrderAdd.Controls.Add(this.txtOrderedFor);
+            this.tabSpOrderAdd.Controls.Add(this.lblOrderedFor);
+            this.tabSpOrderAdd.Controls.Add(this.btnAcctSearch);
+            this.tabSpOrderAdd.Controls.Add(this.txtAcctSearch);
+            this.tabSpOrderAdd.Controls.Add(this.lblAcctSearch);
+            this.tabSpOrderAdd.Location = new System.Drawing.Point(4, 23);
+            this.tabSpOrderAdd.Name = "tabSpOrderAdd";
+            this.tabSpOrderAdd.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSpOrderAdd.Size = new System.Drawing.Size(645, 391);
+            this.tabSpOrderAdd.TabIndex = 0;
+            this.tabSpOrderAdd.Text = "Add";
+            this.tabSpOrderAdd.UseVisualStyleBackColor = true;
+            // 
+            // lstPartsSpOrder
+            // 
+            this.lstPartsSpOrder.AllowUserToAddRows = false;
+            this.lstPartsSpOrder.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstPartsSpOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstPartsSpOrder.Location = new System.Drawing.Point(6, 49);
+            this.lstPartsSpOrder.Name = "lstPartsSpOrder";
+            this.lstPartsSpOrder.RowHeadersVisible = false;
+            this.lstPartsSpOrder.Size = new System.Drawing.Size(633, 255);
+            this.lstPartsSpOrder.TabIndex = 10;
+            this.lstPartsSpOrder.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstPartsSpOrder_CellEndEdit);
+            // 
+            // grpSpOrderActions
+            // 
+            this.grpSpOrderActions.Controls.Add(this.btnSpSaveOrder);
+            this.grpSpOrderActions.Controls.Add(this.btnSpClear);
+            this.grpSpOrderActions.Controls.Add(this.btnSpRemovePart);
+            this.grpSpOrderActions.Controls.Add(this.btnSpAddPart);
+            this.grpSpOrderActions.Controls.Add(this.btnSpLoadParts);
+            this.grpSpOrderActions.Location = new System.Drawing.Point(9, 310);
+            this.grpSpOrderActions.Name = "grpSpOrderActions";
+            this.grpSpOrderActions.Size = new System.Drawing.Size(630, 75);
+            this.grpSpOrderActions.TabIndex = 9;
+            this.grpSpOrderActions.TabStop = false;
+            // 
+            // btnSpSaveOrder
+            // 
+            this.btnSpSaveOrder.Location = new System.Drawing.Point(549, 16);
+            this.btnSpSaveOrder.Name = "btnSpSaveOrder";
+            this.btnSpSaveOrder.Size = new System.Drawing.Size(75, 48);
+            this.btnSpSaveOrder.TabIndex = 4;
+            this.btnSpSaveOrder.Text = "Save to Order Log";
+            this.btnSpSaveOrder.UseVisualStyleBackColor = true;
+            this.btnSpSaveOrder.Click += new System.EventHandler(this.btnSpSaveOrder_Click);
+            // 
+            // btnSpClear
+            // 
+            this.btnSpClear.Location = new System.Drawing.Point(249, 16);
+            this.btnSpClear.Name = "btnSpClear";
+            this.btnSpClear.Size = new System.Drawing.Size(75, 48);
+            this.btnSpClear.TabIndex = 3;
+            this.btnSpClear.Text = "Clear";
+            this.btnSpClear.UseVisualStyleBackColor = true;
+            this.btnSpClear.Click += new System.EventHandler(this.btnSpClear_Click);
+            // 
+            // btnSpRemovePart
+            // 
+            this.btnSpRemovePart.Location = new System.Drawing.Point(168, 16);
+            this.btnSpRemovePart.Name = "btnSpRemovePart";
+            this.btnSpRemovePart.Size = new System.Drawing.Size(75, 48);
+            this.btnSpRemovePart.TabIndex = 2;
+            this.btnSpRemovePart.Text = "Remove Part";
+            this.btnSpRemovePart.UseVisualStyleBackColor = true;
+            this.btnSpRemovePart.Click += new System.EventHandler(this.btnSpRemovePart_Click);
+            // 
+            // btnSpAddPart
+            // 
+            this.btnSpAddPart.Location = new System.Drawing.Point(87, 16);
+            this.btnSpAddPart.Name = "btnSpAddPart";
+            this.btnSpAddPart.Size = new System.Drawing.Size(75, 48);
+            this.btnSpAddPart.TabIndex = 1;
+            this.btnSpAddPart.Text = "Add Part";
+            this.btnSpAddPart.UseVisualStyleBackColor = true;
+            this.btnSpAddPart.Click += new System.EventHandler(this.btnSpAddPart_Click);
+            // 
+            // btnSpLoadParts
+            // 
+            this.btnSpLoadParts.Location = new System.Drawing.Point(6, 16);
+            this.btnSpLoadParts.Name = "btnSpLoadParts";
+            this.btnSpLoadParts.Size = new System.Drawing.Size(75, 48);
+            this.btnSpLoadParts.TabIndex = 0;
+            this.btnSpLoadParts.Text = "Load Parts File";
+            this.btnSpLoadParts.UseVisualStyleBackColor = true;
+            this.btnSpLoadParts.Click += new System.EventHandler(this.btnSpLoadParts_Click);
+            // 
+            // txtSpOrderList
+            // 
+            this.txtSpOrderList.Location = new System.Drawing.Point(509, 23);
+            this.txtSpOrderList.Name = "txtSpOrderList";
+            this.txtSpOrderList.Size = new System.Drawing.Size(100, 20);
+            this.txtSpOrderList.TabIndex = 8;
+            // 
+            // lblSpOrderList
+            // 
+            this.lblSpOrderList.AutoSize = true;
+            this.lblSpOrderList.Location = new System.Drawing.Point(506, 6);
+            this.lblSpOrderList.Name = "lblSpOrderList";
+            this.lblSpOrderList.Size = new System.Drawing.Size(70, 13);
+            this.lblSpOrderList.TabIndex = 7;
+            this.lblSpOrderList.Text = "Order List ($):";
+            // 
+            // txtSpOrderCost
+            // 
+            this.txtSpOrderCost.Location = new System.Drawing.Point(337, 23);
+            this.txtSpOrderCost.Name = "txtSpOrderCost";
+            this.txtSpOrderCost.Size = new System.Drawing.Size(100, 20);
+            this.txtSpOrderCost.TabIndex = 6;
+            // 
+            // lblSpOrderCost
+            // 
+            this.lblSpOrderCost.AutoSize = true;
+            this.lblSpOrderCost.Location = new System.Drawing.Point(334, 6);
+            this.lblSpOrderCost.Name = "lblSpOrderCost";
+            this.lblSpOrderCost.Size = new System.Drawing.Size(75, 13);
+            this.lblSpOrderCost.TabIndex = 5;
+            this.lblSpOrderCost.Text = "Order Cost ($):";
+            // 
+            // txtOrderedFor
+            // 
+            this.txtOrderedFor.Location = new System.Drawing.Point(165, 23);
+            this.txtOrderedFor.Name = "txtOrderedFor";
+            this.txtOrderedFor.Size = new System.Drawing.Size(100, 20);
+            this.txtOrderedFor.TabIndex = 4;
+            // 
+            // lblOrderedFor
+            // 
+            this.lblOrderedFor.AutoSize = true;
+            this.lblOrderedFor.Location = new System.Drawing.Point(162, 7);
+            this.lblOrderedFor.Name = "lblOrderedFor";
+            this.lblOrderedFor.Size = new System.Drawing.Size(66, 13);
+            this.lblOrderedFor.TabIndex = 3;
+            this.lblOrderedFor.Text = "Ordered For:";
+            // 
+            // btnAcctSearch
+            // 
+            this.btnAcctSearch.Location = new System.Drawing.Point(99, 20);
+            this.btnAcctSearch.Name = "btnAcctSearch";
+            this.btnAcctSearch.Size = new System.Drawing.Size(22, 23);
+            this.btnAcctSearch.TabIndex = 2;
+            this.btnAcctSearch.UseVisualStyleBackColor = true;
+            this.btnAcctSearch.Click += new System.EventHandler(this.btnAcctSearch_Click);
+            // 
+            // txtAcctSearch
+            // 
+            this.txtAcctSearch.Location = new System.Drawing.Point(6, 22);
+            this.txtAcctSearch.Name = "txtAcctSearch";
+            this.txtAcctSearch.Size = new System.Drawing.Size(87, 20);
+            this.txtAcctSearch.TabIndex = 1;
+            // 
+            // lblAcctSearch
+            // 
+            this.lblAcctSearch.AutoSize = true;
+            this.lblAcctSearch.Location = new System.Drawing.Point(6, 6);
+            this.lblAcctSearch.Name = "lblAcctSearch";
+            this.lblAcctSearch.Size = new System.Drawing.Size(87, 13);
+            this.lblAcctSearch.TabIndex = 0;
+            this.lblAcctSearch.Text = "Account Search:";
+            // 
+            // tabSpOrderView
+            // 
+            this.tabSpOrderView.Controls.Add(this.lstPartsSpOrderView);
+            this.tabSpOrderView.Controls.Add(this.btnSpOrderClear);
+            this.tabSpOrderView.Controls.Add(this.txtSpOrderListView);
+            this.tabSpOrderView.Controls.Add(this.lblSpOrderListView);
+            this.tabSpOrderView.Controls.Add(this.txtSpOrderCostView);
+            this.tabSpOrderView.Controls.Add(this.lblSpOrderCostView);
+            this.tabSpOrderView.Controls.Add(this.txtSpItemCountView);
+            this.tabSpOrderView.Controls.Add(this.lblSpOrderCountView);
+            this.tabSpOrderView.Location = new System.Drawing.Point(4, 23);
+            this.tabSpOrderView.Name = "tabSpOrderView";
+            this.tabSpOrderView.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSpOrderView.Size = new System.Drawing.Size(645, 391);
+            this.tabSpOrderView.TabIndex = 1;
+            this.tabSpOrderView.Text = "View";
+            this.tabSpOrderView.UseVisualStyleBackColor = true;
+            this.tabSpOrderView.Enter += new System.EventHandler(this.tabSpOrderView_Enter);
+            // 
+            // txtSpItemCountView
+            // 
+            this.txtSpItemCountView.Location = new System.Drawing.Point(190, 24);
+            this.txtSpItemCountView.Name = "txtSpItemCountView";
+            this.txtSpItemCountView.Size = new System.Drawing.Size(100, 20);
+            this.txtSpItemCountView.TabIndex = 1;
+            // 
+            // lblSpOrderCountView
+            // 
+            this.lblSpOrderCountView.AutoSize = true;
+            this.lblSpOrderCountView.Location = new System.Drawing.Point(187, 7);
+            this.lblSpOrderCountView.Name = "lblSpOrderCountView";
+            this.lblSpOrderCountView.Size = new System.Drawing.Size(61, 13);
+            this.lblSpOrderCountView.TabIndex = 0;
+            this.lblSpOrderCountView.Text = "Item Count:";
             // 
             // tabOrders
             // 
@@ -985,7 +1253,7 @@
             this.grpOrderActions.Controls.Add(this.btnAddSpecialOrder);
             this.grpOrderActions.Controls.Add(this.btnAddPartOrder);
             this.grpOrderActions.Controls.Add(this.btnLoadPartsFileOrder);
-            this.grpOrderActions.Location = new System.Drawing.Point(9, 293);
+            this.grpOrderActions.Location = new System.Drawing.Point(9, 350);
             this.grpOrderActions.Name = "grpOrderActions";
             this.grpOrderActions.Size = new System.Drawing.Size(650, 74);
             this.grpOrderActions.TabIndex = 7;
@@ -999,6 +1267,7 @@
             this.btnSendOrder.TabIndex = 5;
             this.btnSendOrder.Text = "Send Order";
             this.btnSendOrder.UseVisualStyleBackColor = true;
+            this.btnSendOrder.Click += new System.EventHandler(this.btnSendOrder_Click);
             // 
             // btnClearOrder
             // 
@@ -1008,6 +1277,7 @@
             this.btnClearOrder.TabIndex = 4;
             this.btnClearOrder.Text = "Clear";
             this.btnClearOrder.UseVisualStyleBackColor = true;
+            this.btnClearOrder.Click += new System.EventHandler(this.btnClearOrder_Click);
             // 
             // btnAddGeneralOrder
             // 
@@ -1017,6 +1287,7 @@
             this.btnAddGeneralOrder.TabIndex = 3;
             this.btnAddGeneralOrder.Text = "Add General Order";
             this.btnAddGeneralOrder.UseVisualStyleBackColor = true;
+            this.btnAddGeneralOrder.Click += new System.EventHandler(this.btnAddGeneralOrder_Click);
             // 
             // btnAddSpecialOrder
             // 
@@ -1026,6 +1297,7 @@
             this.btnAddSpecialOrder.TabIndex = 2;
             this.btnAddSpecialOrder.Text = "Add Special Order Log";
             this.btnAddSpecialOrder.UseVisualStyleBackColor = true;
+            this.btnAddSpecialOrder.Click += new System.EventHandler(this.btnAddSpecialOrder_Click);
             // 
             // btnAddPartOrder
             // 
@@ -1035,6 +1307,7 @@
             this.btnAddPartOrder.TabIndex = 1;
             this.btnAddPartOrder.Text = "Add Part";
             this.btnAddPartOrder.UseVisualStyleBackColor = true;
+            this.btnAddPartOrder.Click += new System.EventHandler(this.btnAddPartOrder_Click);
             // 
             // btnLoadPartsFileOrder
             // 
@@ -1044,6 +1317,7 @@
             this.btnLoadPartsFileOrder.TabIndex = 0;
             this.btnLoadPartsFileOrder.Text = "Load Parts File";
             this.btnLoadPartsFileOrder.UseVisualStyleBackColor = true;
+            this.btnLoadPartsFileOrder.Click += new System.EventHandler(this.btnLoadPartsFileOrder_Click);
             // 
             // txtTotalOrderCost
             // 
@@ -1070,11 +1344,15 @@
             // 
             // lstPartsOrder
             // 
+            this.lstPartsOrder.AllowUserToAddRows = false;
+            this.lstPartsOrder.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.lstPartsOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lstPartsOrder.Location = new System.Drawing.Point(9, 54);
             this.lstPartsOrder.Name = "lstPartsOrder";
-            this.lstPartsOrder.Size = new System.Drawing.Size(650, 233);
+            this.lstPartsOrder.Size = new System.Drawing.Size(650, 290);
             this.lstPartsOrder.TabIndex = 3;
+            this.lstPartsOrder.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.lstPartsOrder_RowsAdded);
+            this.lstPartsOrder.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.lstPartsOrder_RowsRemoved);
             // 
             // lblTotalOrderCost
             // 
@@ -1103,212 +1381,174 @@
             this.lblPONum.TabIndex = 0;
             this.lblPONum.Text = "Purchase Order #:";
             // 
-            // lblDepositWithTax
+            // tabPartsReq
             // 
-            this.lblDepositWithTax.AutoSize = true;
-            this.lblDepositWithTax.Location = new System.Drawing.Point(300, 16);
-            this.lblDepositWithTax.Name = "lblDepositWithTax";
-            this.lblDepositWithTax.Size = new System.Drawing.Size(37, 13);
-            this.lblDepositWithTax.TabIndex = 12;
-            this.lblDepositWithTax.Text = "+ Tax:";
+            this.tabPartsReq.Controls.Add(this.grpWOActions);
+            this.tabPartsReq.Controls.Add(this.lstInServWO);
+            this.tabPartsReq.Controls.Add(this.lblInServWO);
+            this.tabPartsReq.Controls.Add(this.lstPartReq);
+            this.tabPartsReq.Controls.Add(this.label1);
+            this.tabPartsReq.Location = new System.Drawing.Point(4, 23);
+            this.tabPartsReq.Name = "tabPartsReq";
+            this.tabPartsReq.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPartsReq.Size = new System.Drawing.Size(665, 430);
+            this.tabPartsReq.TabIndex = 4;
+            this.tabPartsReq.Text = "Parts Request";
+            this.tabPartsReq.UseVisualStyleBackColor = true;
             // 
-            // txtDepositWithTax
+            // grpWOActions
             // 
-            this.txtDepositWithTax.Location = new System.Drawing.Point(303, 32);
-            this.txtDepositWithTax.Name = "txtDepositWithTax";
-            this.txtDepositWithTax.ReadOnly = true;
-            this.txtDepositWithTax.Size = new System.Drawing.Size(55, 20);
-            this.txtDepositWithTax.TabIndex = 13;
+            this.grpWOActions.Controls.Add(this.btnWOComplete);
+            this.grpWOActions.Controls.Add(this.btnWOClear);
+            this.grpWOActions.Controls.Add(this.btnWORemoveReq);
+            this.grpWOActions.Controls.Add(this.btnWOAddPart);
+            this.grpWOActions.Controls.Add(this.btnWOLoadParts);
+            this.grpWOActions.Location = new System.Drawing.Point(9, 351);
+            this.grpWOActions.Name = "grpWOActions";
+            this.grpWOActions.Size = new System.Drawing.Size(650, 73);
+            this.grpWOActions.TabIndex = 9;
+            this.grpWOActions.TabStop = false;
             // 
-            // tabSpecialOrders
+            // btnWOComplete
             // 
-            this.tabSpecialOrders.Controls.Add(this.tabSpecialOrderContainer);
-            this.tabSpecialOrders.Location = new System.Drawing.Point(4, 23);
-            this.tabSpecialOrders.Name = "tabSpecialOrders";
-            this.tabSpecialOrders.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSpecialOrders.Size = new System.Drawing.Size(665, 430);
-            this.tabSpecialOrders.TabIndex = 3;
-            this.tabSpecialOrders.Text = "Special Orders";
-            this.tabSpecialOrders.UseVisualStyleBackColor = true;
+            this.btnWOComplete.Location = new System.Drawing.Point(555, 16);
+            this.btnWOComplete.Name = "btnWOComplete";
+            this.btnWOComplete.Size = new System.Drawing.Size(89, 46);
+            this.btnWOComplete.TabIndex = 4;
+            this.btnWOComplete.Text = "Complete Request";
+            this.btnWOComplete.UseVisualStyleBackColor = true;
             // 
-            // tabSpecialOrderContainer
+            // btnWOClear
             // 
-            this.tabSpecialOrderContainer.Controls.Add(this.tabSpOrderAdd);
-            this.tabSpecialOrderContainer.Controls.Add(this.tabSpOrderView);
-            this.tabSpecialOrderContainer.Location = new System.Drawing.Point(6, 6);
-            this.tabSpecialOrderContainer.Name = "tabSpecialOrderContainer";
-            this.tabSpecialOrderContainer.SelectedIndex = 0;
-            this.tabSpecialOrderContainer.Size = new System.Drawing.Size(653, 418);
-            this.tabSpecialOrderContainer.TabIndex = 0;
+            this.btnWOClear.Location = new System.Drawing.Point(291, 16);
+            this.btnWOClear.Name = "btnWOClear";
+            this.btnWOClear.Size = new System.Drawing.Size(89, 46);
+            this.btnWOClear.TabIndex = 3;
+            this.btnWOClear.Text = "Clear";
+            this.btnWOClear.UseVisualStyleBackColor = true;
             // 
-            // tabSpOrderAdd
+            // btnWORemoveReq
             // 
-            this.tabSpOrderAdd.Controls.Add(this.lstPartsSpOrder);
-            this.tabSpOrderAdd.Controls.Add(this.grpSpOrderActions);
-            this.tabSpOrderAdd.Controls.Add(this.textBox1);
-            this.tabSpOrderAdd.Controls.Add(this.lblSpOrderList);
-            this.tabSpOrderAdd.Controls.Add(this.txtSpOrderCost);
-            this.tabSpOrderAdd.Controls.Add(this.lblSpOrderCost);
-            this.tabSpOrderAdd.Controls.Add(this.txtOrderedFor);
-            this.tabSpOrderAdd.Controls.Add(this.lblOrderedFor);
-            this.tabSpOrderAdd.Controls.Add(this.btnAcctSearch);
-            this.tabSpOrderAdd.Controls.Add(this.txtAcctSearch);
-            this.tabSpOrderAdd.Controls.Add(this.lblAcctSearch);
-            this.tabSpOrderAdd.Location = new System.Drawing.Point(4, 23);
-            this.tabSpOrderAdd.Name = "tabSpOrderAdd";
-            this.tabSpOrderAdd.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSpOrderAdd.Size = new System.Drawing.Size(645, 391);
-            this.tabSpOrderAdd.TabIndex = 0;
-            this.tabSpOrderAdd.Text = "Add";
-            this.tabSpOrderAdd.UseVisualStyleBackColor = true;
+            this.btnWORemoveReq.Location = new System.Drawing.Point(196, 16);
+            this.btnWORemoveReq.Name = "btnWORemoveReq";
+            this.btnWORemoveReq.Size = new System.Drawing.Size(89, 46);
+            this.btnWORemoveReq.TabIndex = 2;
+            this.btnWORemoveReq.Text = "Remove Request";
+            this.btnWORemoveReq.UseVisualStyleBackColor = true;
             // 
-            // tabSpOrderView
+            // btnWOAddPart
             // 
-            this.tabSpOrderView.Location = new System.Drawing.Point(4, 23);
-            this.tabSpOrderView.Name = "tabSpOrderView";
-            this.tabSpOrderView.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSpOrderView.Size = new System.Drawing.Size(645, 391);
-            this.tabSpOrderView.TabIndex = 1;
-            this.tabSpOrderView.Text = "View";
-            this.tabSpOrderView.UseVisualStyleBackColor = true;
+            this.btnWOAddPart.Location = new System.Drawing.Point(101, 16);
+            this.btnWOAddPart.Name = "btnWOAddPart";
+            this.btnWOAddPart.Size = new System.Drawing.Size(89, 46);
+            this.btnWOAddPart.TabIndex = 1;
+            this.btnWOAddPart.Text = "Add Part";
+            this.btnWOAddPart.UseVisualStyleBackColor = true;
             // 
-            // lblAcctSearch
+            // btnWOLoadParts
             // 
-            this.lblAcctSearch.AutoSize = true;
-            this.lblAcctSearch.Location = new System.Drawing.Point(6, 6);
-            this.lblAcctSearch.Name = "lblAcctSearch";
-            this.lblAcctSearch.Size = new System.Drawing.Size(87, 13);
-            this.lblAcctSearch.TabIndex = 0;
-            this.lblAcctSearch.Text = "Account Search:";
+            this.btnWOLoadParts.Location = new System.Drawing.Point(6, 16);
+            this.btnWOLoadParts.Name = "btnWOLoadParts";
+            this.btnWOLoadParts.Size = new System.Drawing.Size(89, 46);
+            this.btnWOLoadParts.TabIndex = 0;
+            this.btnWOLoadParts.Text = "Load Parts File";
+            this.btnWOLoadParts.UseVisualStyleBackColor = true;
+            this.btnWOLoadParts.Click += new System.EventHandler(this.btnWOLoadParts_Click);
             // 
-            // txtAcctSearch
+            // lstInServWO
             // 
-            this.txtAcctSearch.Location = new System.Drawing.Point(6, 22);
-            this.txtAcctSearch.Name = "txtAcctSearch";
-            this.txtAcctSearch.Size = new System.Drawing.Size(87, 20);
-            this.txtAcctSearch.TabIndex = 1;
+            this.lstInServWO.AllowUserToAddRows = false;
+            this.lstInServWO.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstInServWO.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstInServWO.Location = new System.Drawing.Point(6, 23);
+            this.lstInServWO.Name = "lstInServWO";
+            this.lstInServWO.RowHeadersVisible = false;
+            this.lstInServWO.Size = new System.Drawing.Size(653, 91);
+            this.lstInServWO.TabIndex = 8;
+            this.lstInServWO.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstInServWO_CellClick);
             // 
-            // btnAcctSearch
+            // lblInServWO
             // 
-            this.btnAcctSearch.Location = new System.Drawing.Point(99, 20);
-            this.btnAcctSearch.Name = "btnAcctSearch";
-            this.btnAcctSearch.Size = new System.Drawing.Size(22, 23);
-            this.btnAcctSearch.TabIndex = 2;
-            this.btnAcctSearch.UseVisualStyleBackColor = true;
+            this.lblInServWO.AutoSize = true;
+            this.lblInServWO.Location = new System.Drawing.Point(6, 7);
+            this.lblInServWO.Name = "lblInServWO";
+            this.lblInServWO.Size = new System.Drawing.Size(121, 13);
+            this.lblInServWO.TabIndex = 7;
+            this.lblInServWO.Text = "In Service Work Orders:";
             // 
-            // lblOrderedFor
+            // lstPartReq
             // 
-            this.lblOrderedFor.AutoSize = true;
-            this.lblOrderedFor.Location = new System.Drawing.Point(162, 7);
-            this.lblOrderedFor.Name = "lblOrderedFor";
-            this.lblOrderedFor.Size = new System.Drawing.Size(66, 13);
-            this.lblOrderedFor.TabIndex = 3;
-            this.lblOrderedFor.Text = "Ordered For:";
+            this.lstPartReq.AllowUserToAddRows = false;
+            this.lstPartReq.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstPartReq.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstPartReq.Location = new System.Drawing.Point(6, 133);
+            this.lstPartReq.Name = "lstPartReq";
+            this.lstPartReq.RowHeadersVisible = false;
+            this.lstPartReq.Size = new System.Drawing.Size(653, 212);
+            this.lstPartReq.TabIndex = 6;
             // 
-            // txtOrderedFor
+            // label1
             // 
-            this.txtOrderedFor.Location = new System.Drawing.Point(165, 23);
-            this.txtOrderedFor.Name = "txtOrderedFor";
-            this.txtOrderedFor.Size = new System.Drawing.Size(100, 20);
-            this.txtOrderedFor.TabIndex = 4;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 117);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Parts Requested:";
             // 
-            // lblSpOrderCost
+            // txtSpOrderCostView
             // 
-            this.lblSpOrderCost.AutoSize = true;
-            this.lblSpOrderCost.Location = new System.Drawing.Point(334, 6);
-            this.lblSpOrderCost.Name = "lblSpOrderCost";
-            this.lblSpOrderCost.Size = new System.Drawing.Size(75, 13);
-            this.lblSpOrderCost.TabIndex = 5;
-            this.lblSpOrderCost.Text = "Order Cost ($):";
+            this.txtSpOrderCostView.Location = new System.Drawing.Point(321, 24);
+            this.txtSpOrderCostView.Name = "txtSpOrderCostView";
+            this.txtSpOrderCostView.Size = new System.Drawing.Size(100, 20);
+            this.txtSpOrderCostView.TabIndex = 3;
             // 
-            // txtSpOrderCost
+            // lblSpOrderCostView
             // 
-            this.txtSpOrderCost.Location = new System.Drawing.Point(337, 23);
-            this.txtSpOrderCost.Name = "txtSpOrderCost";
-            this.txtSpOrderCost.Size = new System.Drawing.Size(100, 20);
-            this.txtSpOrderCost.TabIndex = 6;
+            this.lblSpOrderCostView.AutoSize = true;
+            this.lblSpOrderCostView.Location = new System.Drawing.Point(318, 7);
+            this.lblSpOrderCostView.Name = "lblSpOrderCostView";
+            this.lblSpOrderCostView.Size = new System.Drawing.Size(75, 13);
+            this.lblSpOrderCostView.TabIndex = 2;
+            this.lblSpOrderCostView.Text = "Order Cost ($):";
             // 
-            // lblSpOrderList
+            // txtSpOrderListView
             // 
-            this.lblSpOrderList.AutoSize = true;
-            this.lblSpOrderList.Location = new System.Drawing.Point(506, 6);
-            this.lblSpOrderList.Name = "lblSpOrderList";
-            this.lblSpOrderList.Size = new System.Drawing.Size(70, 13);
-            this.lblSpOrderList.TabIndex = 7;
-            this.lblSpOrderList.Text = "Order List ($):";
+            this.txtSpOrderListView.Location = new System.Drawing.Point(447, 24);
+            this.txtSpOrderListView.Name = "txtSpOrderListView";
+            this.txtSpOrderListView.Size = new System.Drawing.Size(100, 20);
+            this.txtSpOrderListView.TabIndex = 5;
             // 
-            // textBox1
+            // lblSpOrderListView
             // 
-            this.textBox1.Location = new System.Drawing.Point(509, 23);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 8;
+            this.lblSpOrderListView.AutoSize = true;
+            this.lblSpOrderListView.Location = new System.Drawing.Point(444, 7);
+            this.lblSpOrderListView.Name = "lblSpOrderListView";
+            this.lblSpOrderListView.Size = new System.Drawing.Size(70, 13);
+            this.lblSpOrderListView.TabIndex = 4;
+            this.lblSpOrderListView.Text = "Order List ($):";
             // 
-            // grpSpOrderActions
+            // btnSpOrderClear
             // 
-            this.grpSpOrderActions.Controls.Add(this.btnSpSaveOrder);
-            this.grpSpOrderActions.Controls.Add(this.btnSpClear);
-            this.grpSpOrderActions.Controls.Add(this.btnSpRemovePart);
-            this.grpSpOrderActions.Controls.Add(this.btnSpAddPart);
-            this.grpSpOrderActions.Controls.Add(this.btnSpLoadParts);
-            this.grpSpOrderActions.Location = new System.Drawing.Point(9, 310);
-            this.grpSpOrderActions.Name = "grpSpOrderActions";
-            this.grpSpOrderActions.Size = new System.Drawing.Size(630, 75);
-            this.grpSpOrderActions.TabIndex = 9;
-            this.grpSpOrderActions.TabStop = false;
+            this.btnSpOrderClear.Location = new System.Drawing.Point(560, 21);
+            this.btnSpOrderClear.Name = "btnSpOrderClear";
+            this.btnSpOrderClear.Size = new System.Drawing.Size(75, 24);
+            this.btnSpOrderClear.TabIndex = 6;
+            this.btnSpOrderClear.Text = "Clear";
+            this.btnSpOrderClear.UseVisualStyleBackColor = true;
+            this.btnSpOrderClear.Click += new System.EventHandler(this.btnSpOrderClear_Click);
             // 
-            // btnSpLoadParts
+            // lstPartsSpOrderView
             // 
-            this.btnSpLoadParts.Location = new System.Drawing.Point(6, 16);
-            this.btnSpLoadParts.Name = "btnSpLoadParts";
-            this.btnSpLoadParts.Size = new System.Drawing.Size(75, 48);
-            this.btnSpLoadParts.TabIndex = 0;
-            this.btnSpLoadParts.Text = "Load Parts File";
-            this.btnSpLoadParts.UseVisualStyleBackColor = true;
-            // 
-            // btnSpAddPart
-            // 
-            this.btnSpAddPart.Location = new System.Drawing.Point(87, 16);
-            this.btnSpAddPart.Name = "btnSpAddPart";
-            this.btnSpAddPart.Size = new System.Drawing.Size(75, 48);
-            this.btnSpAddPart.TabIndex = 1;
-            this.btnSpAddPart.Text = "Add Part";
-            this.btnSpAddPart.UseVisualStyleBackColor = true;
-            // 
-            // btnSpRemovePart
-            // 
-            this.btnSpRemovePart.Location = new System.Drawing.Point(168, 16);
-            this.btnSpRemovePart.Name = "btnSpRemovePart";
-            this.btnSpRemovePart.Size = new System.Drawing.Size(75, 48);
-            this.btnSpRemovePart.TabIndex = 2;
-            this.btnSpRemovePart.Text = "Remove Part";
-            this.btnSpRemovePart.UseVisualStyleBackColor = true;
-            // 
-            // btnSpClear
-            // 
-            this.btnSpClear.Location = new System.Drawing.Point(249, 16);
-            this.btnSpClear.Name = "btnSpClear";
-            this.btnSpClear.Size = new System.Drawing.Size(75, 48);
-            this.btnSpClear.TabIndex = 3;
-            this.btnSpClear.Text = "Clear";
-            this.btnSpClear.UseVisualStyleBackColor = true;
-            // 
-            // btnSpSaveOrder
-            // 
-            this.btnSpSaveOrder.Location = new System.Drawing.Point(549, 16);
-            this.btnSpSaveOrder.Name = "btnSpSaveOrder";
-            this.btnSpSaveOrder.Size = new System.Drawing.Size(75, 48);
-            this.btnSpSaveOrder.TabIndex = 4;
-            this.btnSpSaveOrder.Text = "Save to Order Log";
-            this.btnSpSaveOrder.UseVisualStyleBackColor = true;
-            // 
-            // lstPartsSpOrder
-            // 
-            this.lstPartsSpOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.lstPartsSpOrder.Location = new System.Drawing.Point(6, 49);
-            this.lstPartsSpOrder.Name = "lstPartsSpOrder";
-            this.lstPartsSpOrder.Size = new System.Drawing.Size(633, 255);
-            this.lstPartsSpOrder.TabIndex = 10;
+            this.lstPartsSpOrderView.AllowUserToAddRows = false;
+            this.lstPartsSpOrderView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstPartsSpOrderView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstPartsSpOrderView.Location = new System.Drawing.Point(6, 50);
+            this.lstPartsSpOrderView.Name = "lstPartsSpOrderView";
+            this.lstPartsSpOrderView.Size = new System.Drawing.Size(633, 335);
+            this.lstPartsSpOrderView.TabIndex = 7;
+            this.lstPartsSpOrderView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.lstPartsSpOrderView_RowsAdded);
+            this.lstPartsSpOrderView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.lstPartsSpOrderView_RowsRemoved);
             // 
             // frmPartsInventory
             // 
@@ -1343,16 +1583,24 @@
             this.grpOrderInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDepositPct)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsInvoice)).EndInit();
-            this.tabOrders.ResumeLayout(false);
-            this.tabOrders.PerformLayout();
-            this.grpOrderActions.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.lstPartsOrder)).EndInit();
             this.tabSpecialOrders.ResumeLayout(false);
             this.tabSpecialOrderContainer.ResumeLayout(false);
             this.tabSpOrderAdd.ResumeLayout(false);
             this.tabSpOrderAdd.PerformLayout();
-            this.grpSpOrderActions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lstPartsSpOrder)).EndInit();
+            this.grpSpOrderActions.ResumeLayout(false);
+            this.tabSpOrderView.ResumeLayout(false);
+            this.tabSpOrderView.PerformLayout();
+            this.tabOrders.ResumeLayout(false);
+            this.tabOrders.PerformLayout();
+            this.grpOrderActions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsOrder)).EndInit();
+            this.tabPartsReq.ResumeLayout(false);
+            this.tabPartsReq.PerformLayout();
+            this.grpWOActions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lstInServWO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartReq)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsSpOrderView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1462,7 +1710,7 @@
         private System.Windows.Forms.TabPage tabSpOrderAdd;
         private System.Windows.Forms.TabPage tabSpOrderView;
         private System.Windows.Forms.Label lblAcctSearch;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSpOrderList;
         private System.Windows.Forms.Label lblSpOrderList;
         private System.Windows.Forms.TextBox txtSpOrderCost;
         private System.Windows.Forms.Label lblSpOrderCost;
@@ -1477,6 +1725,25 @@
         private System.Windows.Forms.Button btnSpAddPart;
         private System.Windows.Forms.Button btnSpLoadParts;
         private System.Windows.Forms.DataGridView lstPartsSpOrder;
+        private System.Windows.Forms.TabPage tabPartsReq;
+        private System.Windows.Forms.GroupBox grpWOActions;
+        private System.Windows.Forms.Button btnWOComplete;
+        private System.Windows.Forms.Button btnWOClear;
+        private System.Windows.Forms.Button btnWORemoveReq;
+        private System.Windows.Forms.Button btnWOAddPart;
+        private System.Windows.Forms.Button btnWOLoadParts;
+        private System.Windows.Forms.DataGridView lstInServWO;
+        private System.Windows.Forms.Label lblInServWO;
+        private System.Windows.Forms.DataGridView lstPartReq;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtSpItemCountView;
+        private System.Windows.Forms.Label lblSpOrderCountView;
+        private System.Windows.Forms.TextBox txtSpOrderListView;
+        private System.Windows.Forms.Label lblSpOrderListView;
+        private System.Windows.Forms.TextBox txtSpOrderCostView;
+        private System.Windows.Forms.Label lblSpOrderCostView;
+        private System.Windows.Forms.Button btnSpOrderClear;
+        private System.Windows.Forms.DataGridView lstPartsSpOrderView;
 
     }
 }

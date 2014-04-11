@@ -246,6 +246,11 @@
             this.numTaskTime.Name = "numTaskTime";
             this.numTaskTime.Size = new System.Drawing.Size(98, 20);
             this.numTaskTime.TabIndex = 20;
+            this.numTaskTime.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnRemoveTask
             // 
@@ -498,6 +503,11 @@
             this.numRate.Name = "numRate";
             this.numRate.Size = new System.Drawing.Size(57, 20);
             this.numRate.TabIndex = 3;
+            this.numRate.Value = new decimal(new int[] {
+            85,
+            0,
+            0,
+            0});
             // 
             // lblRate
             // 

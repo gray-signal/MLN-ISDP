@@ -192,12 +192,16 @@ namespace MLN_ISDP_project
                     techs = techs + tech + ", ";
                 }
 
+                string desc = txtDescription.Text;
+
+                desc = desc.Replace("'", "''");
+
                 workOrderTasks.Rows.Add(
 
                     cboTask.SelectedItem,
                     numTaskTime.Value,
                     cboType.SelectedItem,
-                    txtDescription.Text,
+                    desc,
                     techs
                 );
 

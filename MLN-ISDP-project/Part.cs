@@ -45,6 +45,7 @@ namespace MLN_ISDP_project
         public decimal TotalList { get; set; }
 
         //calculated/selected for lookup
+        public string OrderedFor { get; set; }
 
 
         //calculated/selected for invoice

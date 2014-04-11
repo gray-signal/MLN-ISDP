@@ -31,9 +31,10 @@ namespace MLN_ISDP_project
             for (int index = 6; index <= lines.Length - 1; index = index + 2)
             {
                 Part p = new Part(lines[index].Trim(), lines[index + 1]);
-                p.load(dbConn);
-
-                parts.Add(p);
+                if (p.load(dbConn))
+                {
+                    parts.Add(p);
+                } 
             }
 
             return parts;
