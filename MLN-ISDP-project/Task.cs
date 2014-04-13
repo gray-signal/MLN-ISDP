@@ -27,9 +27,17 @@ namespace MLN_ISDP_project
 
         #endregion
 
+        public Task()
+        {
+            this.TaskUniq = -1;
+            this.TaskTime = 1;
+            TechList = new List<string>();
+        }
+
         public Task(string woID)
         {
             this.WorkOrderID = woID;
+            this.TaskTime = 1;
             this.TaskUniq = -1;
             TechList = new List<string>();
         }
@@ -70,7 +78,7 @@ namespace MLN_ISDP_project
                 {
                     TaskID = int.Parse(dt.Rows[0]["TaskID"].ToString());
                     TaskTime = (double?)dt.Rows[0].Field<double?>("TaskTime") ?? 0;
-                    Description = (string)dt.Rows[0]["Description"];
+                    Description = (string)dt.Rows[0]["Description"].ToString();
                     WorkOrderID = (string)dt.Rows[0]["WorkOrderID"].ToString();
                     string techTemp = (string)dt.Rows[0]["TechList"].ToString();
 
@@ -121,13 +129,15 @@ namespace MLN_ISDP_project
                 string techs = String.Join(",", this.TechList);
                 if (this.TaskUniq != -1)
                 {
+                    string sanitizedDesc = this.Description.Replace("'", "''");
+
                     writeComplete = in_db.insertQuery("UPDATE Task "
                                     + "SET TaskID = " + this.TaskID + ","
                                     + "TaskTime = " + this.TaskTime + ","
                                     + "TechList = '" + String.Join(",", this.TechList) + "',"
-                                    + "Description = '" + this.Description + "',"
+                                    + "Description = '" + sanitizedDesc + "',"
                                     + "WorkOrderID = '" + this.WorkOrderID + "',"
-                                    + "Type = '" + this.Type.ToString() + "'"
+                                    + "Type = '" + this.Type.ToString() + "' "
                                     + "WHERE TaskUniq = '" + this.TaskUniq + "'");
                 }
                 else

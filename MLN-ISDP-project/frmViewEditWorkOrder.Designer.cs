@@ -31,6 +31,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabViewEdit = new System.Windows.Forms.TabPage();
             this.grpServiceInfo = new System.Windows.Forms.GroupBox();
+            this.btnRemoveTask = new System.Windows.Forms.Button();
             this.btnNewTask = new System.Windows.Forms.Button();
             this.lstTasks = new System.Windows.Forms.DataGridView();
             this.btnSave = new System.Windows.Forms.Button();
@@ -82,7 +83,6 @@
             this.txtCxNum = new System.Windows.Forms.TextBox();
             this.lblCxNum = new System.Windows.Forms.Label();
             this.tabParts = new System.Windows.Forms.TabPage();
-            this.btnRemoveTask = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabViewEdit.SuspendLayout();
             this.grpServiceInfo.SuspendLayout();
@@ -137,6 +137,16 @@
             this.grpServiceInfo.TabIndex = 12;
             this.grpServiceInfo.TabStop = false;
             this.grpServiceInfo.Text = "Service Information";
+            // 
+            // btnRemoveTask
+            // 
+            this.btnRemoveTask.Location = new System.Drawing.Point(503, 213);
+            this.btnRemoveTask.Name = "btnRemoveTask";
+            this.btnRemoveTask.Size = new System.Drawing.Size(75, 23);
+            this.btnRemoveTask.TabIndex = 18;
+            this.btnRemoveTask.Text = "Delete Task";
+            this.btnRemoveTask.UseVisualStyleBackColor = true;
+            this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
             // 
             // btnNewTask
             // 
@@ -339,6 +349,7 @@
             this.dtpPromised.Size = new System.Drawing.Size(139, 20);
             this.dtpPromised.TabIndex = 1;
             this.dtpPromised.Value = new System.DateTime(2014, 3, 19, 13, 30, 0, 0);
+            this.dtpPromised.ValueChanged += new System.EventHandler(this.dtpPromised_ValueChanged);
             // 
             // lblPromised
             // 
@@ -638,20 +649,10 @@
             this.tabParts.Location = new System.Drawing.Point(4, 23);
             this.tabParts.Name = "tabParts";
             this.tabParts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParts.Size = new System.Drawing.Size(750, 520);
+            this.tabParts.Size = new System.Drawing.Size(718, 520);
             this.tabParts.TabIndex = 1;
             this.tabParts.Text = "Parts List";
             this.tabParts.UseVisualStyleBackColor = true;
-            // 
-            // btnRemoveTask
-            // 
-            this.btnRemoveTask.Location = new System.Drawing.Point(503, 213);
-            this.btnRemoveTask.Name = "btnRemoveTask";
-            this.btnRemoveTask.Size = new System.Drawing.Size(75, 23);
-            this.btnRemoveTask.TabIndex = 18;
-            this.btnRemoveTask.Text = "Delete Task";
-            this.btnRemoveTask.UseVisualStyleBackColor = true;
-            this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
             // 
             // frmViewEditWorkOrder
             // 
@@ -660,7 +661,7 @@
             this.ClientSize = new System.Drawing.Size(746, 582);
             this.Controls.Add(this.tabControl1);
             this.Name = "frmViewEditWorkOrder";
-            this.Text = "frmViewEditWorkOrder";
+            this.Text = "View/Edit Work Order";
             this.Load += new System.EventHandler(this.frmViewEditWorkOrder_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabViewEdit.ResumeLayout(false);

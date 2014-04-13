@@ -16,46 +16,72 @@ namespace MLN_ISDP_project
                 "Provider=MSDAORA;Data Source=localhost;User ID=2023164;Password=#42Paradox;");
         static OracleDB dbConn = new OracleDB(csBuilder.ToString());
 
-        DataTable workOrderTasks;
+
         DataTable workOrders;
         BindingSource sourceWO;
+
+        private List<Task> taskList;
+        private BindingSource sourceTasks;
 
         public frmServiceWorkOrder()
         {
             InitializeComponent();
 
-            workOrderTasks = new DataTable();
             workOrders = new DataTable();
 
             sourceWO = new BindingSource();
 
-            workOrderTasks.Columns.Add("TaskValue");
-            workOrderTasks.PrimaryKey = new DataColumn[] { workOrderTasks.Columns["TaskValue"] };
-            
+            taskList = new List<Task>();
+            sourceTasks = new BindingSource();
 
-            workOrderTasks.Columns.Add("TaskTime");
-            workOrderTasks.Columns.Add("TypeValue");
-            workOrderTasks.Columns.Add("Description");
-            workOrderTasks.Columns.Add("Technicians");
+            sourceTasks.DataSource = taskList;
+
+            lstTasks.DataSource = sourceTasks;
 
             workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS != 'DISCHARGED' OR STATUS IS NULL ORDER BY STATUS Desc");
 
             cboAssign.SelectedIndex = 0;
-            cboType.SelectedIndex = 0;
-
-            cboTask.Items.Add(1);
-            cboTask.Items.Add("Add new task");
-
-            cboTask.SelectedIndex = 0;
 
             sourceWO.DataSource = workOrders;
 
             lstWorkOrders.DataSource = sourceWO;
 
-            dataGridView1.DataSource = workOrderTasks;
+            setUpTaskColumns();
 
             dtpPromised.Value = DateTime.Now;
         }
+
+        private void setUpTaskColumns()
+        {
+            lstTasks.Columns["TaskID"].ReadOnly = true;
+
+            //ordering
+            lstTasks.Columns["TaskID"].DisplayIndex = 0;
+            lstTasks.Columns["TaskTime"].DisplayIndex = 1;
+            lstTasks.Columns["Description"].DisplayIndex = 2;
+            lstTasks.Columns["Type"].DisplayIndex = 3;
+
+
+            //names
+            lstTasks.Columns["TaskID"].HeaderText = "Task Number";
+            lstTasks.Columns["TaskTime"].HeaderText = "Time";
+            lstTasks.Columns["Description"].HeaderText = "Description";
+            lstTasks.Columns["Type"].HeaderText = "Type";
+
+            //visibility
+            lstTasks.Columns["Dirty"].Visible = false;
+            lstTasks.Columns["WorkOrderID"].Visible = false;
+
+            lstTasks.Columns.Remove("Type");
+
+            var Type = new DataGridViewComboBoxColumn();
+            Type.DataPropertyName = "Type";
+            lstTasks.Columns.Add(Type);
+
+            Type.HeaderText = "Type";
+            Type.DataSource = new List<Task.TaskType> { Task.TaskType.NONE, Task.TaskType.RECALL, Task.TaskType.WARRANTY };
+        }
+
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -156,148 +182,37 @@ namespace MLN_ISDP_project
 
         private void btnRemoveTask_Click(object sender, EventArgs e)
         {
-            int selectedIndex = lstTasks.SelectedIndex;
-            if (selectedIndex != -1)
-            {
-                workOrderTasks.Rows.Remove(workOrderTasks.Rows[lstTasks.SelectedIndex]);
-                lstTasks.Items.RemoveAt(lstTasks.SelectedIndex);
-
-                if (lstTasks.SelectedIndex == -1 && lstTasks.Items.Count > 0)
-                    lstTasks.SelectedIndex = 0;
-            }
+            taskList.RemoveAt(lstTasks.CurrentCell.RowIndex);
+            sourceTasks.ResetBindings(false);
         }
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
 
-            if (lstTasks.FindString(cboTask.SelectedItem.ToString() + " - ") != ListBox.NoMatches)
-            {
-                workOrderTasks.Rows.Remove(workOrderTasks.Rows.Find(cboTask.SelectedItem.ToString()));
-                lstTasks.Items.RemoveAt(lstTasks.FindString(cboTask.SelectedItem.ToString() + " - "));
-            }
+            Task newTask = new Task();
 
-            if (lstTechnicians.Items.Count < 1)
-            {
-                MessageBox.Show("Please assign at least one technician.");
-            }
-            else
-            {
+            newTask.TaskID = taskList[taskList.Count - 1].TaskID + 1;
 
-                string descSummary = "";
-                if (txtDescription.Text.Length > 15)
-                {
-                    descSummary = txtDescription.Text.Substring(0, 15);
-                }
-                else
-                {
-                    descSummary = txtDescription.Text;
-                }
-                if (txtDescription.Text.Equals("")) descSummary = "no description";
-
-                lstTasks.Items.Add(cboTask.SelectedItem + " - " + descSummary);
-
-                string techs = "";
-
-                foreach (string tech in lstTechnicians.Items)
-                {
-                    techs = techs + tech + ",";
-                }
-
-                techs = techs.TrimEnd(',');
-
-                string desc = txtDescription.Text;
-
-                desc = desc.Replace("'", "''");
-
-                workOrderTasks.Rows.Add(
-
-                    cboTask.SelectedItem,
-                    numTaskTime.Value,
-                    cboType.SelectedItem,
-                    desc,
-                    techs
-                );
-
-
-                lstTasks.SelectedIndex = lstTasks.Items.Count - 1;
-
-                dtpPromised_ValueChanged(sender, e);
-            }
-
-        }
-
-        private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            taskList.Add(newTask);
             
-        }
 
-        private void cboTask_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            //if the last item is selected. means new task
-            if (cboTask.SelectedIndex == (cboTask.Items.Count - 1))
-            {
-                cboTask.Items.Remove("Add new task");
-                cboTask.Items.Add(cboTask.Items.Count + 1);
+            sourceTasks.ResetBindings(false);
 
-                cboTask.SelectedIndex = cboTask.Items.Count - 1;
+            
 
-                cboTask.Items.Add("Add new task");
-            }
-
-            //reset when new task is changed.
-            //if it's new, this stays reset, but if it's a saved task, then these will be overwritten next up anyway
-            numTaskTime.Value = 0;
-            cboType.SelectedIndex = 0;
-            cboAssign.SelectedItem = 0;
-            txtDescription.Text = "";
-
-
-            //all else, means task is being switched
-            DataRow selectedTask = workOrderTasks.Rows.Find(cboTask.SelectedIndex + 1);
-
-            if (selectedTask != null)
-            {
-                numTaskTime.Value = Decimal.Parse(selectedTask.Field<string>("TaskTime"));
-                cboType.SelectedItem = selectedTask.Field<string>("TypeValue");
-                txtDescription.Text = selectedTask.Field<string>("Description");
-                //lstTechnicians.Items.AddRange(selectedTask.Field<ListBox.ObjectCollection>("Technicians"));
-                lstTechnicians.Items.Clear();
-                string tempTech = "";
-                foreach (var letter in selectedTask.Field<string>("Technicians"))
-                {
-                    if (letter.Equals(','))
-                    {
-                        lstTechnicians.Items.Add(tempTech.Trim());
-                        tempTech = "";
-                    }
-                    else
-                    {
-                        tempTech = tempTech + letter;
-                    }
-                }
-            }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            numRate.Value = 0;
+            numRate.Value = 85;
             numKmIn.Value = 0;
             numKmOut.Value = 0;
+            dtpPromised.Value = DateTime.Now;
 
-            cboTask.Items.Clear();
-            cboTask.Items.Add(1);
-            cboTask.Items.Add("Add new task");
-
-            numTaskTime.Value = 0;
-
-            lstTasks.Items.Clear();
+            taskList.Clear();
             lstTechnicians.Items.Clear();
-            txtDescription.Text = "";
 
-            cboType.SelectedIndex = 0;
             cboAssign.SelectedIndex = 0;
-
-            workOrderTasks.Clear();
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
@@ -325,17 +240,10 @@ namespace MLN_ISDP_project
                 DataTable dt = dbConn.readQuery("SELECT WorkOrderID FROM WorkOrder WHERE PromisedTime = to_date('" + formattedTime + "', 'yyyy-MM-dd hh24:mi:ss')");
                 double woID = (double)dt.Rows[0]["WorkOrderID"];
 
-                foreach (DataRow dr in workOrderTasks.Rows)
+                foreach (Task t in taskList)
                 {
-                    string value = dr.Field<string>("TaskValue");
-                    string time = dr.Field<string>("TaskTime");
-                    string type = dr.Field<string>("TypeValue");
-                    string desc = dr.Field<string>("Description");
-                    string tech = dr.Field<string>("Technicians");
-
-                    dbConn.insertQuery("INSERT INTO Task "
-                                     + "(TaskID, TaskTime, Type, TechList, Description, WorkOrderID) "
-                                     + "Values ('" + value + "', '" + time + "', '" + type + "', '" + tech + "', '" + desc + "', '" + woID + "')");
+                    t.WorkOrderID = woID.ToString();
+                    t.commit(dbConn);
                 }
 
                 btnReset_Click(sender, e);
@@ -345,10 +253,12 @@ namespace MLN_ISDP_project
         private void dtpPromised_ValueChanged(object sender, EventArgs e)
         {
             double sumHours = 0;
-            foreach (DataRow row in workOrderTasks.Rows)
+            foreach (Task t in taskList)
             {
-                var temp = Double.Parse(row.Field<string>("TaskTime"));
-                sumHours = sumHours + temp;
+                double time = 0.0;
+                if (taskList.Count > 0)
+                    time = t.TaskTime;
+                sumHours = sumHours + time;
             }
 
             TimeSpan hours = TimeSpan.FromHours(sumHours);
@@ -440,7 +350,104 @@ namespace MLN_ISDP_project
             frmEditWO.ShowDialog();
         }
 
+        private void btnAddTech_Click(object sender, EventArgs e)
+        {
+            if (!lstTechnicians.Items.Contains(cboAssign.SelectedItem.ToString()))
+            {
+                if (taskList.Count > 0)
+                {
+                    taskList[lstTasks.CurrentCell.RowIndex].TechList.Add(cboAssign.SelectedItem.ToString());
+                    lstTechnicians.Items.Add(cboAssign.SelectedItem.ToString());
+                }
+            }
 
+            lstTechnicians.SelectedIndex = lstTechnicians.Items.Count - 1;
+        }
+
+        private void btnNewTask_Click(object sender, EventArgs e)
+        {
+            Task newTask = new Task();
+            if (taskList.Count == 0)
+                newTask.TaskID = 1;
+            else
+                newTask.TaskID = taskList[taskList.Count - 1].TaskID + 1;
+
+            taskList.Add(newTask);
+
+
+            sourceTasks.ResetBindings(false);
+        }
+
+        private void btnRemoveTask_Click_1(object sender, EventArgs e)
+        {
+            taskList.RemoveAt(lstTasks.CurrentCell.RowIndex);
+            sourceTasks.ResetBindings(false);
+        }
+
+        private void btnRemoveTech_Click_1(object sender, EventArgs e)
+        {
+            string tempTechName = "";
+            int selectedIndex = lstTechnicians.SelectedIndex;
+
+            if (selectedIndex != -1)
+            {
+                tempTechName = lstTechnicians.SelectedItem.ToString();
+                lstTechnicians.Items.RemoveAt(selectedIndex);
+                lstTechnicians.SelectedIndex = selectedIndex - 1;
+
+                if (lstTechnicians.SelectedIndex == -1 && lstTechnicians.Items.Count > 0)
+                    lstTechnicians.SelectedIndex = 0;
+            }
+
+            if (taskList[lstTasks.CurrentCell.RowIndex].TechList.Contains(tempTechName))
+            {
+                taskList[lstTasks.CurrentCell.RowIndex].TechList.Remove(tempTechName);
+            }
+        }
+
+        private void loadCurrentTaskTechs(Task t)
+        {
+            lstTechnicians.Items.Clear();
+            if (t.TechList != null && t.TechList.Count != 0)
+            {
+                foreach (string tech in t.TechList)
+                {
+                    lstTechnicians.Items.Add(tech);
+                }
+            }
+        }
+
+        private void lstTasks_SelectionChanged(object sender, EventArgs e)
+        {
+            if (lstTasks.RowCount > 0)
+                loadCurrentTaskTechs(taskList[lstTasks.CurrentCell.RowIndex]);
+            else
+                lstTechnicians.Items.Clear();
+        }
+
+        private void btnHoldSelected_Click(object sender, EventArgs e)
+        {
+            string currentWorkOrder = lstWorkOrders.Rows[lstWorkOrders.CurrentRow.Index].Cells["WorkOrderID"].Value.ToString();
+            changeWorkOrderStatus(currentWorkOrder, "ONHOLD");
+
+            btnFilService_Click(sender, e);
+        }
+
+        private void btnResumeSelected_Click(object sender, EventArgs e)
+        {
+            string currentWorkOrder = lstWorkOrders.Rows[lstWorkOrders.CurrentRow.Index].Cells["WorkOrderID"].Value.ToString();
+            changeWorkOrderStatus(currentWorkOrder, "INSERVICE");
+
+            btnFilHold_Click(sender, e);
+        }
+
+        public void changeWorkOrderStatus(string workOrderID, string newStatus)
+        {
+            dbConn.insertQuery("UPDATE WorkOrder "
+                             + "SET "
+                             + "Status =  '" + newStatus + "' "
+                             + "WHERE WorkOrderID = '" + workOrderID + "'");
+        }
 
 
     }

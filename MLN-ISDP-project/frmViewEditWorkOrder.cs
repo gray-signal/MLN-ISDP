@@ -64,6 +64,7 @@ namespace MLN_ISDP_project
 
             tasks = dbConn.readQuery("SELECT TASKUNIQ FROM TASK WHERE WORKORDERID = " + workOrderID + " ORDER BY TASKID");
 
+            dtpPromised.Value = DateTime.Now;
 
             refreshCxFields();
             setUpTaskColumns();
@@ -93,6 +94,11 @@ namespace MLN_ISDP_project
 
             //workOrder fields
             txtWorkOrderID.Text = workOrder.Rows[0].Field<double>("WORKORDERID").ToString();
+            dtpPromised.Value = workOrder.Rows[0].Field<DateTime>("PROMISEDTIME");
+            numRate.Value = (decimal)workOrder.Rows[0].Field<double>("RATE");
+            numKmIn.Value = (decimal)workOrder.Rows[0].Field<double>("KMIN");
+            var kmout = workOrder.Rows[0].Field<double?>("KMOUT") ?? 0.0;
+            numKmOut.Value = (decimal)kmout;
         }
 
         private void setUpTaskColumns()
@@ -164,8 +170,10 @@ namespace MLN_ISDP_project
         private void btnNewTask_Click(object sender, EventArgs e)
         {
             Task newTask = new Task(workOrderID);
-
-            newTask.TaskID = taskList[taskList.Count - 1].TaskID + 1;
+            if (taskList.Count == 0)
+                newTask.TaskID = 1;
+            else
+                newTask.TaskID = taskList[taskList.Count - 1].TaskID + 1;
 
             taskList.Add(newTask);
             
@@ -214,15 +222,70 @@ namespace MLN_ISDP_project
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //write updated wo items
+            string changedStatus = "UNASSIGNED";
+            bool allTasksAssigned = true;
+            if (taskList.Count == 0)
+                allTasksAssigned = false;
+
 
             //write updated tasks
             foreach (Task t in taskList)
             {
                 t.commit(dbConn);
+                if (t.TechList.Count == 0)
+                    allTasksAssigned = false;
+            }
+            //write updated wo items
+            if (allTasksAssigned && status == "UNASSIGNED")
+            {
+                DialogResult result = MessageBox.Show("All of the tasks are assigned, do you want to set this to 'On Hold'?", "Set to On Hold", MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    changedStatus = "ONHOLD";
+                }
             }
 
+            DateTime promisedTime = dtpPromised.Value;
+
+            string formattedTime = promisedTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+            decimal rate = numRate.Value;
+            decimal kmIn = numKmIn.Value;
+            decimal kmOut = numKmOut.Value;
+
+            dbConn.insertQuery("UPDATE WorkOrder "
+                                 + "SET "
+                                 + "PromisedTime = to_date('" + formattedTime + "', 'yyyy-MM-dd hh24:mi:ss'), "
+                                 + "Rate = '" + rate + "', "
+                                 + "KMin = '" + kmIn + "',"
+                                 + "KMout = '" + kmOut + "'," 
+                                 + "Status ='" + changedStatus + "' "
+                                 + "WHERE WorkOrderID = '" + workOrderID + "'");
+
+            
+
             this.Close();
+        }
+
+        private void dtpPromised_ValueChanged(object sender, EventArgs e)
+        {
+            double sumHours = 0;
+            foreach (Task t in taskList)
+            {
+                double time = 0.0;
+                if (taskList.Count > 0)
+                    time = t.TaskTime;
+                sumHours = sumHours + time;
+            }
+
+            TimeSpan hours = TimeSpan.FromHours(sumHours);
+
+            DateTime minPromised = DateTime.Now + hours;
+
+            if (dtpPromised.Value < minPromised)
+            {
+                dtpPromised.Value = minPromised;
+            }
         }
     }
 }
