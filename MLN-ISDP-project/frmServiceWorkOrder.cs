@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,9 @@ namespace MLN_ISDP_project
         DataTable workOrders;
         BindingSource sourceWO;
 
+        DataTable techTasks;
+        BindingSource sourceTechTasks;
+
         private List<Task> taskList;
         private BindingSource sourceTasks;
 
@@ -28,23 +32,27 @@ namespace MLN_ISDP_project
             InitializeComponent();
 
             workOrders = new DataTable();
-
             sourceWO = new BindingSource();
+
+            techTasks = new DataTable();
+            sourceTechTasks = new BindingSource();
 
             taskList = new List<Task>();
             sourceTasks = new BindingSource();
 
             sourceTasks.DataSource = taskList;
-
             lstTasks.DataSource = sourceTasks;
 
-            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS != 'DISCHARGED' OR STATUS IS NULL ORDER BY STATUS Desc");
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS != 'DISCHARGED' OR STATUS IS NULL ORDER BY STATUS Desc, PromisedTime");
 
             cboAssign.SelectedIndex = 0;
+            cboTechs.SelectedIndex = 0;
 
             sourceWO.DataSource = workOrders;
-
             lstWorkOrders.DataSource = sourceWO;
+
+            sourceTechTasks.DataSource = techTasks;
+            lstTechTasks.DataSource = sourceTechTasks;
 
             setUpTaskColumns();
 
@@ -279,7 +287,7 @@ namespace MLN_ISDP_project
             btnCompleteSelected.Enabled = false;
             btnDischargeSelected.Enabled = false;
 
-            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS != 'DISCHARGED' OR STATUS IS NULL ORDER BY STATUS Desc");
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS != 'DISCHARGED' OR STATUS IS NULL ORDER BY STATUS Desc, PromisedTime");
             sourceWO.DataSource = null;
             sourceWO.DataSource = workOrders;
             sourceWO.ResetBindings(false);
@@ -293,7 +301,7 @@ namespace MLN_ISDP_project
             btnCompleteSelected.Enabled = false;
             btnDischargeSelected.Enabled = false;
 
-            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'UNASSIGNED'");
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'UNASSIGNED' ORDER BY PromisedTime");
             sourceWO.DataSource = null;
             sourceWO.DataSource = workOrders;
             sourceWO.ResetBindings(false);
@@ -307,7 +315,7 @@ namespace MLN_ISDP_project
             btnCompleteSelected.Enabled = false;
             btnDischargeSelected.Enabled = false;
 
-            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'ONHOLD'");
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'ONHOLD' ORDER BY PromisedTime");
             sourceWO.DataSource = null;
             sourceWO.DataSource = workOrders;
             sourceWO.ResetBindings(false);
@@ -321,7 +329,7 @@ namespace MLN_ISDP_project
             btnCompleteSelected.Enabled = true;
             btnDischargeSelected.Enabled = false;
 
-            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'INSERVICE'");
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'INSERVICE' ORDER BY PromisedTime");
             sourceWO.DataSource = null;
             sourceWO.DataSource = workOrders;
             sourceWO.ResetBindings(false);
@@ -335,7 +343,7 @@ namespace MLN_ISDP_project
             btnCompleteSelected.Enabled = false;
             btnDischargeSelected.Enabled = true;
 
-            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'AWAITINGPICKUP'");
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'AWAITINGPICKUP' ORDER BY PromisedTime");
             sourceWO.DataSource = null;
             sourceWO.DataSource = workOrders;
             sourceWO.ResetBindings(false);
@@ -348,6 +356,8 @@ namespace MLN_ISDP_project
 
             Form frmEditWO = new frmViewEditWorkOrder(currentWorkOrder, status);
             frmEditWO.ShowDialog();
+
+            sourceWO.ResetBindings(false);
         }
 
         private void btnAddTech_Click(object sender, EventArgs e)
@@ -447,6 +457,60 @@ namespace MLN_ISDP_project
                              + "SET "
                              + "Status =  '" + newStatus + "' "
                              + "WHERE WorkOrderID = '" + workOrderID + "'");
+        }
+
+        private void btnCompleteSelected_Click(object sender, EventArgs e)
+        {
+            btnViewSelected_Click(sender, e);
+        }
+
+        private void btnDischargeSelected_Click(object sender, EventArgs e)
+        {
+            btnViewSelected_Click(sender, e);
+        }
+
+        private void cboTechs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string techName = cboTechs.SelectedItem.ToString();
+            if (techName == "All")
+                techName = "";
+
+            techTasks = dbConn.readQuery(@"Select
+  TASK.TECHLIST,
+  TASK.DESCRIPTION,
+  TASK.WORKORDERID,
+  WORKORDER.PROMISEDTIME,
+  VEHICLE.MODEL,
+  VEHICLE.YEAR,
+  VEHICLE.LICENSEPLATE,
+  VEHICLE.COLOUR,
+  TASK.TASKTIME
+From
+  TASK Inner Join
+  WORKORDER On TASK.WORKORDERID = WORKORDER.WORKORDERID Inner Join
+  VEHICLE On WORKORDER.VEHICLEID = VEHICLE.VIN
+Where 
+  TASK.TECHLIST LIKE '%" + techName + "%' Order By VEHICLE.LICENSEPLATE, WORKORDER.PROMISEDTIME");
+
+            sourceTechTasks.DataSource = null;
+            sourceTechTasks.DataSource = techTasks;
+            sourceTechTasks.ResetBindings(false);
+
+            txtTotalTasks.Text = techTasks.Rows.Count.ToString();
+
+            double totalTime = 0.0;
+            int totalWorkOrders = 0;
+
+            DataView view = new DataView(techTasks);
+            DataTable distinctValues = view.ToTable(true, "WorkOrderID");
+            totalWorkOrders = distinctValues.Rows.Count;
+            foreach (DataRow row in techTasks.Rows)
+            {
+                totalTime = totalTime + (double)row["TaskTime"];
+            }
+
+            txtTotalTime.Text = totalTime.ToString();
+            txtTotalWorkOrders.Text = totalWorkOrders.ToString();
         }
 
 

@@ -108,6 +108,17 @@
             this.btnHoldSelected = new System.Windows.Forms.Button();
             this.btnDeleteSelected = new System.Windows.Forms.Button();
             this.btnViewSelected = new System.Windows.Forms.Button();
+            this.tabViewTechTasks = new System.Windows.Forms.TabPage();
+            this.cboTechs = new System.Windows.Forms.ComboBox();
+            this.lstTechTasks = new System.Windows.Forms.DataGridView();
+            this.grpTechSummary = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtTotalTime = new System.Windows.Forms.TextBox();
+            this.txtTotalTasks = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtTotalWorkOrders = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabCreate.SuspendLayout();
@@ -123,6 +134,9 @@
             this.grpFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstWorkOrders)).BeginInit();
             this.grpViewActions.SuspendLayout();
+            this.tabViewTechTasks.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstTechTasks)).BeginInit();
+            this.grpTechSummary.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -167,6 +181,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabCreate);
             this.tabControl1.Controls.Add(this.tabView);
+            this.tabControl1.Controls.Add(this.tabViewTechTasks);
             this.tabControl1.Location = new System.Drawing.Point(12, 28);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -883,6 +898,7 @@
             this.btnCompleteSelected.TabIndex = 5;
             this.btnCompleteSelected.Text = "Complete Selected";
             this.btnCompleteSelected.UseVisualStyleBackColor = true;
+            this.btnCompleteSelected.Click += new System.EventHandler(this.btnCompleteSelected_Click);
             // 
             // btnDischargeSelected
             // 
@@ -893,6 +909,7 @@
             this.btnDischargeSelected.TabIndex = 4;
             this.btnDischargeSelected.Text = "Discharge Selected";
             this.btnDischargeSelected.UseVisualStyleBackColor = true;
+            this.btnDischargeSelected.Click += new System.EventHandler(this.btnDischargeSelected_Click);
             // 
             // btnResumeSelected
             // 
@@ -936,6 +953,122 @@
             this.btnViewSelected.UseVisualStyleBackColor = true;
             this.btnViewSelected.Click += new System.EventHandler(this.btnViewSelected_Click);
             // 
+            // tabViewTechTasks
+            // 
+            this.tabViewTechTasks.Controls.Add(this.grpTechSummary);
+            this.tabViewTechTasks.Controls.Add(this.lstTechTasks);
+            this.tabViewTechTasks.Location = new System.Drawing.Point(4, 23);
+            this.tabViewTechTasks.Name = "tabViewTechTasks";
+            this.tabViewTechTasks.Padding = new System.Windows.Forms.Padding(3);
+            this.tabViewTechTasks.Size = new System.Drawing.Size(749, 558);
+            this.tabViewTechTasks.TabIndex = 2;
+            this.tabViewTechTasks.Text = "View Tasks By Tech";
+            this.tabViewTechTasks.UseVisualStyleBackColor = true;
+            // 
+            // cboTechs
+            // 
+            this.cboTechs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTechs.FormattingEnabled = true;
+            this.cboTechs.Items.AddRange(new object[] {
+            "All",
+            "Eduardo Concepcion",
+            "Will McAvoy",
+            "Sarah White",
+            "Raymond Roach"});
+            this.cboTechs.Location = new System.Drawing.Point(9, 32);
+            this.cboTechs.Name = "cboTechs";
+            this.cboTechs.Size = new System.Drawing.Size(149, 21);
+            this.cboTechs.TabIndex = 0;
+            this.cboTechs.SelectedIndexChanged += new System.EventHandler(this.cboTechs_SelectedIndexChanged);
+            // 
+            // lstTechTasks
+            // 
+            this.lstTechTasks.AllowUserToAddRows = false;
+            this.lstTechTasks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstTechTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstTechTasks.Location = new System.Drawing.Point(6, 85);
+            this.lstTechTasks.Name = "lstTechTasks";
+            this.lstTechTasks.ReadOnly = true;
+            this.lstTechTasks.RowHeadersVisible = false;
+            this.lstTechTasks.Size = new System.Drawing.Size(737, 467);
+            this.lstTechTasks.TabIndex = 1;
+            // 
+            // grpTechSummary
+            // 
+            this.grpTechSummary.Controls.Add(this.txtTotalWorkOrders);
+            this.grpTechSummary.Controls.Add(this.label4);
+            this.grpTechSummary.Controls.Add(this.txtTotalTasks);
+            this.grpTechSummary.Controls.Add(this.txtTotalTime);
+            this.grpTechSummary.Controls.Add(this.cboTechs);
+            this.grpTechSummary.Controls.Add(this.label3);
+            this.grpTechSummary.Controls.Add(this.label2);
+            this.grpTechSummary.Controls.Add(this.label1);
+            this.grpTechSummary.Location = new System.Drawing.Point(6, 6);
+            this.grpTechSummary.Name = "grpTechSummary";
+            this.grpTechSummary.Size = new System.Drawing.Size(737, 73);
+            this.grpTechSummary.TabIndex = 2;
+            this.grpTechSummary.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Task Stats for Tech:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(191, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(122, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Total Task Time (hours):";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(367, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(138, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Total Assigned Task Count:";
+            // 
+            // txtTotalTime
+            // 
+            this.txtTotalTime.Location = new System.Drawing.Point(194, 32);
+            this.txtTotalTime.Name = "txtTotalTime";
+            this.txtTotalTime.ReadOnly = true;
+            this.txtTotalTime.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalTime.TabIndex = 4;
+            // 
+            // txtTotalTasks
+            // 
+            this.txtTotalTasks.Location = new System.Drawing.Point(370, 32);
+            this.txtTotalTasks.Name = "txtTotalTasks";
+            this.txtTotalTasks.ReadOnly = true;
+            this.txtTotalTasks.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalTasks.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(547, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(130, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Total Work Orders Active:";
+            // 
+            // txtTotalWorkOrders
+            // 
+            this.txtTotalWorkOrders.Location = new System.Drawing.Point(550, 32);
+            this.txtTotalWorkOrders.Name = "txtTotalWorkOrders";
+            this.txtTotalWorkOrders.ReadOnly = true;
+            this.txtTotalWorkOrders.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalWorkOrders.TabIndex = 7;
+            // 
             // frmServiceWorkOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -968,6 +1101,10 @@
             this.grpFilters.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lstWorkOrders)).EndInit();
             this.grpViewActions.ResumeLayout(false);
+            this.tabViewTechTasks.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lstTechTasks)).EndInit();
+            this.grpTechSummary.ResumeLayout(false);
+            this.grpTechSummary.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1055,6 +1192,17 @@
         private System.Windows.Forms.Button btnAddTech;
         private System.Windows.Forms.ComboBox cboAssign;
         private System.Windows.Forms.Label lblAssign;
+        private System.Windows.Forms.TabPage tabViewTechTasks;
+        private System.Windows.Forms.GroupBox grpTechSummary;
+        private System.Windows.Forms.DataGridView lstTechTasks;
+        private System.Windows.Forms.ComboBox cboTechs;
+        private System.Windows.Forms.TextBox txtTotalTasks;
+        private System.Windows.Forms.TextBox txtTotalTime;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtTotalWorkOrders;
+        private System.Windows.Forms.Label label4;
     }
 }
 
