@@ -116,6 +116,7 @@ Order By
             orderColumnSetup();
             spOrderColumnSetUp();
             spOrderViewColumnSetUp();
+            workOrderColumnSetup();
         }
 
         private void lookUpColumnSetUp()
@@ -337,37 +338,90 @@ Order By
         {
 
             //ordering
-            lstPartReq.Columns["PartID"].DisplayIndex = 0;
-            lstPartReq.Columns["PartDescription"].DisplayIndex = 1;
-            lstPartReq.Columns["BackOrder"].DisplayIndex = 2;
-            lstPartReq.Columns["CostPrice"].DisplayIndex = 4;
-            lstPartReq.Columns["ListPrice"].DisplayIndex = 5;
-            lstPartReq.Columns["TotalCost"].DisplayIndex = 6;
-            lstPartReq.Columns["TotalList"].DisplayIndex = 7;
-            lstPartReq.Columns["OrderedFor"].DisplayIndex = 8;
+            lstPartsSpOrderView.Columns["PartID"].DisplayIndex = 0;
+            lstPartsSpOrderView.Columns["PartDescription"].DisplayIndex = 1;
+            lstPartsSpOrderView.Columns["BackOrder"].DisplayIndex = 2;
+            lstPartsSpOrderView.Columns["CostPrice"].DisplayIndex = 4;
+            lstPartsSpOrderView.Columns["ListPrice"].DisplayIndex = 5;
+            lstPartsSpOrderView.Columns["TotalCost"].DisplayIndex = 6;
+            lstPartsSpOrderView.Columns["TotalList"].DisplayIndex = 7;
+            lstPartsSpOrderView.Columns["OrderedFor"].DisplayIndex = 8;
 
 
             //names
-            lstPartReq.Columns["BackOrder"].HeaderText = "Request";
-            lstPartReq.Columns["ListPrice"].HeaderText = "List Price ($)";
-            lstPartReq.Columns["CostPrice"].HeaderText = "Cost Price ($)";
-            lstPartReq.Columns["TotalCost"].HeaderText = "Total Cost ($)";
-            lstPartReq.Columns["TotalList"].HeaderText = "Total List ($)";
-            lstPartReq.Columns["OrderedFor"].HeaderText = "Ordered For";
+            lstPartsSpOrderView.Columns["BackOrder"].HeaderText = "Request";
+            lstPartsSpOrderView.Columns["ListPrice"].HeaderText = "List Price ($)";
+            lstPartsSpOrderView.Columns["CostPrice"].HeaderText = "Cost Price ($)";
+            lstPartsSpOrderView.Columns["TotalCost"].HeaderText = "Total Cost ($)";
+            lstPartsSpOrderView.Columns["TotalList"].HeaderText = "Total List ($)";
+            lstPartsSpOrderView.Columns["OrderedFor"].HeaderText = "Ordered For";
+
+            //visibility
+            lstPartsSpOrderView.Columns["MinQuantity"].Visible = false;
+            lstPartsSpOrderView.Columns["Section"].Visible = false;
+            lstPartsSpOrderView.Columns["QuantityOnHand"].Visible = false;
+            lstPartsSpOrderView.Columns["QuantityOnOrder"].Visible = false;
+            lstPartsSpOrderView.Columns["Reserved"].Visible = false;
+            lstPartsSpOrderView.Columns["Dirty"].Visible = false;
+            lstPartsSpOrderView.Columns["PurchaseIndicator"].Visible = false;
+            lstPartsSpOrderView.Columns["Net"].Visible = false;
+            lstPartsSpOrderView.Columns["Deposit"].Visible = false;
+            lstPartsSpOrderView.Columns["Request"].Visible = false;
+            lstPartsSpOrderView.Columns["Receive"].Visible = false;
+            lstPartsSpOrderView.Columns["Amount"].Visible = false;
+
+            //formatting currency
+            lstPartsSpOrderView.Columns["ListPrice"].DefaultCellStyle.Format = "c";
+            lstPartsSpOrderView.Columns["CostPrice"].DefaultCellStyle.Format = "c";
+            lstPartsSpOrderView.Columns["TotalCost"].DefaultCellStyle.Format = "c";
+            lstPartsSpOrderView.Columns["TotalList"].DefaultCellStyle.Format = "c";
+
+            //formatting nums right justified
+            lstPartsSpOrderView.Columns["ListPrice"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsSpOrderView.Columns["CostPrice"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsSpOrderView.Columns["TotalCost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            lstPartsSpOrderView.Columns["TotalList"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+
+            
+
+
+            lstPartsSpOrderView.RowHeadersVisible = false;
+        }
+
+        private void workOrderColumnSetup()
+        {
+
+            //ordering
+            lstPartReq.Columns["PartID"].DisplayIndex = 0;
+            lstPartReq.Columns["PartDescription"].DisplayIndex = 1;
+            lstPartReq.Columns["Request"].DisplayIndex = 2;
+            lstPartReq.Columns["QuantityOnHand"].DisplayIndex = 3;
+
+
+            //names
+            lstPartReq.Columns["PartID"].HeaderText = "Part Number";
+            lstPartReq.Columns["PartDescription"].HeaderText = "Description";
+            lstPartReq.Columns["Request"].HeaderText = "Quantity Requested";
+            lstPartReq.Columns["QuantityOnHand"].HeaderText = "Quantity On Hand";
 
             //visibility
             lstPartReq.Columns["MinQuantity"].Visible = false;
             lstPartReq.Columns["Section"].Visible = false;
-            lstPartReq.Columns["QuantityOnHand"].Visible = false;
             lstPartReq.Columns["QuantityOnOrder"].Visible = false;
             lstPartReq.Columns["Reserved"].Visible = false;
             lstPartReq.Columns["Dirty"].Visible = false;
             lstPartReq.Columns["PurchaseIndicator"].Visible = false;
             lstPartReq.Columns["Net"].Visible = false;
             lstPartReq.Columns["Deposit"].Visible = false;
-            lstPartReq.Columns["Request"].Visible = false;
             lstPartReq.Columns["Receive"].Visible = false;
             lstPartReq.Columns["Amount"].Visible = false;
+            lstPartReq.Columns["ListPrice"].Visible = false;
+            lstPartReq.Columns["CostPrice"].Visible = false;
+            lstPartReq.Columns["TotalList"].Visible = false;
+            lstPartReq.Columns["TotalCost"].Visible = false;
+            lstPartReq.Columns["OrderedFor"].Visible = false;
+            lstPartReq.Columns["BackOrder"].Visible = false;
 
             //formatting currency
             lstPartReq.Columns["ListPrice"].DefaultCellStyle.Format = "c";
@@ -382,11 +436,6 @@ Order By
             lstPartReq.Columns["TotalList"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             lstPartReq.RowHeadersVisible = false;
-        }
-
-        private void workOrderColumnSetup()
-        {
-
         }
 
         //default db connection
@@ -633,11 +682,11 @@ Order By
                 }
                 selectedPartList.Add(addPart);
                 sourceParts.ResetBindings(false);
-            }
 
-            //if the current part selection is null or an empty part, select this one
-            //if (selectedPart == null || selectedPart.PartID.Equals("NO PART"))
-            //{
+
+                //if the current part selection is null or an empty part, select this one
+                //if (selectedPart == null || selectedPart.PartID.Equals("NO PART"))
+                //{
                 selectedPart = addPart;
                 lstPartsQuery.ClearSelection();
 
@@ -646,6 +695,7 @@ Order By
                 lstPartsQuery.Rows[rowIndex].Selected = true;
                 lstPartsQuery.Rows[rowIndex].Cells[0].Selected = true;
                 lstPartsQuery.FirstDisplayedScrollingRowIndex = rowIndex;
+            }
 
             //}
 
@@ -859,22 +909,25 @@ Order By
 
         private void updateCurrentRow()
         {
-            int editedRowIndex = lstPartsQuery.CurrentRow.Index;
-
-            //pull the part to edit out
-            Part editedPart = selectedPartList[editedRowIndex];
-
-            //if they're askin' for more than we've got, order some.
-            if (editedPart.Request > editedPart.QuantityOnHand)
+            if (lstPartsQuery.CurrentRow != null)
             {
-                int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
-                editedPart.QuantityOnOrder = editedPart.QuantityOnOrder + difference;
+                int editedRowIndex = lstPartsQuery.CurrentRow.Index;
+
+                //pull the part to edit out
+                Part editedPart = selectedPartList[editedRowIndex];
+
+                //if they're askin' for more than we've got, order some.
+                if (editedPart.Request > editedPart.QuantityOnHand)
+                {
+                    int difference = (int)(editedPart.Request - editedPart.QuantityOnHand);
+                    editedPart.QuantityOnOrder = editedPart.QuantityOnOrder + difference;
+                }
+
+                editedPart.Dirty = true;
+
+                //stick the edited part back in
+                selectedPartList[editedRowIndex] = editedPart;
             }
-
-            editedPart.Dirty = true;
-
-            //stick the edited part back in
-            selectedPartList[editedRowIndex] = editedPart;
         }
 
         private void lstPartsInvoice_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -991,15 +1044,16 @@ Order By
                 }
                 spOrderPartList.Add(addPart);
                 sourceSpOrder.ResetBindings(false);
+
+
+                lstPartsSpOrder.ClearSelection();
+
+                int rowIndex = lstPartsSpOrder.Rows.Count - 1;
+
+                lstPartsSpOrder.Rows[rowIndex].Selected = true;
+                lstPartsSpOrder.Rows[rowIndex].Cells[0].Selected = true;
+                lstPartsSpOrder.FirstDisplayedScrollingRowIndex = rowIndex;
             }
-
-            lstPartsSpOrder.ClearSelection();
-
-            int rowIndex = lstPartsSpOrder.Rows.Count - 1;
-
-            lstPartsSpOrder.Rows[rowIndex].Selected = true;
-            lstPartsSpOrder.Rows[rowIndex].Cells[0].Selected = true;
-            lstPartsSpOrder.FirstDisplayedScrollingRowIndex = rowIndex;
 
             calcSpOrder();
         }
@@ -1199,15 +1253,16 @@ Order By
                 }
                 orderPartList.Add(addPart);
                 sourceOrder.ResetBindings(false);
+
+
+                lstPartsOrder.ClearSelection();
+
+                int rowIndex = lstPartsOrder.Rows.Count - 1;
+
+                lstPartsOrder.Rows[rowIndex].Selected = true;
+                lstPartsOrder.Rows[rowIndex].Cells[0].Selected = true;
+                lstPartsOrder.FirstDisplayedScrollingRowIndex = rowIndex;
             }
-
-            lstPartsOrder.ClearSelection();
-
-            int rowIndex = lstPartsOrder.Rows.Count - 1;
-
-            lstPartsOrder.Rows[rowIndex].Selected = true;
-            lstPartsOrder.Rows[rowIndex].Cells[0].Selected = true;
-            lstPartsOrder.FirstDisplayedScrollingRowIndex = rowIndex;
         }
 
         private void btnAddSpecialOrder_Click(object sender, EventArgs e)
@@ -1315,13 +1370,75 @@ Order By
 
                 foreach (Part p in partsFromFast)
                 {
-
+                    if (p.Request == 0)
+                    {
+                        p.Request = 1;
+                    }
                     workOrderPartList.Add(p);
 
                 }
             }
 
             sourceWorkOrder.ResetBindings(false);
+        }
+
+        private void btnWOAddPart_Click(object sender, EventArgs e)
+        {
+            Part addPart;
+            String dialogText = "Please enter Part Number to add.";
+            string promptValue;
+
+            //loop until a valid part is returned, or cancel is clicked
+            do
+            {
+                //show the prompt
+                promptValue = PartSearchModal.ShowDialog(dialogText, "Part Number");
+
+                //create the new part (will always work, but won't always be able to load)
+                addPart = new Part(promptValue);
+
+                //resets the text in case we do end up looping
+                dialogText = "Part number not found. Please enter Part Number.";
+
+            } while (!addPart.load(dbConn) && promptValue != ""); //tries to load the part from the db. they're smart enough, they can load themselves
+
+            //if not cancelled, add the part to the list and refresh
+            if (promptValue != "")
+            {
+                if (addPart.Request == 0)
+                {
+                    addPart.Request = 1;
+                }
+                workOrderPartList.Add(addPart);
+                sourceWorkOrder.ResetBindings(false);
+
+
+                lstPartReq.ClearSelection();
+
+                int rowIndex = lstPartReq.Rows.Count - 1;
+
+                lstPartReq.Rows[rowIndex].Selected = true;
+                lstPartReq.Rows[rowIndex].Cells[0].Selected = true;
+                lstPartReq.FirstDisplayedScrollingRowIndex = rowIndex;
+            }
+        }
+
+        private void btnWOClear_Click(object sender, EventArgs e)
+        {
+            workOrderPartList.Clear();
+            sourceWorkOrder.ResetBindings(false);
+        }
+
+        private void btnWOComplete_Click(object sender, EventArgs e)
+        {
+            foreach (Part p in workOrderPartList)
+            {
+                dbConn.insertQuery("INSERT INTO TaskPart "
+                                 + "(PartID, WorkOrderID) "
+                                 + "VALUES ('" + p.PartID + "', '" + activeWOID + "')");
+            }
+
+            btnWOClear_Click(sender, e);
         }
 
     }

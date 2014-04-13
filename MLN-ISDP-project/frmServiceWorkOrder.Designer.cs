@@ -37,27 +37,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabCreate = new System.Windows.Forms.TabPage();
-            this.grpServiceInfo = new System.Windows.Forms.GroupBox();
-            this.numTaskTime = new System.Windows.Forms.NumericUpDown();
-            this.btnRemoveTask = new System.Windows.Forms.Button();
-            this.lblTaskList = new System.Windows.Forms.Label();
-            this.lstTasks = new System.Windows.Forms.ListBox();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.btnCreate = new System.Windows.Forms.Button();
-            this.btnRemoveTech = new System.Windows.Forms.Button();
-            this.lstTechnicians = new System.Windows.Forms.ListBox();
-            this.lblTechnicianList = new System.Windows.Forms.Label();
-            this.btnAssign = new System.Windows.Forms.Button();
-            this.cboAssign = new System.Windows.Forms.ComboBox();
-            this.lblAssign = new System.Windows.Forms.Label();
-            this.cboType = new System.Windows.Forms.ComboBox();
-            this.lblType = new System.Windows.Forms.Label();
-            this.txtDescription = new System.Windows.Forms.RichTextBox();
-            this.lblDescription = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
-            this.btnAddTask = new System.Windows.Forms.Button();
-            this.cboTask = new System.Windows.Forms.ComboBox();
-            this.lblTask = new System.Windows.Forms.Label();
             this.grpWorkInfo = new System.Windows.Forms.GroupBox();
             this.numKmOut = new System.Windows.Forms.NumericUpDown();
             this.lblKmOut = new System.Windows.Forms.Label();
@@ -105,19 +84,58 @@
             this.txtCxNameSearch = new System.Windows.Forms.TextBox();
             this.lblCxSearch = new System.Windows.Forms.Label();
             this.tabView = new System.Windows.Forms.TabPage();
+            this.grpFilters = new System.Windows.Forms.GroupBox();
+            this.btnFilPickup = new System.Windows.Forms.Button();
+            this.btnFilService = new System.Windows.Forms.Button();
+            this.btnFilHold = new System.Windows.Forms.Button();
+            this.btnFilUnassigned = new System.Windows.Forms.Button();
+            this.btnFilAll = new System.Windows.Forms.Button();
+            this.lstWorkOrders = new System.Windows.Forms.DataGridView();
+            this.grpViewActions = new System.Windows.Forms.GroupBox();
+            this.btnCompleteSelected = new System.Windows.Forms.Button();
+            this.btnDischargeSelected = new System.Windows.Forms.Button();
+            this.btnResumeSelected = new System.Windows.Forms.Button();
+            this.btnHoldSelected = new System.Windows.Forms.Button();
+            this.btnDeleteSelected = new System.Windows.Forms.Button();
+            this.btnViewSelected = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lblTask = new System.Windows.Forms.Label();
+            this.cboTask = new System.Windows.Forms.ComboBox();
+            this.btnAddTask = new System.Windows.Forms.Button();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.lblDescription = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.RichTextBox();
+            this.lblType = new System.Windows.Forms.Label();
+            this.cboType = new System.Windows.Forms.ComboBox();
+            this.lblAssign = new System.Windows.Forms.Label();
+            this.cboAssign = new System.Windows.Forms.ComboBox();
+            this.btnAssign = new System.Windows.Forms.Button();
+            this.lblTechnicianList = new System.Windows.Forms.Label();
+            this.lstTechnicians = new System.Windows.Forms.ListBox();
+            this.btnRemoveTech = new System.Windows.Forms.Button();
+            this.btnCreate = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.lstTasks = new System.Windows.Forms.ListBox();
+            this.lblTaskList = new System.Windows.Forms.Label();
+            this.btnRemoveTask = new System.Windows.Forms.Button();
+            this.numTaskTime = new System.Windows.Forms.NumericUpDown();
+            this.grpServiceInfo = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabCreate.SuspendLayout();
-            this.grpServiceInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).BeginInit();
             this.grpWorkInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numKmOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKmIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRate)).BeginInit();
             this.grpVehicleInfo.SuspendLayout();
             this.grpCxInfo.SuspendLayout();
+            this.tabView.SuspendLayout();
+            this.grpFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstWorkOrders)).BeginInit();
+            this.grpViewActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).BeginInit();
+            this.grpServiceInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -204,238 +222,6 @@
             this.tabCreate.TabIndex = 0;
             this.tabCreate.Text = "Create";
             this.tabCreate.UseVisualStyleBackColor = true;
-            // 
-            // grpServiceInfo
-            // 
-            this.grpServiceInfo.Controls.Add(this.numTaskTime);
-            this.grpServiceInfo.Controls.Add(this.btnRemoveTask);
-            this.grpServiceInfo.Controls.Add(this.lblTaskList);
-            this.grpServiceInfo.Controls.Add(this.lstTasks);
-            this.grpServiceInfo.Controls.Add(this.btnReset);
-            this.grpServiceInfo.Controls.Add(this.btnCreate);
-            this.grpServiceInfo.Controls.Add(this.btnRemoveTech);
-            this.grpServiceInfo.Controls.Add(this.lstTechnicians);
-            this.grpServiceInfo.Controls.Add(this.lblTechnicianList);
-            this.grpServiceInfo.Controls.Add(this.btnAssign);
-            this.grpServiceInfo.Controls.Add(this.cboAssign);
-            this.grpServiceInfo.Controls.Add(this.lblAssign);
-            this.grpServiceInfo.Controls.Add(this.cboType);
-            this.grpServiceInfo.Controls.Add(this.lblType);
-            this.grpServiceInfo.Controls.Add(this.txtDescription);
-            this.grpServiceInfo.Controls.Add(this.lblDescription);
-            this.grpServiceInfo.Controls.Add(this.lblTime);
-            this.grpServiceInfo.Controls.Add(this.btnAddTask);
-            this.grpServiceInfo.Controls.Add(this.cboTask);
-            this.grpServiceInfo.Controls.Add(this.lblTask);
-            this.grpServiceInfo.Location = new System.Drawing.Point(10, 307);
-            this.grpServiceInfo.Name = "grpServiceInfo";
-            this.grpServiceInfo.Size = new System.Drawing.Size(733, 245);
-            this.grpServiceInfo.TabIndex = 8;
-            this.grpServiceInfo.TabStop = false;
-            this.grpServiceInfo.Text = "Service Information";
-            // 
-            // numTaskTime
-            // 
-            this.numTaskTime.DecimalPlaces = 2;
-            this.numTaskTime.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.numTaskTime.Location = new System.Drawing.Point(98, 32);
-            this.numTaskTime.Name = "numTaskTime";
-            this.numTaskTime.Size = new System.Drawing.Size(98, 20);
-            this.numTaskTime.TabIndex = 20;
-            this.numTaskTime.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // btnRemoveTask
-            // 
-            this.btnRemoveTask.Location = new System.Drawing.Point(200, 130);
-            this.btnRemoveTask.Name = "btnRemoveTask";
-            this.btnRemoveTask.Size = new System.Drawing.Size(23, 23);
-            this.btnRemoveTask.TabIndex = 19;
-            this.btnRemoveTask.Text = "X";
-            this.btnRemoveTask.UseVisualStyleBackColor = true;
-            this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
-            // 
-            // lblTaskList
-            // 
-            this.lblTaskList.AutoSize = true;
-            this.lblTaskList.Location = new System.Drawing.Point(7, 114);
-            this.lblTaskList.Name = "lblTaskList";
-            this.lblTaskList.Size = new System.Drawing.Size(39, 13);
-            this.lblTaskList.TabIndex = 18;
-            this.lblTaskList.Text = "Tasks:";
-            // 
-            // lstTasks
-            // 
-            this.lstTasks.FormattingEnabled = true;
-            this.lstTasks.Location = new System.Drawing.Point(10, 130);
-            this.lstTasks.Name = "lstTasks";
-            this.lstTasks.Size = new System.Drawing.Size(186, 82);
-            this.lstTasks.TabIndex = 17;
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(549, 184);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(86, 55);
-            this.btnReset.TabIndex = 16;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // btnCreate
-            // 
-            this.btnCreate.Location = new System.Drawing.Point(641, 184);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(86, 55);
-            this.btnCreate.TabIndex = 15;
-            this.btnCreate.Text = "Create";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
-            // 
-            // btnRemoveTech
-            // 
-            this.btnRemoveTech.Location = new System.Drawing.Point(428, 130);
-            this.btnRemoveTech.Name = "btnRemoveTech";
-            this.btnRemoveTech.Size = new System.Drawing.Size(23, 23);
-            this.btnRemoveTech.TabIndex = 14;
-            this.btnRemoveTech.Text = "X";
-            this.btnRemoveTech.UseVisualStyleBackColor = true;
-            this.btnRemoveTech.Click += new System.EventHandler(this.btnRemoveTech_Click);
-            // 
-            // lstTechnicians
-            // 
-            this.lstTechnicians.FormattingEnabled = true;
-            this.lstTechnicians.Location = new System.Drawing.Point(234, 130);
-            this.lstTechnicians.Name = "lstTechnicians";
-            this.lstTechnicians.Size = new System.Drawing.Size(186, 82);
-            this.lstTechnicians.TabIndex = 13;
-            // 
-            // lblTechnicianList
-            // 
-            this.lblTechnicianList.AutoSize = true;
-            this.lblTechnicianList.Location = new System.Drawing.Point(234, 114);
-            this.lblTechnicianList.Name = "lblTechnicianList";
-            this.lblTechnicianList.Size = new System.Drawing.Size(120, 13);
-            this.lblTechnicianList.TabIndex = 12;
-            this.lblTechnicianList.Text = "Assigned Technician(s):";
-            // 
-            // btnAssign
-            // 
-            this.btnAssign.Location = new System.Drawing.Point(234, 57);
-            this.btnAssign.Name = "btnAssign";
-            this.btnAssign.Size = new System.Drawing.Size(66, 23);
-            this.btnAssign.TabIndex = 11;
-            this.btnAssign.Text = "Add Tech";
-            this.btnAssign.UseVisualStyleBackColor = true;
-            this.btnAssign.Click += new System.EventHandler(this.btnAssign_Click);
-            // 
-            // cboAssign
-            // 
-            this.cboAssign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboAssign.FormattingEnabled = true;
-            this.cboAssign.Items.AddRange(new object[] {
-            "Eduardo Concepcion",
-            "Raymond Roach",
-            "Will McAvoy",
-            "Sarah White"});
-            this.cboAssign.Location = new System.Drawing.Point(234, 30);
-            this.cboAssign.Name = "cboAssign";
-            this.cboAssign.Size = new System.Drawing.Size(186, 21);
-            this.cboAssign.TabIndex = 10;
-            // 
-            // lblAssign
-            // 
-            this.lblAssign.AutoSize = true;
-            this.lblAssign.Location = new System.Drawing.Point(234, 14);
-            this.lblAssign.Name = "lblAssign";
-            this.lblAssign.Size = new System.Drawing.Size(68, 13);
-            this.lblAssign.TabIndex = 9;
-            this.lblAssign.Text = "Technicians:";
-            // 
-            // cboType
-            // 
-            this.cboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboType.FormattingEnabled = true;
-            this.cboType.Items.AddRange(new object[] {
-            "None",
-            "Recall",
-            "Warranty"});
-            this.cboType.Location = new System.Drawing.Point(10, 72);
-            this.cboType.Name = "cboType";
-            this.cboType.Size = new System.Drawing.Size(104, 21);
-            this.cboType.TabIndex = 8;
-            // 
-            // lblType
-            // 
-            this.lblType.AutoSize = true;
-            this.lblType.Location = new System.Drawing.Point(6, 56);
-            this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(61, 13);
-            this.lblType.TabIndex = 7;
-            this.lblType.Text = "Task Type:";
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.Location = new System.Drawing.Point(460, 34);
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(267, 139);
-            this.txtDescription.TabIndex = 6;
-            this.txtDescription.Text = "";
-            // 
-            // lblDescription
-            // 
-            this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(457, 16);
-            this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(60, 13);
-            this.lblDescription.TabIndex = 5;
-            this.lblDescription.Text = "Description";
-            // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(95, 17);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(33, 13);
-            this.lblTime.TabIndex = 3;
-            this.lblTime.Text = "Time:";
-            // 
-            // btnAddTask
-            // 
-            this.btnAddTask.Location = new System.Drawing.Point(120, 70);
-            this.btnAddTask.Name = "btnAddTask";
-            this.btnAddTask.Size = new System.Drawing.Size(76, 23);
-            this.btnAddTask.TabIndex = 2;
-            this.btnAddTask.Text = "Save Task";
-            this.btnAddTask.UseVisualStyleBackColor = true;
-            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
-            // 
-            // cboTask
-            // 
-            this.cboTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTask.FormattingEnabled = true;
-            this.cboTask.Location = new System.Drawing.Point(10, 32);
-            this.cboTask.Name = "cboTask";
-            this.cboTask.Size = new System.Drawing.Size(82, 21);
-            this.cboTask.TabIndex = 1;
-            this.cboTask.SelectedIndexChanged += new System.EventHandler(this.cboTask_SelectedIndexChanged);
-            this.cboTask.SelectionChangeCommitted += new System.EventHandler(this.cboTask_SelectionChangeCommitted);
-            // 
-            // lblTask
-            // 
-            this.lblTask.AutoSize = true;
-            this.lblTask.Location = new System.Drawing.Point(6, 16);
-            this.lblTask.Name = "lblTask";
-            this.lblTask.Size = new System.Drawing.Size(48, 13);
-            this.lblTask.TabIndex = 0;
-            this.lblTask.Text = "Task ID:";
             // 
             // grpWorkInfo
             // 
@@ -888,6 +674,9 @@
             // 
             // tabView
             // 
+            this.tabView.Controls.Add(this.grpFilters);
+            this.tabView.Controls.Add(this.lstWorkOrders);
+            this.tabView.Controls.Add(this.grpViewActions);
             this.tabView.Location = new System.Drawing.Point(4, 23);
             this.tabView.Name = "tabView";
             this.tabView.Padding = new System.Windows.Forms.Padding(3);
@@ -896,6 +685,155 @@
             this.tabView.Text = "View";
             this.tabView.UseVisualStyleBackColor = true;
             // 
+            // grpFilters
+            // 
+            this.grpFilters.Controls.Add(this.btnFilPickup);
+            this.grpFilters.Controls.Add(this.btnFilService);
+            this.grpFilters.Controls.Add(this.btnFilHold);
+            this.grpFilters.Controls.Add(this.btnFilUnassigned);
+            this.grpFilters.Controls.Add(this.btnFilAll);
+            this.grpFilters.Location = new System.Drawing.Point(6, 6);
+            this.grpFilters.Name = "grpFilters";
+            this.grpFilters.Size = new System.Drawing.Size(737, 62);
+            this.grpFilters.TabIndex = 2;
+            this.grpFilters.TabStop = false;
+            this.grpFilters.Text = "Work Order Filters:";
+            // 
+            // btnFilPickup
+            // 
+            this.btnFilPickup.Location = new System.Drawing.Point(330, 17);
+            this.btnFilPickup.Name = "btnFilPickup";
+            this.btnFilPickup.Size = new System.Drawing.Size(75, 37);
+            this.btnFilPickup.TabIndex = 4;
+            this.btnFilPickup.Text = "Awaiting Pick Up";
+            this.btnFilPickup.UseVisualStyleBackColor = true;
+            this.btnFilPickup.Click += new System.EventHandler(this.btnFilPickup_Click);
+            // 
+            // btnFilService
+            // 
+            this.btnFilService.Location = new System.Drawing.Point(249, 17);
+            this.btnFilService.Name = "btnFilService";
+            this.btnFilService.Size = new System.Drawing.Size(75, 37);
+            this.btnFilService.TabIndex = 3;
+            this.btnFilService.Text = "In Service";
+            this.btnFilService.UseVisualStyleBackColor = true;
+            this.btnFilService.Click += new System.EventHandler(this.btnFilService_Click);
+            // 
+            // btnFilHold
+            // 
+            this.btnFilHold.Location = new System.Drawing.Point(168, 17);
+            this.btnFilHold.Name = "btnFilHold";
+            this.btnFilHold.Size = new System.Drawing.Size(75, 37);
+            this.btnFilHold.TabIndex = 2;
+            this.btnFilHold.Text = "Hold";
+            this.btnFilHold.UseVisualStyleBackColor = true;
+            this.btnFilHold.Click += new System.EventHandler(this.btnFilHold_Click);
+            // 
+            // btnFilUnassigned
+            // 
+            this.btnFilUnassigned.Location = new System.Drawing.Point(87, 17);
+            this.btnFilUnassigned.Name = "btnFilUnassigned";
+            this.btnFilUnassigned.Size = new System.Drawing.Size(75, 37);
+            this.btnFilUnassigned.TabIndex = 1;
+            this.btnFilUnassigned.Text = "Unassigned";
+            this.btnFilUnassigned.UseVisualStyleBackColor = true;
+            this.btnFilUnassigned.Click += new System.EventHandler(this.btnFilUnassigned_Click);
+            // 
+            // btnFilAll
+            // 
+            this.btnFilAll.Location = new System.Drawing.Point(6, 17);
+            this.btnFilAll.Name = "btnFilAll";
+            this.btnFilAll.Size = new System.Drawing.Size(75, 37);
+            this.btnFilAll.TabIndex = 0;
+            this.btnFilAll.Text = "All";
+            this.btnFilAll.UseVisualStyleBackColor = true;
+            this.btnFilAll.Click += new System.EventHandler(this.btnFilAll_Click);
+            // 
+            // lstWorkOrders
+            // 
+            this.lstWorkOrders.AllowUserToAddRows = false;
+            this.lstWorkOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstWorkOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstWorkOrders.Location = new System.Drawing.Point(6, 74);
+            this.lstWorkOrders.Name = "lstWorkOrders";
+            this.lstWorkOrders.RowHeadersVisible = false;
+            this.lstWorkOrders.Size = new System.Drawing.Size(737, 393);
+            this.lstWorkOrders.TabIndex = 1;
+            // 
+            // grpViewActions
+            // 
+            this.grpViewActions.Controls.Add(this.btnCompleteSelected);
+            this.grpViewActions.Controls.Add(this.btnDischargeSelected);
+            this.grpViewActions.Controls.Add(this.btnResumeSelected);
+            this.grpViewActions.Controls.Add(this.btnHoldSelected);
+            this.grpViewActions.Controls.Add(this.btnDeleteSelected);
+            this.grpViewActions.Controls.Add(this.btnViewSelected);
+            this.grpViewActions.Location = new System.Drawing.Point(6, 473);
+            this.grpViewActions.Name = "grpViewActions";
+            this.grpViewActions.Size = new System.Drawing.Size(737, 79);
+            this.grpViewActions.TabIndex = 0;
+            this.grpViewActions.TabStop = false;
+            // 
+            // btnCompleteSelected
+            // 
+            this.btnCompleteSelected.Enabled = false;
+            this.btnCompleteSelected.Location = new System.Drawing.Point(575, 15);
+            this.btnCompleteSelected.Name = "btnCompleteSelected";
+            this.btnCompleteSelected.Size = new System.Drawing.Size(75, 54);
+            this.btnCompleteSelected.TabIndex = 5;
+            this.btnCompleteSelected.Text = "Complete Selected";
+            this.btnCompleteSelected.UseVisualStyleBackColor = true;
+            // 
+            // btnDischargeSelected
+            // 
+            this.btnDischargeSelected.Enabled = false;
+            this.btnDischargeSelected.Location = new System.Drawing.Point(656, 15);
+            this.btnDischargeSelected.Name = "btnDischargeSelected";
+            this.btnDischargeSelected.Size = new System.Drawing.Size(75, 54);
+            this.btnDischargeSelected.TabIndex = 4;
+            this.btnDischargeSelected.Text = "Discharge Selected";
+            this.btnDischargeSelected.UseVisualStyleBackColor = true;
+            // 
+            // btnResumeSelected
+            // 
+            this.btnResumeSelected.Enabled = false;
+            this.btnResumeSelected.Location = new System.Drawing.Point(249, 15);
+            this.btnResumeSelected.Name = "btnResumeSelected";
+            this.btnResumeSelected.Size = new System.Drawing.Size(75, 54);
+            this.btnResumeSelected.TabIndex = 3;
+            this.btnResumeSelected.Text = "Resume Selected";
+            this.btnResumeSelected.UseVisualStyleBackColor = true;
+            // 
+            // btnHoldSelected
+            // 
+            this.btnHoldSelected.Enabled = false;
+            this.btnHoldSelected.Location = new System.Drawing.Point(168, 15);
+            this.btnHoldSelected.Name = "btnHoldSelected";
+            this.btnHoldSelected.Size = new System.Drawing.Size(75, 54);
+            this.btnHoldSelected.TabIndex = 2;
+            this.btnHoldSelected.Text = "Hold Selected";
+            this.btnHoldSelected.UseVisualStyleBackColor = true;
+            // 
+            // btnDeleteSelected
+            // 
+            this.btnDeleteSelected.Enabled = false;
+            this.btnDeleteSelected.Location = new System.Drawing.Point(87, 15);
+            this.btnDeleteSelected.Name = "btnDeleteSelected";
+            this.btnDeleteSelected.Size = new System.Drawing.Size(75, 54);
+            this.btnDeleteSelected.TabIndex = 1;
+            this.btnDeleteSelected.Text = "Delete Selected";
+            this.btnDeleteSelected.UseVisualStyleBackColor = true;
+            // 
+            // btnViewSelected
+            // 
+            this.btnViewSelected.Location = new System.Drawing.Point(6, 15);
+            this.btnViewSelected.Name = "btnViewSelected";
+            this.btnViewSelected.Size = new System.Drawing.Size(75, 54);
+            this.btnViewSelected.TabIndex = 0;
+            this.btnViewSelected.Text = "View Selected";
+            this.btnViewSelected.UseVisualStyleBackColor = true;
+            this.btnViewSelected.Click += new System.EventHandler(this.btnViewSelected_Click);
+            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -903,6 +841,238 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(342, 73);
             this.dataGridView1.TabIndex = 4;
+            // 
+            // lblTask
+            // 
+            this.lblTask.AutoSize = true;
+            this.lblTask.Location = new System.Drawing.Point(6, 16);
+            this.lblTask.Name = "lblTask";
+            this.lblTask.Size = new System.Drawing.Size(48, 13);
+            this.lblTask.TabIndex = 0;
+            this.lblTask.Text = "Task ID:";
+            // 
+            // cboTask
+            // 
+            this.cboTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTask.FormattingEnabled = true;
+            this.cboTask.Location = new System.Drawing.Point(10, 32);
+            this.cboTask.Name = "cboTask";
+            this.cboTask.Size = new System.Drawing.Size(82, 21);
+            this.cboTask.TabIndex = 1;
+            this.cboTask.SelectedIndexChanged += new System.EventHandler(this.cboTask_SelectedIndexChanged);
+            this.cboTask.SelectionChangeCommitted += new System.EventHandler(this.cboTask_SelectionChangeCommitted);
+            // 
+            // btnAddTask
+            // 
+            this.btnAddTask.Location = new System.Drawing.Point(120, 70);
+            this.btnAddTask.Name = "btnAddTask";
+            this.btnAddTask.Size = new System.Drawing.Size(76, 23);
+            this.btnAddTask.TabIndex = 2;
+            this.btnAddTask.Text = "Save Task";
+            this.btnAddTask.UseVisualStyleBackColor = true;
+            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Location = new System.Drawing.Point(95, 17);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(33, 13);
+            this.lblTime.TabIndex = 3;
+            this.lblTime.Text = "Time:";
+            // 
+            // lblDescription
+            // 
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.Location = new System.Drawing.Point(457, 16);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(60, 13);
+            this.lblDescription.TabIndex = 5;
+            this.lblDescription.Text = "Description";
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.Location = new System.Drawing.Point(460, 34);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(267, 139);
+            this.txtDescription.TabIndex = 6;
+            this.txtDescription.Text = "";
+            // 
+            // lblType
+            // 
+            this.lblType.AutoSize = true;
+            this.lblType.Location = new System.Drawing.Point(6, 56);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(61, 13);
+            this.lblType.TabIndex = 7;
+            this.lblType.Text = "Task Type:";
+            // 
+            // cboType
+            // 
+            this.cboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboType.FormattingEnabled = true;
+            this.cboType.Items.AddRange(new object[] {
+            "None",
+            "Recall",
+            "Warranty"});
+            this.cboType.Location = new System.Drawing.Point(10, 72);
+            this.cboType.Name = "cboType";
+            this.cboType.Size = new System.Drawing.Size(104, 21);
+            this.cboType.TabIndex = 8;
+            // 
+            // lblAssign
+            // 
+            this.lblAssign.AutoSize = true;
+            this.lblAssign.Location = new System.Drawing.Point(234, 14);
+            this.lblAssign.Name = "lblAssign";
+            this.lblAssign.Size = new System.Drawing.Size(68, 13);
+            this.lblAssign.TabIndex = 9;
+            this.lblAssign.Text = "Technicians:";
+            // 
+            // cboAssign
+            // 
+            this.cboAssign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboAssign.FormattingEnabled = true;
+            this.cboAssign.Items.AddRange(new object[] {
+            "Eduardo Concepcion",
+            "Raymond Roach",
+            "Will McAvoy",
+            "Sarah White"});
+            this.cboAssign.Location = new System.Drawing.Point(234, 30);
+            this.cboAssign.Name = "cboAssign";
+            this.cboAssign.Size = new System.Drawing.Size(186, 21);
+            this.cboAssign.TabIndex = 10;
+            // 
+            // btnAssign
+            // 
+            this.btnAssign.Location = new System.Drawing.Point(234, 57);
+            this.btnAssign.Name = "btnAssign";
+            this.btnAssign.Size = new System.Drawing.Size(66, 23);
+            this.btnAssign.TabIndex = 11;
+            this.btnAssign.Text = "Add Tech";
+            this.btnAssign.UseVisualStyleBackColor = true;
+            this.btnAssign.Click += new System.EventHandler(this.btnAssign_Click);
+            // 
+            // lblTechnicianList
+            // 
+            this.lblTechnicianList.AutoSize = true;
+            this.lblTechnicianList.Location = new System.Drawing.Point(234, 114);
+            this.lblTechnicianList.Name = "lblTechnicianList";
+            this.lblTechnicianList.Size = new System.Drawing.Size(120, 13);
+            this.lblTechnicianList.TabIndex = 12;
+            this.lblTechnicianList.Text = "Assigned Technician(s):";
+            // 
+            // lstTechnicians
+            // 
+            this.lstTechnicians.FormattingEnabled = true;
+            this.lstTechnicians.Location = new System.Drawing.Point(234, 130);
+            this.lstTechnicians.Name = "lstTechnicians";
+            this.lstTechnicians.Size = new System.Drawing.Size(186, 82);
+            this.lstTechnicians.TabIndex = 13;
+            // 
+            // btnRemoveTech
+            // 
+            this.btnRemoveTech.Location = new System.Drawing.Point(428, 130);
+            this.btnRemoveTech.Name = "btnRemoveTech";
+            this.btnRemoveTech.Size = new System.Drawing.Size(23, 23);
+            this.btnRemoveTech.TabIndex = 14;
+            this.btnRemoveTech.Text = "X";
+            this.btnRemoveTech.UseVisualStyleBackColor = true;
+            this.btnRemoveTech.Click += new System.EventHandler(this.btnRemoveTech_Click);
+            // 
+            // btnCreate
+            // 
+            this.btnCreate.Location = new System.Drawing.Point(641, 184);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(86, 55);
+            this.btnCreate.TabIndex = 15;
+            this.btnCreate.Text = "Create";
+            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(549, 184);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(86, 55);
+            this.btnReset.TabIndex = 16;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // lstTasks
+            // 
+            this.lstTasks.FormattingEnabled = true;
+            this.lstTasks.Location = new System.Drawing.Point(10, 130);
+            this.lstTasks.Name = "lstTasks";
+            this.lstTasks.Size = new System.Drawing.Size(186, 82);
+            this.lstTasks.TabIndex = 17;
+            // 
+            // lblTaskList
+            // 
+            this.lblTaskList.AutoSize = true;
+            this.lblTaskList.Location = new System.Drawing.Point(7, 114);
+            this.lblTaskList.Name = "lblTaskList";
+            this.lblTaskList.Size = new System.Drawing.Size(39, 13);
+            this.lblTaskList.TabIndex = 18;
+            this.lblTaskList.Text = "Tasks:";
+            // 
+            // btnRemoveTask
+            // 
+            this.btnRemoveTask.Location = new System.Drawing.Point(200, 130);
+            this.btnRemoveTask.Name = "btnRemoveTask";
+            this.btnRemoveTask.Size = new System.Drawing.Size(23, 23);
+            this.btnRemoveTask.TabIndex = 19;
+            this.btnRemoveTask.Text = "X";
+            this.btnRemoveTask.UseVisualStyleBackColor = true;
+            this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
+            // 
+            // numTaskTime
+            // 
+            this.numTaskTime.DecimalPlaces = 2;
+            this.numTaskTime.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.numTaskTime.Location = new System.Drawing.Point(98, 32);
+            this.numTaskTime.Name = "numTaskTime";
+            this.numTaskTime.Size = new System.Drawing.Size(98, 20);
+            this.numTaskTime.TabIndex = 20;
+            this.numTaskTime.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // grpServiceInfo
+            // 
+            this.grpServiceInfo.Controls.Add(this.numTaskTime);
+            this.grpServiceInfo.Controls.Add(this.btnRemoveTask);
+            this.grpServiceInfo.Controls.Add(this.lblTaskList);
+            this.grpServiceInfo.Controls.Add(this.lstTasks);
+            this.grpServiceInfo.Controls.Add(this.btnReset);
+            this.grpServiceInfo.Controls.Add(this.btnCreate);
+            this.grpServiceInfo.Controls.Add(this.btnRemoveTech);
+            this.grpServiceInfo.Controls.Add(this.lstTechnicians);
+            this.grpServiceInfo.Controls.Add(this.lblTechnicianList);
+            this.grpServiceInfo.Controls.Add(this.btnAssign);
+            this.grpServiceInfo.Controls.Add(this.cboAssign);
+            this.grpServiceInfo.Controls.Add(this.lblAssign);
+            this.grpServiceInfo.Controls.Add(this.cboType);
+            this.grpServiceInfo.Controls.Add(this.lblType);
+            this.grpServiceInfo.Controls.Add(this.txtDescription);
+            this.grpServiceInfo.Controls.Add(this.lblDescription);
+            this.grpServiceInfo.Controls.Add(this.lblTime);
+            this.grpServiceInfo.Controls.Add(this.btnAddTask);
+            this.grpServiceInfo.Controls.Add(this.cboTask);
+            this.grpServiceInfo.Controls.Add(this.lblTask);
+            this.grpServiceInfo.Location = new System.Drawing.Point(10, 307);
+            this.grpServiceInfo.Name = "grpServiceInfo";
+            this.grpServiceInfo.Size = new System.Drawing.Size(733, 245);
+            this.grpServiceInfo.TabIndex = 8;
+            this.grpServiceInfo.TabStop = false;
+            this.grpServiceInfo.Text = "Service Information";
             // 
             // frmServiceWorkOrder
             // 
@@ -923,9 +1093,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabCreate.ResumeLayout(false);
             this.tabCreate.PerformLayout();
-            this.grpServiceInfo.ResumeLayout(false);
-            this.grpServiceInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).EndInit();
             this.grpWorkInfo.ResumeLayout(false);
             this.grpWorkInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numKmOut)).EndInit();
@@ -935,7 +1102,14 @@
             this.grpVehicleInfo.PerformLayout();
             this.grpCxInfo.ResumeLayout(false);
             this.grpCxInfo.PerformLayout();
+            this.tabView.ResumeLayout(false);
+            this.grpFilters.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lstWorkOrders)).EndInit();
+            this.grpViewActions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTaskTime)).EndInit();
+            this.grpServiceInfo.ResumeLayout(false);
+            this.grpServiceInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -958,7 +1132,6 @@
         private System.Windows.Forms.Label lblCxSearch;
         private System.Windows.Forms.ComboBox cboVehicle;
         private System.Windows.Forms.Label lblSelectVehicle;
-        private System.Windows.Forms.GroupBox grpServiceInfo;
         private System.Windows.Forms.GroupBox grpWorkInfo;
         private System.Windows.Forms.GroupBox grpVehicleInfo;
         private System.Windows.Forms.GroupBox grpCxInfo;
@@ -997,30 +1170,45 @@
         private System.Windows.Forms.Label lblKmIn;
         private System.Windows.Forms.NumericUpDown numRate;
         private System.Windows.Forms.Label lblRate;
-        private System.Windows.Forms.Label lblTask;
-        private System.Windows.Forms.ComboBox cboType;
-        private System.Windows.Forms.Label lblType;
-        private System.Windows.Forms.RichTextBox txtDescription;
-        private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.ComboBox cboTask;
+        private System.Windows.Forms.TextBox txtProvince;
+        private System.Windows.Forms.TextBox txtYear;
+        private System.Windows.Forms.NumericUpDown numKmIn;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView lstWorkOrders;
+        private System.Windows.Forms.GroupBox grpViewActions;
+        private System.Windows.Forms.Button btnDeleteSelected;
+        private System.Windows.Forms.Button btnViewSelected;
+        private System.Windows.Forms.Button btnCompleteSelected;
+        private System.Windows.Forms.Button btnDischargeSelected;
+        private System.Windows.Forms.Button btnResumeSelected;
+        private System.Windows.Forms.Button btnHoldSelected;
+        private System.Windows.Forms.GroupBox grpFilters;
+        private System.Windows.Forms.Button btnFilPickup;
+        private System.Windows.Forms.Button btnFilService;
+        private System.Windows.Forms.Button btnFilHold;
+        private System.Windows.Forms.Button btnFilUnassigned;
+        private System.Windows.Forms.Button btnFilAll;
+        private System.Windows.Forms.GroupBox grpServiceInfo;
+        private System.Windows.Forms.NumericUpDown numTaskTime;
+        private System.Windows.Forms.Button btnRemoveTask;
+        private System.Windows.Forms.Label lblTaskList;
+        private System.Windows.Forms.ListBox lstTasks;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnCreate;
+        private System.Windows.Forms.Button btnRemoveTech;
         private System.Windows.Forms.ListBox lstTechnicians;
         private System.Windows.Forms.Label lblTechnicianList;
         private System.Windows.Forms.Button btnAssign;
         private System.Windows.Forms.ComboBox cboAssign;
         private System.Windows.Forms.Label lblAssign;
-        private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Button btnCreate;
-        private System.Windows.Forms.TextBox txtProvince;
-        private System.Windows.Forms.TextBox txtYear;
-        private System.Windows.Forms.Label lblTaskList;
-        private System.Windows.Forms.ListBox lstTasks;
-        private System.Windows.Forms.NumericUpDown numKmIn;
-        private System.Windows.Forms.Button btnRemoveTask;
-        private System.Windows.Forms.Button btnRemoveTech;
+        private System.Windows.Forms.ComboBox cboType;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.RichTextBox txtDescription;
+        private System.Windows.Forms.Label lblDescription;
+        private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button btnAddTask;
-        private System.Windows.Forms.NumericUpDown numTaskTime;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox cboTask;
+        private System.Windows.Forms.Label lblTask;
     }
 }
 

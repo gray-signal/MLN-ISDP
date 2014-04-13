@@ -17,12 +17,17 @@ namespace MLN_ISDP_project
         static OracleDB dbConn = new OracleDB(csBuilder.ToString());
 
         DataTable workOrderTasks;
+        DataTable workOrders;
+        BindingSource sourceWO;
 
         public frmServiceWorkOrder()
         {
             InitializeComponent();
 
             workOrderTasks = new DataTable();
+            workOrders = new DataTable();
+
+            sourceWO = new BindingSource();
 
             workOrderTasks.Columns.Add("TaskValue");
             workOrderTasks.PrimaryKey = new DataColumn[] { workOrderTasks.Columns["TaskValue"] };
@@ -33,6 +38,8 @@ namespace MLN_ISDP_project
             workOrderTasks.Columns.Add("Description");
             workOrderTasks.Columns.Add("Technicians");
 
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS != 'DISCHARGED' OR STATUS IS NULL ORDER BY STATUS Desc");
+
             cboAssign.SelectedIndex = 0;
             cboType.SelectedIndex = 0;
 
@@ -40,6 +47,10 @@ namespace MLN_ISDP_project
             cboTask.Items.Add("Add new task");
 
             cboTask.SelectedIndex = 0;
+
+            sourceWO.DataSource = workOrders;
+
+            lstWorkOrders.DataSource = sourceWO;
 
             dataGridView1.DataSource = workOrderTasks;
 
@@ -189,8 +200,10 @@ namespace MLN_ISDP_project
 
                 foreach (string tech in lstTechnicians.Items)
                 {
-                    techs = techs + tech + ", ";
+                    techs = techs + tech + ",";
                 }
+
+                techs = techs.TrimEnd(',');
 
                 string desc = txtDescription.Text;
 
@@ -305,9 +318,9 @@ namespace MLN_ISDP_project
                 string cxNum = txtCxNum.Text;
 
                 dbConn.insertQuery("INSERT INTO WorkOrder "
-                                 + "(PromisedTime, Rate, KMin, CustomerID, VehicleID) "
+                                 + "(PromisedTime, Rate, KMin, CustomerID, VehicleID, Status) "
                                  + "Values (to_date('" + formattedTime + "', 'yyyy-MM-dd hh24:mi:ss'), '"
-                                 + rate + "', '" + kmIn + "', '" + cxNum + "', '" + txtVin.Text + "')");
+                                 + rate + "', '" + kmIn + "', '" + cxNum + "', '" + txtVin.Text + "', 'UNASSIGNED')");
 
                 DataTable dt = dbConn.readQuery("SELECT WorkOrderID FROM WorkOrder WHERE PromisedTime = to_date('" + formattedTime + "', 'yyyy-MM-dd hh24:mi:ss')");
                 double woID = (double)dt.Rows[0]["WorkOrderID"];
@@ -347,6 +360,87 @@ namespace MLN_ISDP_project
                 dtpPromised.Value = minPromised;
             }
         }
+
+        private void btnFilAll_Click(object sender, EventArgs e)
+        {
+            btnDeleteSelected.Enabled = false;
+            btnHoldSelected.Enabled = false;
+            btnResumeSelected.Enabled = false;
+            btnCompleteSelected.Enabled = false;
+            btnDischargeSelected.Enabled = false;
+
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS != 'DISCHARGED' OR STATUS IS NULL ORDER BY STATUS Desc");
+            sourceWO.DataSource = null;
+            sourceWO.DataSource = workOrders;
+            sourceWO.ResetBindings(false);
+        }
+
+        private void btnFilUnassigned_Click(object sender, EventArgs e)
+        {
+            btnDeleteSelected.Enabled = true;
+            btnHoldSelected.Enabled = false;
+            btnResumeSelected.Enabled = false;
+            btnCompleteSelected.Enabled = false;
+            btnDischargeSelected.Enabled = false;
+
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'UNASSIGNED'");
+            sourceWO.DataSource = null;
+            sourceWO.DataSource = workOrders;
+            sourceWO.ResetBindings(false);
+        }
+
+        private void btnFilHold_Click(object sender, EventArgs e)
+        {
+            btnDeleteSelected.Enabled = false;
+            btnHoldSelected.Enabled = false;
+            btnResumeSelected.Enabled = true;
+            btnCompleteSelected.Enabled = false;
+            btnDischargeSelected.Enabled = false;
+
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'ONHOLD'");
+            sourceWO.DataSource = null;
+            sourceWO.DataSource = workOrders;
+            sourceWO.ResetBindings(false);
+        }
+
+        private void btnFilService_Click(object sender, EventArgs e)
+        {
+            btnDeleteSelected.Enabled = false;
+            btnHoldSelected.Enabled = true;
+            btnResumeSelected.Enabled = false;
+            btnCompleteSelected.Enabled = true;
+            btnDischargeSelected.Enabled = false;
+
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'INSERVICE'");
+            sourceWO.DataSource = null;
+            sourceWO.DataSource = workOrders;
+            sourceWO.ResetBindings(false);
+        }
+
+        private void btnFilPickup_Click(object sender, EventArgs e)
+        {
+            btnDeleteSelected.Enabled = false;
+            btnHoldSelected.Enabled = false;
+            btnResumeSelected.Enabled = false;
+            btnCompleteSelected.Enabled = false;
+            btnDischargeSelected.Enabled = true;
+
+            workOrders = dbConn.readQuery("SELECT * FROM WORKORDER WHERE STATUS = 'AWAITINGPICKUP'");
+            sourceWO.DataSource = null;
+            sourceWO.DataSource = workOrders;
+            sourceWO.ResetBindings(false);
+        }
+
+        private void btnViewSelected_Click(object sender, EventArgs e)
+        {
+            string currentWorkOrder = lstWorkOrders.Rows[lstWorkOrders.CurrentRow.Index].Cells["WorkOrderID"].Value.ToString();
+            string status = lstWorkOrders.Rows[lstWorkOrders.CurrentRow.Index].Cells["status"].Value.ToString();
+
+            Form frmEditWO = new frmViewEditWorkOrder(currentWorkOrder, status);
+            frmEditWO.ShowDialog();
+        }
+
+
 
 
     }
