@@ -80,7 +80,14 @@ namespace MLN_ISDP_project
         public Part(string id, string requested)
         {
             m_id = id;
-            Request = Int16.Parse(requested);            
+            if (requested == "")
+            {
+                Request = 1;
+            }
+            else
+            {
+                Request = Int16.Parse(requested);
+            }
 
         }
 
