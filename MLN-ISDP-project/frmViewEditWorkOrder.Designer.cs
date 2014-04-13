@@ -34,7 +34,7 @@
             this.btnRemoveTask = new System.Windows.Forms.Button();
             this.btnNewTask = new System.Windows.Forms.Button();
             this.lstTasks = new System.Windows.Forms.DataGridView();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnSaveAndClose = new System.Windows.Forms.Button();
             this.btnRemoveTech = new System.Windows.Forms.Button();
             this.lstTechnicians = new System.Windows.Forms.ListBox();
             this.lblTechnicianList = new System.Windows.Forms.Label();
@@ -83,6 +83,14 @@
             this.txtCxNum = new System.Windows.Forms.TextBox();
             this.lblCxNum = new System.Windows.Forms.Label();
             this.tabParts = new System.Windows.Forms.TabPage();
+            this.lstTasksForParts = new System.Windows.Forms.DataGridView();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.lstAvailableParts = new System.Windows.Forms.DataGridView();
+            this.lstPartsForSelectedTask = new System.Windows.Forms.DataGridView();
+            this.btnAddAll = new System.Windows.Forms.Button();
+            this.btnAddSelected = new System.Windows.Forms.Button();
+            this.btnRemoveSelected = new System.Windows.Forms.Button();
+            this.btnRemoveAll = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabViewEdit.SuspendLayout();
             this.grpServiceInfo.SuspendLayout();
@@ -93,17 +101,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRate)).BeginInit();
             this.grpVehicleInfo.SuspendLayout();
             this.grpCxInfo.SuspendLayout();
+            this.tabParts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstTasksForParts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstAvailableParts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsForSelectedTask)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabViewEdit);
             this.tabControl1.Controls.Add(this.tabParts);
-            this.tabControl1.Location = new System.Drawing.Point(12, 31);
+            this.tabControl1.Location = new System.Drawing.Point(12, 38);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(726, 547);
+            this.tabControl1.Size = new System.Drawing.Size(726, 540);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
             // 
             // tabViewEdit
             // 
@@ -114,7 +127,7 @@
             this.tabViewEdit.Location = new System.Drawing.Point(4, 23);
             this.tabViewEdit.Name = "tabViewEdit";
             this.tabViewEdit.Padding = new System.Windows.Forms.Padding(3);
-            this.tabViewEdit.Size = new System.Drawing.Size(718, 520);
+            this.tabViewEdit.Size = new System.Drawing.Size(718, 513);
             this.tabViewEdit.TabIndex = 0;
             this.tabViewEdit.Text = "View/Edit";
             this.tabViewEdit.UseVisualStyleBackColor = true;
@@ -124,7 +137,6 @@
             this.grpServiceInfo.Controls.Add(this.btnRemoveTask);
             this.grpServiceInfo.Controls.Add(this.btnNewTask);
             this.grpServiceInfo.Controls.Add(this.lstTasks);
-            this.grpServiceInfo.Controls.Add(this.btnSave);
             this.grpServiceInfo.Controls.Add(this.btnRemoveTech);
             this.grpServiceInfo.Controls.Add(this.lstTechnicians);
             this.grpServiceInfo.Controls.Add(this.lblTechnicianList);
@@ -140,9 +152,9 @@
             // 
             // btnRemoveTask
             // 
-            this.btnRemoveTask.Location = new System.Drawing.Point(503, 213);
+            this.btnRemoveTask.Location = new System.Drawing.Point(591, 19);
             this.btnRemoveTask.Name = "btnRemoveTask";
-            this.btnRemoveTask.Size = new System.Drawing.Size(75, 23);
+            this.btnRemoveTask.Size = new System.Drawing.Size(93, 44);
             this.btnRemoveTask.TabIndex = 18;
             this.btnRemoveTask.Text = "Delete Task";
             this.btnRemoveTask.UseVisualStyleBackColor = true;
@@ -150,9 +162,9 @@
             // 
             // btnNewTask
             // 
-            this.btnNewTask.Location = new System.Drawing.Point(503, 184);
+            this.btnNewTask.Location = new System.Drawing.Point(498, 19);
             this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(75, 23);
+            this.btnNewTask.Size = new System.Drawing.Size(87, 44);
             this.btnNewTask.TabIndex = 17;
             this.btnNewTask.Text = "New Task";
             this.btnNewTask.UseVisualStyleBackColor = true;
@@ -169,19 +181,19 @@
             this.lstTasks.TabIndex = 16;
             this.lstTasks.SelectionChanged += new System.EventHandler(this.lstTasks_SelectionChanged);
             // 
-            // btnSave
+            // btnSaveAndClose
             // 
-            this.btnSave.Location = new System.Drawing.Point(603, 184);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(86, 55);
-            this.btnSave.TabIndex = 15;
-            this.btnSave.Text = "Save and Close";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSaveAndClose.Location = new System.Drawing.Point(634, 12);
+            this.btnSaveAndClose.Name = "btnSaveAndClose";
+            this.btnSaveAndClose.Size = new System.Drawing.Size(100, 39);
+            this.btnSaveAndClose.TabIndex = 15;
+            this.btnSaveAndClose.Text = "Save and Close";
+            this.btnSaveAndClose.UseVisualStyleBackColor = true;
+            this.btnSaveAndClose.Click += new System.EventHandler(this.btnSaveAndClose_Click);
             // 
             // btnRemoveTech
             // 
-            this.btnRemoveTech.Location = new System.Drawing.Point(596, 54);
+            this.btnRemoveTech.Location = new System.Drawing.Point(591, 115);
             this.btnRemoveTech.Name = "btnRemoveTech";
             this.btnRemoveTech.Size = new System.Drawing.Size(93, 23);
             this.btnRemoveTech.TabIndex = 14;
@@ -192,7 +204,7 @@
             // lstTechnicians
             // 
             this.lstTechnicians.FormattingEnabled = true;
-            this.lstTechnicians.Location = new System.Drawing.Point(503, 96);
+            this.lstTechnicians.Location = new System.Drawing.Point(498, 157);
             this.lstTechnicians.Name = "lstTechnicians";
             this.lstTechnicians.Size = new System.Drawing.Size(186, 82);
             this.lstTechnicians.TabIndex = 13;
@@ -200,7 +212,7 @@
             // lblTechnicianList
             // 
             this.lblTechnicianList.AutoSize = true;
-            this.lblTechnicianList.Location = new System.Drawing.Point(503, 80);
+            this.lblTechnicianList.Location = new System.Drawing.Point(498, 141);
             this.lblTechnicianList.Name = "lblTechnicianList";
             this.lblTechnicianList.Size = new System.Drawing.Size(120, 13);
             this.lblTechnicianList.TabIndex = 12;
@@ -208,7 +220,7 @@
             // 
             // btnAddTech
             // 
-            this.btnAddTech.Location = new System.Drawing.Point(503, 54);
+            this.btnAddTech.Location = new System.Drawing.Point(498, 115);
             this.btnAddTech.Name = "btnAddTech";
             this.btnAddTech.Size = new System.Drawing.Size(87, 23);
             this.btnAddTech.TabIndex = 11;
@@ -225,7 +237,7 @@
             "Raymond Roach",
             "Will McAvoy",
             "Sarah White"});
-            this.cboAssign.Location = new System.Drawing.Point(503, 29);
+            this.cboAssign.Location = new System.Drawing.Point(498, 90);
             this.cboAssign.Name = "cboAssign";
             this.cboAssign.Size = new System.Drawing.Size(186, 21);
             this.cboAssign.TabIndex = 10;
@@ -233,7 +245,7 @@
             // lblAssign
             // 
             this.lblAssign.AutoSize = true;
-            this.lblAssign.Location = new System.Drawing.Point(503, 13);
+            this.lblAssign.Location = new System.Drawing.Point(498, 74);
             this.lblAssign.Name = "lblAssign";
             this.lblAssign.Size = new System.Drawing.Size(68, 13);
             this.lblAssign.TabIndex = 9;
@@ -646,19 +658,113 @@
             // 
             // tabParts
             // 
+            this.tabParts.Controls.Add(this.btnRemoveAll);
+            this.tabParts.Controls.Add(this.btnRemoveSelected);
+            this.tabParts.Controls.Add(this.btnAddSelected);
+            this.tabParts.Controls.Add(this.btnAddAll);
+            this.tabParts.Controls.Add(this.lstPartsForSelectedTask);
+            this.tabParts.Controls.Add(this.lstAvailableParts);
+            this.tabParts.Controls.Add(this.lstTasksForParts);
             this.tabParts.Location = new System.Drawing.Point(4, 23);
             this.tabParts.Name = "tabParts";
             this.tabParts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParts.Size = new System.Drawing.Size(718, 520);
+            this.tabParts.Size = new System.Drawing.Size(718, 513);
             this.tabParts.TabIndex = 1;
             this.tabParts.Text = "Parts List";
             this.tabParts.UseVisualStyleBackColor = true;
+            // 
+            // lstTasksForParts
+            // 
+            this.lstTasksForParts.AllowUserToAddRows = false;
+            this.lstTasksForParts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstTasksForParts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstTasksForParts.Location = new System.Drawing.Point(6, 6);
+            this.lstTasksForParts.Name = "lstTasksForParts";
+            this.lstTasksForParts.Size = new System.Drawing.Size(706, 220);
+            this.lstTasksForParts.TabIndex = 17;
+            this.lstTasksForParts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstTasksForParts_CellClick);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(528, 12);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 39);
+            this.btnSave.TabIndex = 16;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // lstAvailableParts
+            // 
+            this.lstAvailableParts.AllowUserToAddRows = false;
+            this.lstAvailableParts.AllowUserToDeleteRows = false;
+            this.lstAvailableParts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstAvailableParts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstAvailableParts.Location = new System.Drawing.Point(6, 247);
+            this.lstAvailableParts.Name = "lstAvailableParts";
+            this.lstAvailableParts.ReadOnly = true;
+            this.lstAvailableParts.Size = new System.Drawing.Size(303, 211);
+            this.lstAvailableParts.TabIndex = 18;
+            // 
+            // lstPartsForSelectedTask
+            // 
+            this.lstPartsForSelectedTask.AllowUserToAddRows = false;
+            this.lstPartsForSelectedTask.AllowUserToDeleteRows = false;
+            this.lstPartsForSelectedTask.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstPartsForSelectedTask.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstPartsForSelectedTask.Location = new System.Drawing.Point(389, 247);
+            this.lstPartsForSelectedTask.Name = "lstPartsForSelectedTask";
+            this.lstPartsForSelectedTask.ReadOnly = true;
+            this.lstPartsForSelectedTask.Size = new System.Drawing.Size(323, 211);
+            this.lstPartsForSelectedTask.TabIndex = 19;
+            // 
+            // btnAddAll
+            // 
+            this.btnAddAll.Location = new System.Drawing.Point(329, 261);
+            this.btnAddAll.Name = "btnAddAll";
+            this.btnAddAll.Size = new System.Drawing.Size(37, 23);
+            this.btnAddAll.TabIndex = 20;
+            this.btnAddAll.Text = ">>";
+            this.btnAddAll.UseVisualStyleBackColor = true;
+            this.btnAddAll.Click += new System.EventHandler(this.btnAddAll_Click);
+            // 
+            // btnAddSelected
+            // 
+            this.btnAddSelected.Location = new System.Drawing.Point(329, 290);
+            this.btnAddSelected.Name = "btnAddSelected";
+            this.btnAddSelected.Size = new System.Drawing.Size(37, 23);
+            this.btnAddSelected.TabIndex = 21;
+            this.btnAddSelected.Text = ">";
+            this.btnAddSelected.UseVisualStyleBackColor = true;
+            this.btnAddSelected.Click += new System.EventHandler(this.btnAddSelected_Click);
+            // 
+            // btnRemoveSelected
+            // 
+            this.btnRemoveSelected.Location = new System.Drawing.Point(329, 319);
+            this.btnRemoveSelected.Name = "btnRemoveSelected";
+            this.btnRemoveSelected.Size = new System.Drawing.Size(37, 23);
+            this.btnRemoveSelected.TabIndex = 22;
+            this.btnRemoveSelected.Text = "<";
+            this.btnRemoveSelected.UseVisualStyleBackColor = true;
+            this.btnRemoveSelected.Click += new System.EventHandler(this.btnRemoveSelected_Click);
+            // 
+            // btnRemoveAll
+            // 
+            this.btnRemoveAll.Location = new System.Drawing.Point(329, 348);
+            this.btnRemoveAll.Name = "btnRemoveAll";
+            this.btnRemoveAll.Size = new System.Drawing.Size(37, 23);
+            this.btnRemoveAll.TabIndex = 23;
+            this.btnRemoveAll.Text = "<<";
+            this.btnRemoveAll.UseVisualStyleBackColor = true;
+            this.btnRemoveAll.Click += new System.EventHandler(this.btnRemoveAll_Click);
             // 
             // frmViewEditWorkOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(746, 582);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnSaveAndClose);
             this.Controls.Add(this.tabControl1);
             this.Name = "frmViewEditWorkOrder";
             this.Text = "View/Edit Work Order";
@@ -677,6 +783,10 @@
             this.grpVehicleInfo.PerformLayout();
             this.grpCxInfo.ResumeLayout(false);
             this.grpCxInfo.PerformLayout();
+            this.tabParts.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lstTasksForParts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstAvailableParts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lstPartsForSelectedTask)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -687,7 +797,7 @@
         private System.Windows.Forms.TabPage tabViewEdit;
         private System.Windows.Forms.TabPage tabParts;
         private System.Windows.Forms.GroupBox grpServiceInfo;
-        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnSaveAndClose;
         private System.Windows.Forms.Button btnRemoveTech;
         private System.Windows.Forms.ListBox lstTechnicians;
         private System.Windows.Forms.Label lblTechnicianList;
@@ -738,5 +848,13 @@
         private System.Windows.Forms.DataGridView lstTasks;
         private System.Windows.Forms.Button btnNewTask;
         private System.Windows.Forms.Button btnRemoveTask;
+        private System.Windows.Forms.DataGridView lstTasksForParts;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnRemoveAll;
+        private System.Windows.Forms.Button btnRemoveSelected;
+        private System.Windows.Forms.Button btnAddSelected;
+        private System.Windows.Forms.Button btnAddAll;
+        private System.Windows.Forms.DataGridView lstPartsForSelectedTask;
+        private System.Windows.Forms.DataGridView lstAvailableParts;
     }
 }

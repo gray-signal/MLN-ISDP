@@ -15,6 +15,12 @@ namespace MLN_ISDP_project
         private List<Task> taskList;
         private BindingSource sourceTasks;
 
+        private List<Part> availableParts;
+        private BindingSource sourceAvailParts;
+
+        //list associated with this binding source exists on the task objects
+        private BindingSource sourcePartsForSelectedTask;
+
         private string workOrderID;
         private string status;
 
@@ -23,6 +29,8 @@ namespace MLN_ISDP_project
         private DataTable workOrder;
 
         private DataTable tasks;
+
+        private DataTable parts;
 
         static System.Data.OleDb.OleDbConnectionStringBuilder csBuilder = new System.Data.OleDb.OleDbConnectionStringBuilder(
                 "Provider=MSDAORA;Data Source=localhost;User ID=2023164;Password=#42Paradox;");
@@ -47,9 +55,15 @@ namespace MLN_ISDP_project
             taskList = new List<Task>();
             sourceTasks = new BindingSource();
 
-            sourceTasks.DataSource = taskList;
+            availableParts = new List<Part>();
+            sourceAvailParts = new BindingSource();
 
+            sourcePartsForSelectedTask = new BindingSource();
+
+            sourceTasks.DataSource = taskList;
             lstTasks.DataSource = sourceTasks;
+
+            lstTasksForParts.DataSource = sourceTasks;
 
             cboAssign.SelectedIndex = 0;
 
@@ -57,6 +71,7 @@ namespace MLN_ISDP_project
             vehicle = new DataTable();
             workOrder = new DataTable();
             tasks = new DataTable();
+            parts = new DataTable();
 
             workOrder = dbConn.readQuery("SELECT * FROM WORKORDER WHERE WORKORDERID = " + workOrderID);
             customer = dbConn.readQuery("SELECT * FROM CUSTOMER WHERE CUSTOMERID = " + workOrder.Rows[0].Field<double>("CUSTOMERID"));
@@ -64,12 +79,36 @@ namespace MLN_ISDP_project
 
             tasks = dbConn.readQuery("SELECT TASKUNIQ FROM TASK WHERE WORKORDERID = " + workOrderID + " ORDER BY TASKID");
 
+            parts = dbConn.readQuery("SELECT PARTID, REQUESTED FROM TASKPART WHERE WORKORDERID = " + workOrderID);
+
+            foreach (DataRow row in parts.Rows)
+            {
+                Part addPart = new Part(row["PARTID"].ToString(), row["REQUESTED"].ToString());
+                if (addPart.load(dbConn))
+                {
+                    availableParts.Add(addPart);
+                }
+            }
+
+            sourceAvailParts.DataSource = availableParts;
+            lstAvailableParts.DataSource = sourceAvailParts;
+
+            
+
             dtpPromised.Value = DateTime.Now;
 
             refreshCxFields();
             setUpTaskColumns();
+            setUpTaskForPartsColumns();
+            setUpAssignPartsColumns(lstAvailableParts);
+            
 
             loadTasks();
+
+            
+            lstPartsForSelectedTask.DataSource = sourcePartsForSelectedTask;
+
+            
         }
 
         private void refreshCxFields()
@@ -130,6 +169,68 @@ namespace MLN_ISDP_project
 
             Type.HeaderText = "Type";
             Type.DataSource = new List<Task.TaskType> { Task.TaskType.NONE, Task.TaskType.RECALL, Task.TaskType.WARRANTY };
+        }
+
+        private void setUpTaskForPartsColumns()
+        {
+            lstTasksForParts.Columns["TaskID"].ReadOnly = true;
+            lstTasksForParts.Columns["TaskTime"].ReadOnly = true;
+            lstTasksForParts.Columns["Description"].ReadOnly = true;
+            lstTasksForParts.Columns["Type"].ReadOnly = true;
+
+            //ordering
+            lstTasksForParts.Columns["TaskID"].DisplayIndex = 0;
+            lstTasksForParts.Columns["TaskTime"].DisplayIndex = 1;
+            lstTasksForParts.Columns["Description"].DisplayIndex = 2;
+            lstTasksForParts.Columns["Type"].DisplayIndex = 3;
+
+
+            //names
+            lstTasksForParts.Columns["TaskID"].HeaderText = "Task Number";
+            lstTasksForParts.Columns["TaskTime"].HeaderText = "Time";
+            lstTasksForParts.Columns["Description"].HeaderText = "Description";
+            lstTasksForParts.Columns["Type"].HeaderText = "Type";
+
+            //visibility
+            lstTasksForParts.Columns["Dirty"].Visible = false;
+            lstTasksForParts.Columns["WorkOrderID"].Visible = false;
+
+            
+        }
+
+        private void setUpAssignPartsColumns(DataGridView lstToSetUp)
+        {
+            //ordering
+            lstToSetUp.Columns["Request"].DisplayIndex = 0;
+            lstToSetUp.Columns["PartID"].DisplayIndex = 1;
+            lstToSetUp.Columns["PartDescription"].DisplayIndex = 2;
+
+            //names
+            lstToSetUp.Columns["Request"].HeaderText = "Quantity";
+            lstToSetUp.Columns["PartID"].HeaderText = "Part Number";
+            lstToSetUp.Columns["PartDescription"].HeaderText = "Description";
+
+            //visibility
+            lstToSetUp.Columns["MinQuantity"].Visible = false;
+            lstToSetUp.Columns["Section"].Visible = false;
+            lstToSetUp.Columns["QuantityOnHand"].Visible = false;
+            lstToSetUp.Columns["QuantityOnOrder"].Visible = false;
+            lstToSetUp.Columns["Reserved"].Visible = false;
+            lstToSetUp.Columns["Dirty"].Visible = false;
+            lstToSetUp.Columns["CostPrice"].Visible = false;
+            lstToSetUp.Columns["PurchaseIndicator"].Visible = false;
+            lstToSetUp.Columns["TotalCost"].Visible = false;
+            lstToSetUp.Columns["TotalList"].Visible = false;
+            lstToSetUp.Columns["OrderedFor"].Visible = false;
+            lstToSetUp.Columns["ListPrice"].Visible = false;
+            lstToSetUp.Columns["Receive"].Visible = false;
+            lstToSetUp.Columns["BackOrder"].Visible = false;
+            lstToSetUp.Columns["Net"].Visible = false;
+            lstToSetUp.Columns["Amount"].Visible = false;
+            lstToSetUp.Columns["Deposit"].Visible = false;
+
+
+            lstToSetUp.RowHeadersVisible = false;
         }
 
         private void loadTasks()
@@ -220,9 +321,45 @@ namespace MLN_ISDP_project
             sourceTasks.ResetBindings(false);
         }
 
+        private void dtpPromised_ValueChanged(object sender, EventArgs e)
+        {
+            double sumHours = 0;
+            foreach (Task t in taskList)
+            {
+                double time = 0.0;
+                if (taskList.Count > 0)
+                    time = t.TaskTime;
+                sumHours = sumHours + time;
+            }
+
+            TimeSpan hours = TimeSpan.FromHours(sumHours);
+
+            DateTime minPromised = DateTime.Now + hours;
+
+            if (dtpPromised.Value < minPromised)
+            {
+                dtpPromised.Value = minPromised;
+            }
+        }
+
+        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage == tabParts && status != "INSERVICE")
+            {
+                e.Cancel = true;
+                MessageBox.Show("You can only add parts if you're done and the car's awaiting pick up!");
+            }
+        }
+
+        private void btnSaveAndClose_Click(object sender, EventArgs e)
+        {
+            btnSave_Click(sender, e);
+            this.Close();
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string changedStatus = "UNASSIGNED";
+            string changedStatus = status;
             bool allTasksAssigned = true;
             if (taskList.Count == 0)
                 allTasksAssigned = false;
@@ -234,6 +371,15 @@ namespace MLN_ISDP_project
                 t.commit(dbConn);
                 if (t.TechList.Count == 0)
                     allTasksAssigned = false;
+
+                foreach (Part p in t.PartsList)
+                {
+                    p.commit(dbConn);
+
+                    dbConn.insertQuery("UPDATE TaskPart SET TaskUniq = " + t.getUniq()
+                                     + " WHERE WorkOrderID = " + workOrderID 
+                                     + " AND PartID = '" + p.PartID + "'");
+                }
             }
             //write updated wo items
             if (allTasksAssigned && status == "UNASSIGNED")
@@ -258,34 +404,66 @@ namespace MLN_ISDP_project
                                  + "PromisedTime = to_date('" + formattedTime + "', 'yyyy-MM-dd hh24:mi:ss'), "
                                  + "Rate = '" + rate + "', "
                                  + "KMin = '" + kmIn + "',"
-                                 + "KMout = '" + kmOut + "'," 
+                                 + "KMout = '" + kmOut + "',"
                                  + "Status ='" + changedStatus + "' "
                                  + "WHERE WorkOrderID = '" + workOrderID + "'");
 
-            
-
-            this.Close();
+            MessageBox.Show("Saved!");
         }
 
-        private void dtpPromised_ValueChanged(object sender, EventArgs e)
+        private void btnAddAll_Click(object sender, EventArgs e)
         {
-            double sumHours = 0;
-            foreach (Task t in taskList)
+            while (lstAvailableParts.Rows.Count > 0)
             {
-                double time = 0.0;
-                if (taskList.Count > 0)
-                    time = t.TaskTime;
-                sumHours = sumHours + time;
+                btnAddSelected_Click(sender, e);
+            }
+        }
+
+        private void btnAddSelected_Click(object sender, EventArgs e)
+        {
+            if (lstAvailableParts.Rows.Count > 0)
+            {
+                taskList[lstTasksForParts.CurrentRow.Index].PartsList.Add(availableParts[lstAvailableParts.CurrentRow.Index]);
+
+                availableParts.Remove(taskList[lstTasksForParts.CurrentRow.Index].PartsList[taskList[lstTasksForParts.CurrentRow.Index].PartsList.Count - 1]);
+
+                sourcePartsForSelectedTask.DataSource = taskList[lstTasksForParts.CurrentRow.Index].PartsList;
+
+                setUpAssignPartsColumns(lstPartsForSelectedTask);
             }
 
-            TimeSpan hours = TimeSpan.FromHours(sumHours);
+            sourcePartsForSelectedTask.ResetBindings(false);
+            sourceAvailParts.ResetBindings(false);
+        }
 
-            DateTime minPromised = DateTime.Now + hours;
-
-            if (dtpPromised.Value < minPromised)
+        private void btnRemoveSelected_Click(object sender, EventArgs e)
+        {
+            if (lstPartsForSelectedTask.Rows.Count > 0)
             {
-                dtpPromised.Value = minPromised;
+                availableParts.Add(taskList[lstTasksForParts.CurrentRow.Index].PartsList[lstPartsForSelectedTask.CurrentRow.Index]);
+
+                sourceAvailParts.ResetBindings(false);
+
+                taskList[lstTasksForParts.CurrentRow.Index].PartsList.Remove(availableParts[lstAvailableParts.Rows.Count - 1]);
+
+                sourcePartsForSelectedTask.DataSource = taskList[lstTasksForParts.CurrentRow.Index].PartsList;
+
+                sourcePartsForSelectedTask.ResetBindings(false);
             }
+        }
+
+        private void btnRemoveAll_Click(object sender, EventArgs e)
+        {
+            while (lstPartsForSelectedTask.Rows.Count > 0)
+            {
+                btnRemoveSelected_Click(sender, e);
+            }
+        }
+
+        private void lstTasksForParts_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            sourcePartsForSelectedTask.DataSource = taskList[lstTasksForParts.CurrentRow.Index].PartsList;
+            sourcePartsForSelectedTask.ResetBindings(false);
         }
     }
 }
