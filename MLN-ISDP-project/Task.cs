@@ -24,28 +24,31 @@ namespace MLN_ISDP_project
 
         //util
         public bool Dirty { get; set; }
+        public List<Part> PartsList { get; set; }
 
         #endregion
 
         public Task()
         {
-            this.TaskUniq = -1;
+            if (this.TaskUniq == 0)
+            {
+                this.TaskUniq = -1;
+            }
             this.TaskTime = 1;
             TechList = new List<string>();
+            PartsList = new List<Part>();
         }
 
         public Task(string woID)
+            :this()
         {
             this.WorkOrderID = woID;
-            this.TaskTime = 1;
-            this.TaskUniq = -1;
-            TechList = new List<string>();
         }
 
         public Task(int id)
+            :this()
         {
             TaskUniq = id;
-            TechList = new List<string>();
         }
 
         public Task(Task other)
@@ -56,6 +59,11 @@ namespace MLN_ISDP_project
             Description = other.Description;
             WorkOrderID = other.WorkOrderID;
             Type = other.Type;
+        }
+
+        public int getUniq()
+        {
+            return this.TaskUniq;
         }
 
         internal bool load(OracleDB in_db)
@@ -127,9 +135,14 @@ namespace MLN_ISDP_project
             //if (this.Dirty)
             //{
                 string techs = String.Join(",", this.TechList);
+
+                string sanitizedDesc = "";
                 if (this.TaskUniq != -1)
                 {
-                    string sanitizedDesc = this.Description.Replace("'", "''");
+                    if (this.Description != null)
+                    {
+                        sanitizedDesc = this.Description.Replace("'", "''");
+                    }
 
                     writeComplete = in_db.insertQuery("UPDATE Task "
                                     + "SET TaskID = " + this.TaskID + ","
