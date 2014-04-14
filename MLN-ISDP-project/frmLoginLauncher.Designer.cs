@@ -31,6 +31,7 @@
             this.btnPartsSale = new System.Windows.Forms.Button();
             this.btnService = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnReports = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnPartsSale
@@ -62,11 +63,22 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "This is a login placeholder";
             // 
+            // btnReports
+            // 
+            this.btnReports.Location = new System.Drawing.Point(12, 130);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(346, 30);
+            this.btnReports.TabIndex = 3;
+            this.btnReports.Text = "Reports";
+            this.btnReports.UseVisualStyleBackColor = true;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            // 
             // frmLoginLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(370, 136);
+            this.ClientSize = new System.Drawing.Size(370, 172);
+            this.Controls.Add(this.btnReports);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnService);
             this.Controls.Add(this.btnPartsSale);
@@ -83,5 +95,6 @@
         private System.Windows.Forms.Button btnPartsSale;
         private System.Windows.Forms.Button btnService;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnReports;
     }
 }

@@ -18,6 +18,8 @@ namespace MLN_ISDP_project
         private List<Part> availableParts;
         private BindingSource sourceAvailParts;
 
+        private List<Task> tasksToBeDeleted;
+
         //list associated with this binding source exists on the task objects
         private BindingSource sourcePartsForSelectedTask;
 
@@ -58,6 +60,8 @@ namespace MLN_ISDP_project
             availableParts = new List<Part>();
             sourceAvailParts = new BindingSource();
 
+            tasksToBeDeleted = new List<Task>();
+
             sourcePartsForSelectedTask = new BindingSource();
 
             sourceTasks.DataSource = taskList;
@@ -79,16 +83,9 @@ namespace MLN_ISDP_project
 
             tasks = dbConn.readQuery("SELECT TASKUNIQ FROM TASK WHERE WORKORDERID = " + workOrderID + " ORDER BY TASKID");
 
-            parts = dbConn.readQuery("SELECT PARTID, REQUESTED FROM TASKPART WHERE WORKORDERID = " + workOrderID);
+            parts = dbConn.readQuery("SELECT PARTID, REQUESTED, TASKUNIQ FROM TASKPART WHERE WORKORDERID = " + workOrderID);
 
-            foreach (DataRow row in parts.Rows)
-            {
-                Part addPart = new Part(row["PARTID"].ToString(), row["REQUESTED"].ToString());
-                if (addPart.load(dbConn))
-                {
-                    availableParts.Add(addPart);
-                }
-            }
+            
 
             sourceAvailParts.DataSource = availableParts;
             lstAvailableParts.DataSource = sourceAvailParts;
@@ -100,15 +97,19 @@ namespace MLN_ISDP_project
             refreshCxFields();
             setUpTaskColumns();
             setUpTaskForPartsColumns();
-            setUpAssignPartsColumns(lstAvailableParts);
+            
             
 
             loadTasks();
-
+            setUpAssignPartsColumns(lstAvailableParts);
             
+            
+            addSavedPartsToTasks();
+            sourcePartsForSelectedTask.DataSource = taskList[lstTasksForParts.CurrentRow.Index].PartsList;
             lstPartsForSelectedTask.DataSource = sourcePartsForSelectedTask;
 
-            
+            setUpAssignPartsColumns(lstPartsForSelectedTask);
+            sourcePartsForSelectedTask.ResetBindings(false);
         }
 
         private void refreshCxFields()
@@ -251,6 +252,36 @@ namespace MLN_ISDP_project
             sourceTasks.ResetBindings(false);
         }
 
+        private void addSavedPartsToTasks()
+        {
+            foreach (DataRow row in parts.Rows)
+            {
+                Part addPart = new Part(row["PARTID"].ToString(), row["REQUESTED"].ToString());
+                if (addPart.load(dbConn))
+                {
+                    string targetTaskUniq = row["TASKUNIQ"].ToString();
+                    if (targetTaskUniq == "")
+                    {
+                        availableParts.Add(addPart);
+                    }
+                    else
+                    {
+                        foreach (Task t in taskList)
+                        {
+                            string thisTaskUniq = t.getUniq().ToString();
+                            if (targetTaskUniq == thisTaskUniq)
+                            {
+                                t.PartsList.Add(addPart);
+                            }
+                        }
+                    }
+                }
+            }
+
+            sourceAvailParts.ResetBindings(false);
+            sourcePartsForSelectedTask.ResetBindings(false);
+        }
+
         private void loadCurrentTaskTechs(Task t)
         {
             lstTechnicians.Items.Clear();
@@ -265,7 +296,10 @@ namespace MLN_ISDP_project
 
         private void lstTasks_SelectionChanged(object sender, EventArgs e)
         {
-            loadCurrentTaskTechs(taskList[lstTasks.CurrentCell.RowIndex]);
+            if (lstTasks.RowCount > 0)
+            {
+                loadCurrentTaskTechs(taskList[lstTasks.CurrentCell.RowIndex]);
+            }
         }
 
         private void btnNewTask_Click(object sender, EventArgs e)
@@ -317,6 +351,7 @@ namespace MLN_ISDP_project
 
         private void btnRemoveTask_Click(object sender, EventArgs e)
         {
+            tasksToBeDeleted.Add(taskList[lstTasks.CurrentCell.RowIndex]);
             taskList.RemoveAt(lstTasks.CurrentCell.RowIndex);
             sourceTasks.ResetBindings(false);
         }
@@ -374,14 +409,38 @@ namespace MLN_ISDP_project
 
                 foreach (Part p in t.PartsList)
                 {
-                    p.commit(dbConn);
-
                     dbConn.insertQuery("UPDATE TaskPart SET TaskUniq = " + t.getUniq()
                                      + " WHERE WorkOrderID = " + workOrderID 
                                      + " AND PartID = '" + p.PartID + "'");
                 }
             }
-            //write updated wo items
+
+            //delete deleted tasks from db
+            foreach (Task t in tasksToBeDeleted)
+            {
+                //if you tried to delete a task with parts, set them free
+                if (t.PartsList.Count != 0)
+                {
+                    foreach (Part p in t.PartsList)
+                    {
+                        availableParts.Add(p);
+                    }
+                    t.PartsList.Clear();
+                }
+                //DESTROY
+                t.selfDestruct(dbConn);
+            }
+
+            //set the uniq of all taskparts still not in (or removed from) a task.
+            foreach (Part p in availableParts)
+            {
+                dbConn.insertQuery("UPDATE TaskPart SET TaskUniq = ''"
+                                 + " WHERE WorkOrderID = " + workOrderID
+                                 + " AND PartID = '" + p.PartID + "'");
+            }
+            
+
+            //prompt to change statuses
             if (allTasksAssigned && status == "UNASSIGNED")
             {
                 DialogResult result = MessageBox.Show("All of the tasks are assigned, do you want to set this to 'On Hold'?", "Set to On Hold", MessageBoxButtons.YesNo);
@@ -391,6 +450,16 @@ namespace MLN_ISDP_project
                 }
             }
 
+            if (availableParts.Count == 0 && status == "INSERVICE")
+            {
+                DialogResult result = MessageBox.Show("No parts left to add to tasks, do you want to set this to 'Awaiting Pick Up'?", "Set to Awaiting Pick Up", MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    changedStatus = "AWAITINGPICKUP";
+                }
+            }
+
+            //write updated wo items
             DateTime promisedTime = dtpPromised.Value;
 
             string formattedTime = promisedTime.ToString("yyyy-MM-dd HH:mm:ss");

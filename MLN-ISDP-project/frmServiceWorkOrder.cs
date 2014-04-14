@@ -130,17 +130,19 @@ namespace MLN_ISDP_project
 
         private void cboVehicle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string vehicleID = cboVehicle.SelectedValue.ToString();
+            if (cboVehicle.SelectedValue != null)
+            {
+                string vehicleID = cboVehicle.SelectedValue.ToString();
 
-            DataTable vehicle = dbConn.readQuery("SELECT * from Vehicle where VIN = '" + vehicleID + "'");
+                DataTable vehicle = dbConn.readQuery("SELECT * from Vehicle where VIN = '" + vehicleID + "'");
 
-            txtVin.Text = vehicle.Rows[0].Field<string>("VIN");
-            txtModel.Text = vehicle.Rows[0].Field<string>("MODEL");
-            txtColour.Text = vehicle.Rows[0].Field<string>("COLOUR");
-            txtYear.Text = Convert.ToString(vehicle.Rows[0].Field<double>("YEAR"));
-            txtPlateNum.Text = vehicle.Rows[0].Field<string>("LICENSEPLATE");
-            //txtWarrantyExp.Text = vehicle.Rows[0].Field<string>("WARRANTY");
-
+                txtVin.Text = vehicle.Rows[0].Field<string>("VIN");
+                txtModel.Text = vehicle.Rows[0].Field<string>("MODEL");
+                txtColour.Text = vehicle.Rows[0].Field<string>("COLOUR");
+                txtYear.Text = Convert.ToString(vehicle.Rows[0].Field<double>("YEAR"));
+                txtPlateNum.Text = vehicle.Rows[0].Field<string>("LICENSEPLATE");
+                //txtWarrantyExp.Text = vehicle.Rows[0].Field<string>("WARRANTY");
+            }
         }
 
         private void populateVehicleInfo(string vehicleID)
@@ -217,10 +219,31 @@ namespace MLN_ISDP_project
             numKmOut.Value = 0;
             dtpPromised.Value = DateTime.Now;
 
+            txtCxNameSearch.Text = "";
+            cboVehicle.DataSource = null;
+
+            txtCxNum.Text = "";
+            txtCxFirstName.Text = "";
+            txtCxLastName.Text = "";
+            txtHomePhone.Text = "";
+            txtEmail.Text = "";
+            txtPostCode.Text = "";
+            txtAddress.Text = "";
+            txtCity.Text = "";
+            txtProvince.Text = "";
+
+            txtVin.Text = "";
+            txtModel.Text = "";
+            txtColour.Text = "";
+            txtYear.Text = "";
+            txtPlateNum.Text = "";
+
             taskList.Clear();
             lstTechnicians.Items.Clear();
 
             cboAssign.SelectedIndex = 0;
+
+            sourceTasks.ResetBindings(false);
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
@@ -466,7 +489,17 @@ namespace MLN_ISDP_project
 
         private void btnDischargeSelected_Click(object sender, EventArgs e)
         {
-            btnViewSelected_Click(sender, e);
+            string currentWorkOrder = lstWorkOrders.Rows[lstWorkOrders.CurrentRow.Index].Cells["WorkOrderID"].Value.ToString();
+
+            DialogResult result = MessageBox.Show("Are you sure you want to discharge this vehicle to the customer?", "Release Car", MessageBoxButtons.YesNo);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                dbConn.insertQuery("UPDATE WorkOrder "
+                                 + "SET Status ='DISCHARGED' "
+                                 + "WHERE WorkOrderID = '" + currentWorkOrder + "'");
+            }
+
+            btnFilPickup_Click(sender, e);
         }
 
         private void cboTechs_SelectedIndexChanged(object sender, EventArgs e)

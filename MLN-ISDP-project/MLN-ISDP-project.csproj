@@ -11,7 +11,8 @@
     <RootNamespace>MLN_ISDP_project</RootNamespace>
     <AssemblyName>MLN-ISDP-project</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -34,9 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +57,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reports\crDayOrders.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crDayOrders.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\crSaleInvoice.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crSaleInvoice.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\crWorkOrderInvoice.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crWorkOrderInvoice.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CxSearchModal.cs" />
     <Compile Include="Database\OracleDB.cs" />
     <Compile Include="Database\Persistence.cs" />
@@ -64,6 +92,12 @@
     <Compile Include="frmPartsInventory.Designer.cs">
       <DependentUpon>frmPartsInventory.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmReportLauncher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportLauncher.Designer.cs">
+      <DependentUpon>frmReportLauncher.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmServiceWorkOrder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,23 +110,81 @@
     <Compile Include="frmViewEditWorkOrder.Designer.cs">
       <DependentUpon>frmViewEditWorkOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\crWorkOrderTechnicianReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crWorkOrderTechnicianReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\frmDayOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\frmDayOrders.Designer.cs">
+      <DependentUpon>frmDayOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\frmSaleInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\frmSaleInvoice.Designer.cs">
+      <DependentUpon>frmSaleInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\frmWorkOrderInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\frmWorkOrderInvoice.Designer.cs">
+      <DependentUpon>frmWorkOrderInvoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Part.cs" />
     <Compile Include="PartSearchModal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\frmWorkOrderTechnicianReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\frmWorkOrderTechnicianReport.Designer.cs">
+      <DependentUpon>frmWorkOrderTechnicianReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Task.cs" />
     <Compile Include="Test\Test.cs" />
+    <EmbeddedResource Include="Reports\crDayOrders.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crDayOrders.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\crSaleInvoice.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crSaleInvoice.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\crWorkOrderInvoice.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crWorkOrderInvoice.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLoginLauncher.resx">
       <DependentUpon>frmLoginLauncher.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPartsInventory.resx">
       <DependentUpon>frmPartsInventory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmReportLauncher.resx">
+      <DependentUpon>frmReportLauncher.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmServiceWorkOrder.resx">
       <DependentUpon>frmServiceWorkOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmViewEditWorkOrder.resx">
       <DependentUpon>frmViewEditWorkOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\crWorkOrderTechnicianReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crWorkOrderTechnicianReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\frmDayOrders.resx">
+      <DependentUpon>frmDayOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\frmSaleInvoice.resx">
+      <DependentUpon>frmSaleInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\frmWorkOrderInvoice.resx">
+      <DependentUpon>frmWorkOrderInvoice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -102,7 +194,12 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reports\frmWorkOrderTechnicianReport.resx">
+      <DependentUpon>frmWorkOrderTechnicianReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -115,6 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

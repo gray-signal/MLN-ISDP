@@ -137,12 +137,13 @@ namespace MLN_ISDP_project
                 string techs = String.Join(",", this.TechList);
 
                 string sanitizedDesc = "";
+                if (this.Description != null)
+                {
+                    sanitizedDesc = this.Description.Replace("'", "''");
+                }
                 if (this.TaskUniq != -1)
                 {
-                    if (this.Description != null)
-                    {
-                        sanitizedDesc = this.Description.Replace("'", "''");
-                    }
+                    
 
                     writeComplete = in_db.insertQuery("UPDATE Task "
                                     + "SET TaskID = " + this.TaskID + ","
@@ -159,12 +160,33 @@ namespace MLN_ISDP_project
                                     + "VALUES (" + this.TaskID + ","
                                     + this.TaskTime + ","
                                     + "'" + String.Join(",", this.TechList) + "',"
-                                    + "'" + this.Description + "',"
+                                    + "'" + sanitizedDesc + "',"
                                     + "'" + this.WorkOrderID + "',"
                                     + "'" + this.Type.ToString() + "')");
                 }
 
                 this.Dirty = false;
+
+            //}
+            return writeComplete;
+        }
+
+        internal bool selfDestruct(OracleDB in_db)
+        {
+            bool writeComplete = false;
+            if (!in_db.isConnected())
+            {
+                in_db.connect();
+            }
+
+            //need to make sure we're setting it dirty everywhere it gets changed first
+            //if (this.Dirty)
+            //{
+            
+            writeComplete = in_db.insertQuery("DELETE FROM Task WHERE TaskUniq = '" + this.TaskUniq + "'");
+
+
+            this.Dirty = false;
 
             //}
             return writeComplete;

@@ -29,5 +29,12 @@ namespace MLN_ISDP_project
 
             frmWork.ShowDialog();
         }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            Form frmReport = new frmReportLauncher();
+
+            frmReport.ShowDialog();
+        }
     }
 }

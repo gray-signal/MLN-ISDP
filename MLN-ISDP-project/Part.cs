@@ -175,7 +175,7 @@ namespace MLN_ISDP_project
             //{
             //currently just updating the on hand and on order values. i don't think we want to permanently change ids, descriptions, prices...
             writeComplete = in_db.insertQuery("UPDATE Parts "
-                            + "SET QuantityOnHand = '" + (this.QuantityOnHand - this.Receive) + "',"
+                            + "SET QuantityOnHand = '" + this.QuantityOnHand + "',"
                             + "QuantityOnOrder = '" + this.QuantityOnOrder + "'"
                             + "WHERE PartID = '" + this.PartID + "'");
 

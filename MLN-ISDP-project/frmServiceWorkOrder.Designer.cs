@@ -58,8 +58,6 @@
             this.lblPromised = new System.Windows.Forms.Label();
             this.grpVehicleInfo = new System.Windows.Forms.GroupBox();
             this.txtYear = new System.Windows.Forms.TextBox();
-            this.txtWarrantyExp = new System.Windows.Forms.TextBox();
-            this.lblWarrantyExp = new System.Windows.Forms.Label();
             this.txtPlateNum = new System.Windows.Forms.TextBox();
             this.lblPlateNum = new System.Windows.Forms.Label();
             this.lblYear = new System.Windows.Forms.Label();
@@ -109,16 +107,16 @@
             this.btnDeleteSelected = new System.Windows.Forms.Button();
             this.btnViewSelected = new System.Windows.Forms.Button();
             this.tabViewTechTasks = new System.Windows.Forms.TabPage();
-            this.cboTechs = new System.Windows.Forms.ComboBox();
-            this.lstTechTasks = new System.Windows.Forms.DataGridView();
             this.grpTechSummary = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtTotalTime = new System.Windows.Forms.TextBox();
-            this.txtTotalTasks = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.txtTotalWorkOrders = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtTotalTasks = new System.Windows.Forms.TextBox();
+            this.txtTotalTime = new System.Windows.Forms.TextBox();
+            this.cboTechs = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lstTechTasks = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabCreate.SuspendLayout();
@@ -135,8 +133,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lstWorkOrders)).BeginInit();
             this.grpViewActions.SuspendLayout();
             this.tabViewTechTasks.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lstTechTasks)).BeginInit();
             this.grpTechSummary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstTechTasks)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -194,9 +192,11 @@
             this.tabCreate.Controls.Add(this.grpWorkInfo);
             this.tabCreate.Controls.Add(this.grpVehicleInfo);
             this.tabCreate.Controls.Add(this.grpCxInfo);
+            this.tabCreate.Controls.Add(this.btnReset);
             this.tabCreate.Controls.Add(this.cboVehicle);
             this.tabCreate.Controls.Add(this.lblSelectVehicle);
             this.tabCreate.Controls.Add(this.btnCxSearch);
+            this.tabCreate.Controls.Add(this.btnCreate);
             this.tabCreate.Controls.Add(this.txtCxNameSearch);
             this.tabCreate.Controls.Add(this.lblCxSearch);
             this.tabCreate.Location = new System.Drawing.Point(4, 23);
@@ -213,9 +213,7 @@
             this.grpServiceInfo.Controls.Add(this.btnNewTask);
             this.grpServiceInfo.Controls.Add(this.lstTasks);
             this.grpServiceInfo.Controls.Add(this.btnRemoveTech);
-            this.grpServiceInfo.Controls.Add(this.btnReset);
             this.grpServiceInfo.Controls.Add(this.lstTechnicians);
-            this.grpServiceInfo.Controls.Add(this.btnCreate);
             this.grpServiceInfo.Controls.Add(this.lblTechnicianList);
             this.grpServiceInfo.Controls.Add(this.btnAddTech);
             this.grpServiceInfo.Controls.Add(this.cboAssign);
@@ -229,9 +227,9 @@
             // 
             // btnRemoveTask
             // 
-            this.btnRemoveTask.Location = new System.Drawing.Point(541, 210);
+            this.btnRemoveTask.Location = new System.Drawing.Point(634, 19);
             this.btnRemoveTask.Name = "btnRemoveTask";
-            this.btnRemoveTask.Size = new System.Drawing.Size(75, 26);
+            this.btnRemoveTask.Size = new System.Drawing.Size(93, 38);
             this.btnRemoveTask.TabIndex = 18;
             this.btnRemoveTask.Text = "Delete Task";
             this.btnRemoveTask.UseVisualStyleBackColor = true;
@@ -239,9 +237,9 @@
             // 
             // btnNewTask
             // 
-            this.btnNewTask.Location = new System.Drawing.Point(541, 184);
+            this.btnNewTask.Location = new System.Drawing.Point(541, 19);
             this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(75, 26);
+            this.btnNewTask.Size = new System.Drawing.Size(87, 38);
             this.btnNewTask.TabIndex = 17;
             this.btnNewTask.Text = "New Task";
             this.btnNewTask.UseVisualStyleBackColor = true;
@@ -260,7 +258,7 @@
             // 
             // btnRemoveTech
             // 
-            this.btnRemoveTech.Location = new System.Drawing.Point(634, 55);
+            this.btnRemoveTech.Location = new System.Drawing.Point(634, 115);
             this.btnRemoveTech.Name = "btnRemoveTech";
             this.btnRemoveTech.Size = new System.Drawing.Size(93, 23);
             this.btnRemoveTech.TabIndex = 14;
@@ -270,9 +268,9 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(635, 210);
+            this.btnReset.Location = new System.Drawing.Point(551, 7);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(92, 26);
+            this.btnReset.Size = new System.Drawing.Size(87, 38);
             this.btnReset.TabIndex = 16;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -281,25 +279,25 @@
             // lstTechnicians
             // 
             this.lstTechnicians.FormattingEnabled = true;
-            this.lstTechnicians.Location = new System.Drawing.Point(541, 96);
+            this.lstTechnicians.Location = new System.Drawing.Point(541, 157);
             this.lstTechnicians.Name = "lstTechnicians";
             this.lstTechnicians.Size = new System.Drawing.Size(186, 82);
             this.lstTechnicians.TabIndex = 13;
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(635, 184);
+            this.btnCreate.Location = new System.Drawing.Point(644, 7);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(92, 26);
+            this.btnCreate.Size = new System.Drawing.Size(93, 37);
             this.btnCreate.TabIndex = 15;
-            this.btnCreate.Text = "Create";
+            this.btnCreate.Text = "Create Work Order";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // lblTechnicianList
             // 
             this.lblTechnicianList.AutoSize = true;
-            this.lblTechnicianList.Location = new System.Drawing.Point(538, 80);
+            this.lblTechnicianList.Location = new System.Drawing.Point(538, 141);
             this.lblTechnicianList.Name = "lblTechnicianList";
             this.lblTechnicianList.Size = new System.Drawing.Size(120, 13);
             this.lblTechnicianList.TabIndex = 12;
@@ -307,7 +305,7 @@
             // 
             // btnAddTech
             // 
-            this.btnAddTech.Location = new System.Drawing.Point(541, 55);
+            this.btnAddTech.Location = new System.Drawing.Point(541, 116);
             this.btnAddTech.Name = "btnAddTech";
             this.btnAddTech.Size = new System.Drawing.Size(87, 23);
             this.btnAddTech.TabIndex = 11;
@@ -324,7 +322,7 @@
             "Raymond Roach",
             "Will McAvoy",
             "Sarah White"});
-            this.cboAssign.Location = new System.Drawing.Point(541, 30);
+            this.cboAssign.Location = new System.Drawing.Point(541, 91);
             this.cboAssign.Name = "cboAssign";
             this.cboAssign.Size = new System.Drawing.Size(186, 21);
             this.cboAssign.TabIndex = 10;
@@ -332,7 +330,7 @@
             // lblAssign
             // 
             this.lblAssign.AutoSize = true;
-            this.lblAssign.Location = new System.Drawing.Point(541, 14);
+            this.lblAssign.Location = new System.Drawing.Point(541, 75);
             this.lblAssign.Name = "lblAssign";
             this.lblAssign.Size = new System.Drawing.Size(68, 13);
             this.lblAssign.TabIndex = 9;
@@ -443,8 +441,6 @@
             // grpVehicleInfo
             // 
             this.grpVehicleInfo.Controls.Add(this.txtYear);
-            this.grpVehicleInfo.Controls.Add(this.txtWarrantyExp);
-            this.grpVehicleInfo.Controls.Add(this.lblWarrantyExp);
             this.grpVehicleInfo.Controls.Add(this.txtPlateNum);
             this.grpVehicleInfo.Controls.Add(this.lblPlateNum);
             this.grpVehicleInfo.Controls.Add(this.lblYear);
@@ -468,23 +464,6 @@
             this.txtYear.ReadOnly = true;
             this.txtYear.Size = new System.Drawing.Size(55, 20);
             this.txtYear.TabIndex = 14;
-            // 
-            // txtWarrantyExp
-            // 
-            this.txtWarrantyExp.Location = new System.Drawing.Point(549, 32);
-            this.txtWarrantyExp.Name = "txtWarrantyExp";
-            this.txtWarrantyExp.ReadOnly = true;
-            this.txtWarrantyExp.Size = new System.Drawing.Size(100, 20);
-            this.txtWarrantyExp.TabIndex = 13;
-            // 
-            // lblWarrantyExp
-            // 
-            this.lblWarrantyExp.AutoSize = true;
-            this.lblWarrantyExp.Location = new System.Drawing.Point(546, 16);
-            this.lblWarrantyExp.Name = "lblWarrantyExp";
-            this.lblWarrantyExp.Size = new System.Drawing.Size(84, 13);
-            this.lblWarrantyExp.TabIndex = 12;
-            this.lblWarrantyExp.Text = "Warranty Expiry:";
             // 
             // txtPlateNum
             // 
@@ -965,34 +944,6 @@
             this.tabViewTechTasks.Text = "View Tasks By Tech";
             this.tabViewTechTasks.UseVisualStyleBackColor = true;
             // 
-            // cboTechs
-            // 
-            this.cboTechs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTechs.FormattingEnabled = true;
-            this.cboTechs.Items.AddRange(new object[] {
-            "All",
-            "Eduardo Concepcion",
-            "Will McAvoy",
-            "Sarah White",
-            "Raymond Roach"});
-            this.cboTechs.Location = new System.Drawing.Point(9, 32);
-            this.cboTechs.Name = "cboTechs";
-            this.cboTechs.Size = new System.Drawing.Size(149, 21);
-            this.cboTechs.TabIndex = 0;
-            this.cboTechs.SelectedIndexChanged += new System.EventHandler(this.cboTechs_SelectedIndexChanged);
-            // 
-            // lstTechTasks
-            // 
-            this.lstTechTasks.AllowUserToAddRows = false;
-            this.lstTechTasks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.lstTechTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.lstTechTasks.Location = new System.Drawing.Point(6, 85);
-            this.lstTechTasks.Name = "lstTechTasks";
-            this.lstTechTasks.ReadOnly = true;
-            this.lstTechTasks.RowHeadersVisible = false;
-            this.lstTechTasks.Size = new System.Drawing.Size(737, 467);
-            this.lstTechTasks.TabIndex = 1;
-            // 
             // grpTechSummary
             // 
             this.grpTechSummary.Controls.Add(this.txtTotalWorkOrders);
@@ -1009,48 +960,13 @@
             this.grpTechSummary.TabIndex = 2;
             this.grpTechSummary.TabStop = false;
             // 
-            // label1
+            // txtTotalWorkOrders
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(104, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Task Stats for Tech:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(191, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Total Task Time (hours):";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(367, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(138, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Total Assigned Task Count:";
-            // 
-            // txtTotalTime
-            // 
-            this.txtTotalTime.Location = new System.Drawing.Point(194, 32);
-            this.txtTotalTime.Name = "txtTotalTime";
-            this.txtTotalTime.ReadOnly = true;
-            this.txtTotalTime.Size = new System.Drawing.Size(100, 20);
-            this.txtTotalTime.TabIndex = 4;
-            // 
-            // txtTotalTasks
-            // 
-            this.txtTotalTasks.Location = new System.Drawing.Point(370, 32);
-            this.txtTotalTasks.Name = "txtTotalTasks";
-            this.txtTotalTasks.ReadOnly = true;
-            this.txtTotalTasks.Size = new System.Drawing.Size(100, 20);
-            this.txtTotalTasks.TabIndex = 5;
+            this.txtTotalWorkOrders.Location = new System.Drawing.Point(550, 32);
+            this.txtTotalWorkOrders.Name = "txtTotalWorkOrders";
+            this.txtTotalWorkOrders.ReadOnly = true;
+            this.txtTotalWorkOrders.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalWorkOrders.TabIndex = 7;
             // 
             // label4
             // 
@@ -1061,13 +977,76 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Total Work Orders Active:";
             // 
-            // txtTotalWorkOrders
+            // txtTotalTasks
             // 
-            this.txtTotalWorkOrders.Location = new System.Drawing.Point(550, 32);
-            this.txtTotalWorkOrders.Name = "txtTotalWorkOrders";
-            this.txtTotalWorkOrders.ReadOnly = true;
-            this.txtTotalWorkOrders.Size = new System.Drawing.Size(100, 20);
-            this.txtTotalWorkOrders.TabIndex = 7;
+            this.txtTotalTasks.Location = new System.Drawing.Point(370, 32);
+            this.txtTotalTasks.Name = "txtTotalTasks";
+            this.txtTotalTasks.ReadOnly = true;
+            this.txtTotalTasks.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalTasks.TabIndex = 5;
+            // 
+            // txtTotalTime
+            // 
+            this.txtTotalTime.Location = new System.Drawing.Point(194, 32);
+            this.txtTotalTime.Name = "txtTotalTime";
+            this.txtTotalTime.ReadOnly = true;
+            this.txtTotalTime.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalTime.TabIndex = 4;
+            // 
+            // cboTechs
+            // 
+            this.cboTechs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTechs.FormattingEnabled = true;
+            this.cboTechs.Items.AddRange(new object[] {
+            "All",
+            "Eduardo Concepcion",
+            "Will McAvoy",
+            "Sarah White",
+            "Raymond Roach"});
+            this.cboTechs.Location = new System.Drawing.Point(9, 32);
+            this.cboTechs.Name = "cboTechs";
+            this.cboTechs.Size = new System.Drawing.Size(149, 21);
+            this.cboTechs.TabIndex = 0;
+            this.cboTechs.SelectedIndexChanged += new System.EventHandler(this.cboTechs_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(367, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(138, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Total Assigned Task Count:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(191, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(122, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Total Task Time (hours):";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Task Stats for Tech:";
+            // 
+            // lstTechTasks
+            // 
+            this.lstTechTasks.AllowUserToAddRows = false;
+            this.lstTechTasks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.lstTechTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstTechTasks.Location = new System.Drawing.Point(6, 85);
+            this.lstTechTasks.Name = "lstTechTasks";
+            this.lstTechTasks.ReadOnly = true;
+            this.lstTechTasks.RowHeadersVisible = false;
+            this.lstTechTasks.Size = new System.Drawing.Size(737, 467);
+            this.lstTechTasks.TabIndex = 1;
             // 
             // frmServiceWorkOrder
             // 
@@ -1102,9 +1081,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.lstWorkOrders)).EndInit();
             this.grpViewActions.ResumeLayout(false);
             this.tabViewTechTasks.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.lstTechTasks)).EndInit();
             this.grpTechSummary.ResumeLayout(false);
             this.grpTechSummary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstTechTasks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1147,8 +1126,6 @@
         private System.Windows.Forms.Label lblCxLastName;
         private System.Windows.Forms.TextBox txtVin;
         private System.Windows.Forms.Label lblVin;
-        private System.Windows.Forms.TextBox txtWarrantyExp;
-        private System.Windows.Forms.Label lblWarrantyExp;
         private System.Windows.Forms.TextBox txtPlateNum;
         private System.Windows.Forms.Label lblPlateNum;
         private System.Windows.Forms.Label lblYear;
